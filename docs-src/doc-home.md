@@ -59,7 +59,7 @@ The menu headings offered by JSDoc don't fit our needs perfectly.  You should re
 
 # Configuration Steps
 
-Those steps are available in the README of the [repo](https://github.com/jaquith/usercentrics-v2-integration). 
+Those steps are available in the README of the [repo](https://github.com/jaquith/cmp-integrations). 
 ----
 
 # Test Report
