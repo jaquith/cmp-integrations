@@ -30,16 +30,9 @@
     },
     "docdash": {
       "static": true,
+      "sort": true,
       "typedefs": true,
-      "navLevel": 3,
-      "menu": {                 // Adding additional menu items after Home
-        "GitHub Repo": {        // Menu item name
-            "href":"https://github.com/jaquith/cmp-integrations", //the rest of HTML properties to add to menu item
-            "target":"_blank",
-            "class":"menu-item",
-            "id":"github_link"
-        }
-      }
+      "navLevel": 3
     }
   }
 }

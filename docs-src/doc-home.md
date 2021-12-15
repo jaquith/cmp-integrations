@@ -1,8 +1,8 @@
-#### Developer documentation for an integration between the Tealium iQ TMS and the Usercentrics Browser SDK (CMP Version 2)
+#### Developer documentation for a CMP Integration Framework for Tealium iQ.
 
 ----
 
-## Approach
+# Approach
 
 The purpose of this integration is to allow Tealium iQ customers to control **individual tags** based on a user's interactions with the Usercentrics Browser SDK (CMP Version 2).
 
@@ -24,7 +24,7 @@ The purpose of this integration is to allow Tealium iQ customers to control **in
 
 ----
 
-#### What does it do?
+## What does it do?
 
  - Allows individual Tealium iQ tags to be associated with a Usercentrics service name (like "Google Analytics" or "Tealium iQ Tag Management").
  - Blocks any tags without consent from firing. The blocking logic works even for tags that are explicitly called using the 'uids' array (which circumvents load rules).
@@ -34,18 +34,18 @@ The purpose of this integration is to allow Tealium iQ customers to control **in
    - `b.usercentrics_consent_type` - 'explicit' or 'implicit'
  - Allows more than one tag to be mapped to a given service name.
 
-#### What does it NOT do?
+## What does it NOT do?
 
  - Doesn't use any of Tealium iQ's built-in Consent Manager (or Privacy Manager) functionality, to avoid interference with legacy setups and allow more granular blocking.
  - Doesn't set any cookies, add any entries to localStorage, or read any localStorage entries directly (instead, it uses Usercentrics methods to check consent as needed).
  - Doesn't allow more than one service name to be mapped to a given tag.
- - **Doesn't support TCF 2.0 or CCPA (so far). Relevant Tasks: [TCF 2.0](https://tealium.atlassian.net/browse/CMPI-14) [CCPA](https://tealium.atlassian.net/browse/CMPI-18)**
 
-The only per-profile** configuration required is a map of service names to tag UIDs for each relevant Usercentrics settings ID, see [GroupToTagMap](https://jaquith.github.io/usercentrics-integration-v2/global.html#GroupToTagMap) for more detailed information.
+
+The only per-profile** configuration required is a map of service names to tag UIDs for each relevant Usercentrics settings ID, see [GroupToTagMap](https://jaquith.github.io/cmp-integrations/global.html#GroupToTagMap) for more detailed information.
 
 ----
 
-## Using this Documentation
+# Using this Documentation
 
 This documentation is intended for developers, and was generated using [JSDoc](https://jsdoc.app/).
 
@@ -57,15 +57,12 @@ The menu headings offered by JSDoc don't fit our needs perfectly.  You should re
 
 ----
 
-## Configuration Steps
+# Configuration Steps
 
 Those steps are available in the README of the [repo](https://github.com/jaquith/usercentrics-v2-integration). 
-
-Since this integration is still being formalized, the repo hasn't been made public. Early access is possible on [request](mailto:julian.llorente@tealium.com).
-
 ----
 
-## Test Report
+# Test Report
 
 Some preliminary cross-browser tests have been run using a separate under-development testing tool - the most recent results can be viewed [here](https://jaquith.github.io/usercentrics-v2-integration/integration-test-report).
 

@@ -4,7 +4,7 @@ A series of integrations between the Tealium iQ Tag Manager and various Consent 
 
 ----
 
-## Approach
+# Approach
 
 The purpose of these integrations is to allow Tealium iQ customers to control **individual tags** based on a user's interactions with the CMP of their choice.
 
@@ -26,7 +26,7 @@ The purpose of these integrations is to allow Tealium iQ customers to control **
 
  ----
 
-## Configuration Steps
+# Configuration Steps
 
 Until this is added as a turnkey extension, it can be implemented as follows:
 
@@ -53,13 +53,13 @@ Until this is added as a turnkey extension, it can be implemented as follows:
 ----
 
 
-## Notes
+# Notes
 
  - Each tag can only be assigned a single Group name - there is no support for tags in multiple groups, by design.
 
 ----
 
-## Further Documentation
+# Further Documentation
 
 Developer documentation is available [here](https://jaquith.github.io/cmp-integrations/).
 
