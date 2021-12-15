@@ -177,7 +177,7 @@
 
 
 <div class="description usertext">
-    <p>The name of the CMP.</p>
+    <p>The name of the CMP part of the integration, mostly used for logging and debugging.</p>
 </div>
 
 
@@ -196,6 +196,12 @@
 
 
 
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
+window.tealiumCmpIntegration.cmpName = 'Usercentrics'</code></pre>
+
+
 
         
             
@@ -210,7 +216,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line255">line 255</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line328">line 328</a>
     </li></ul></dd>
     
 
@@ -250,7 +256,7 @@
 
 
 <div class="description usertext">
-    <p>A map of CMP groups to arrays of Tealium iQ tag UIDs, an instance of <a href="global.html#GroupToTagMap">GroupToTagMap</a>. TiQ profile specific, and expected to be provided by extension-1 (map).</p>
+    <p>A map of CMP groups to arrays of Tealium iQ tag UIDs, an instance of <a href="global.html#GroupToTagMap"><code>GroupToTagMap</code></a>. TiQ profile specific, and expected to be provided by extension-1 (map).</p>
 </div>
 
 
@@ -269,6 +275,18 @@
 
 
 
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
+// the arrays of numbers are tag UIDs from the TiQ user interface
+window.tealiumCmpIntegration.map = {
+  yPyIAIIxY: {
+    'Google Analytics': [6, 8, 10], // three Google Analytics tags in TiQ
+    'Another Tag': [11]
+  }
+}</code></pre>
+
+
 
         
             
@@ -283,7 +301,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line61">line 61</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line65">line 65</a>
     </li></ul></dd>
     
 
@@ -350,7 +368,7 @@
     <h5>Example</h5>
     
     <pre class="prettyprint"><code>window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
-window.tealiumCmpIntegration.tiqGroupName = "Tealium iQ Tag Management"</code></pre>
+window.tealiumCmpIntegration.tiqGroupName = "TiQ"</code></pre>
 
 
 
@@ -377,7 +395,7 @@ window.tealiumCmpIntegration.tiqGroupName = "Tealium iQ Tag Management"</code></
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line97">line 97</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line129">line 129</a>
     </li></ul></dd>
     
 
@@ -426,6 +444,22 @@ window.tealiumCmpIntegration.tiqGroupName = "Tealium iQ Tag Management"</code></
 
 
 
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>function cmpCheckForExplicitConsentDecision (cmpRawOutput) {
+  // treat things we don't understand as an opt-out
+  if (toString.call(cmpRawOutput) !== '[object Array]') return false
+  // use the first entry as a proxy for all
+  var consentHistory = (cmpRawOutput &amp;&amp; cmpRawOutput[0] &amp;&amp; cmpRawOutput[0].consent &amp;&amp; cmpRawOutput[0].consent.history) || []
+  var lastHistoryEntryType = (consentHistory &amp;&amp; consentHistory.length &amp;&amp; consentHistory[consentHistory.length - 1].type) || ''
+  if (lastHistoryEntryType === 'explicit') {
+    return true
+  }
+  return false
+}
+window.tealiumCmpIntegration.cmpCheckForExplicitConsentDecision = cmpCheckForExplicitConsentDecision</code></pre>
 
 
 
@@ -530,7 +564,7 @@ window.tealiumCmpIntegration.tiqGroupName = "Tealium iQ Tag Management"</code></
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line106">line 106</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line152">line 152</a>
     </li></ul></dd>
     
 
@@ -579,6 +613,23 @@ window.tealiumCmpIntegration.tiqGroupName = "Tealium iQ Tag Management"</code></
 
 
 
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>function cmpCheckForTiqConsent (cmpRawOutput) {
+  var foundOptIn = false
+  // treat things we don't understand as an opt-out
+  if (toString.call(cmpRawOutput) !== '[object Array]') return false
+  // check vendors if there's an object, look for at least one
+  cmpRawOutput.forEach(function (tagInfo) {
+    if ((tagInfo.consent &amp;&amp; tagInfo.consent.status === true) &amp;&amp; tagInfo.name === tiqGroupName) {
+      foundOptIn = true
+    }
+  })
+  return foundOptIn
+}
+window.tealiumCmpIntegration.cmpCheckForTiqConsent = cmpCheckForTiqConsent</code></pre>
 
 
 
@@ -683,7 +734,7 @@ window.tealiumCmpIntegration.tiqGroupName = "Tealium iQ Tag Management"</code></
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line81">line 81</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line93">line 93</a>
     </li></ul></dd>
     
 
@@ -732,6 +783,20 @@ window.tealiumCmpIntegration.tiqGroupName = "Tealium iQ Tag Management"</code></
 
 
 
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>function cmpCheckForWellFormedDecision (cmpRawOutput) {
+  // treat things we don't understand as an opt-out
+  if (toString.call(cmpRawOutput) !== '[object Array]') return false
+  // use the first entry as a proxy for all
+  if (cmpRawOutput &amp;&amp; cmpRawOutput[0] &amp;&amp; typeof cmpRawOutput[0].name === 'string') {
+    return true
+  }
+  return false
+}
+window.tealiumCmpIntegration.cmpCheckForWellFormedDecision = cmpCheckForWellFormedDecision</code></pre>
 
 
 
@@ -836,7 +901,7 @@ window.tealiumCmpIntegration.tiqGroupName = "Tealium iQ Tag Management"</code></
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line115">line 115</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line176">line 176</a>
     </li></ul></dd>
     
 
@@ -885,6 +950,20 @@ window.tealiumCmpIntegration.tiqGroupName = "Tealium iQ Tag Management"</code></
 
 
 
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>function cmpConvertResponseToGroupList (cmpRawOutput) {
+  var vendorArray = []
+  cmpRawOutput &amp;&amp; cmpRawOutput.forEach(function (tagConsent) {
+    if (tagConsent.consent &amp;&amp; tagConsent.consent.status === true) {
+      vendorArray.push(tagConsent.name)
+    }
+  })
+  return vendorArray
+}
+window.tealiumCmpIntegration.cmpConvertResponseToGroupList = cmpConvertResponseToGroupList</code></pre>
 
 
 
@@ -989,7 +1068,7 @@ window.tealiumCmpIntegration.tiqGroupName = "Tealium iQ Tag Management"</code></
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line73">line 73</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line77">line 77</a>
     </li></ul></dd>
     
 
@@ -1038,6 +1117,16 @@ window.tealiumCmpIntegration.tiqGroupName = "Tealium iQ Tag Management"</code></
 
 
 
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>function cmpFetchCurrentConsentDecision () {
+  if (!window.UC_UI || typeof window.UC_UI.getServicesBaseInfo !== 'function') return false
+  var cmpRawOutput = window.UC_UI.getServicesBaseInfo()
+  return cmpRawOutput
+}
+window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision = cmpFetchCurrentConsentDecision</code></pre>
 
 
 
@@ -1101,7 +1190,7 @@ window.tealiumCmpIntegration.tiqGroupName = "Tealium iQ Tag Management"</code></
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Wed Dec 15 2021 16:15:31 GMT+0100 (Central European Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Wed Dec 15 2021 18:03:57 GMT+0100 (Central European Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

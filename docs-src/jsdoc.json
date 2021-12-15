@@ -21,7 +21,7 @@
   },
   "templates": {
     "cleverLinks": false,
-    "monospaceLinks": false,
+    "monospaceLinks": true,
     "search": false,
     "default": {
         "staticFiles": {
@@ -31,6 +31,7 @@
     "docdash": {
       "static": true,
       "sort": true,
+      "search": true,
       "typedefs": true,
       "navLevel": 3
     }

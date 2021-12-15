@@ -6,7 +6,7 @@
   "scripts": {
     "test": "bold=$(tput bold) && normal=$(tput sgr0) && echo \"${bold}Running linter...${normal}\" && standard --fix && echo \"${bold}Running unit tests...${normal}\" && ./node_modules/mocha/bin/mocha tests/*",
     "lint": "standard --fix",
-    "generate-docs": "./node_modules/.bin/jsdoc --verbose -c ./docs-src/jsdoc.config.json && npm run-script open-docs",
+    "generate-docs": "./node_modules/.bin/jsdoc -c ./docs-src/jsdoc.json",
     "open-docs": "open docs/index.html"
   },
   "repository": {

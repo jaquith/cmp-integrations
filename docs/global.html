@@ -130,7 +130,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line895">line 895</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line978">line 978</a>
     </li></ul></dd>
     
 
@@ -270,7 +270,7 @@ exampleConsentDecision.length
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line918">line 918</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line1001">line 1001</a>
     </li></ul></dd>
     
 
@@ -312,7 +312,7 @@ exampleConsentDecision.length
 <div class="description usertext">
     <p>Assigns Tealium iQ Tags to CMP Group names. Each group can contain multiple tags, but each tag can only be assigned to a single service. If the same tag UID appears in multiple Service arrays, all but one will be ignored.</p>
 <p>The keys for the main object are the configuration ID from the CMP, inside that are key/value pairs where the key is a CMP group name (granularity is flexible), and the value is an array of TagUIDs from Tealium iQ.</p>
-<p>This needs to be provided as per the example below, in tealiumCmpIntegration.map.</p>
+<p>This needs to be provided as per the example below, in <code>tealiumCmpIntegration.map</code>.</p>
 </div>
 
 
@@ -357,7 +357,7 @@ window.tealiumCmpIntegration.map = {
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line962">line 962</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line1045">line 1045</a>
     </li></ul></dd>
     
 
@@ -495,9 +495,9 @@ window.tealiumCmpIntegration.map = {
 
 
 <div class="description usertext">
-    <p>An object from the implicitEventQueue or earlyEventQueue, which represents a Tealium iQ tracking event that's been processed based on an IMPLICIT <a href="global.html#ConsentDecision">ConsentDecision</a></p>
+    <p>An object from the <code>implicitEventQueue</code> or <code>earlyEventQueue</code>, which represents a Tealium iQ tracking event that's been processed based on an IMPLICIT <a href="global.html#ConsentDecision"><code>ConsentDecision</code></a></p>
 <p>Heavily based on the argument passed to <a href="https://community.tealiumiq.com/t5/Tealium-iQ-Tag-Management/utag-track-method/td-p/24578">utag.track</a>, since it's designed to be processed by that method.</p>
-<p>Initial pageviews (handled in the utag.loader.initdata override) will NOT have metadata like cookies, qps, etc - utag.track calls (handled in the utag.handler.trigger override) will. That's a byproduct of using utag.handler.trigger, which is later in the load - those metadata will be re-read when the queue is processed, and since this queue isn't persisted between pages, it should be fine like that - the only strange behavior will be that any metadata that aren't present on re-read will still be present after the re-read - only values that are still present will be replaced with new values.</p>
+<p>Initial pageviews (handled in the <code>utag.loader.initdata override</code>) will NOT have metadata like cookies, qps, etc - utag.track calls (handled in the <code>utag.handler.trigger override</code>) will. That's a byproduct of using utag.handler.trigger, which is later in the load - those metadata will be re-read when the queue is processed, and since this queue isn't persisted between pages, it should be fine like that - the only strange behavior will be that any metadata that aren't present on re-read will still be present after the re-read - only values that are still present will be replaced with new values.</p>
 <p>An alternative approach could be to manually remove 'cp.*', 'dom.*', 'ut.*', 'qp.*', 'meta.*' and possibly 'tealium_*' (except 'tealium_event') from the 'data' object before queueing - that hasn't been done so far.</p>
 </div>
 
@@ -605,7 +605,7 @@ window.tealiumCmpIntegration.map = {
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line940">line 940</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line1023">line 1023</a>
     </li></ul></dd>
     
 
@@ -646,8 +646,8 @@ window.tealiumCmpIntegration.map = {
 
 <div class="description usertext">
     <p>A simple lookup, with Tealium iQ tag UIDs as keys and the associated CMP Groups as values. Each group can be associated with multiple tags, but each tag can be associated with one group.</p>
-<p>The example is based on the <a href="global.html#GroupToTagMap">GroupToTagMap</a> example, where the CMP Lookup Key (a Usercentrics Settings ID, in this case) on the active page is 'yPyIAIIxY'.</p>
-<p>This object is automatically generated by the getTagBasedMap method, and made available globally in tealiumCmpIntegration.tagBasedMap for debugging and use within the extensions.</p>
+<p>The example is based on the <a href="global.html#GroupToTagMap"><code>GroupToTagMap</code></a> example, where the CMP Lookup Key (a Usercentrics Settings ID, in this case) on the active page is 'yPyIAIIxY'.</p>
+<p>This object is automatically generated by the <code>getTagBasedMap</code> method, and made available globally in <code>tealiumCmpIntegration.tagBasedMap</code> for debugging and use within the extensions.</p>
 </div>
 
 
@@ -701,7 +701,7 @@ window.tealiumCmpIntegration.map = {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Wed Dec 15 2021 16:15:31 GMT+0100 (Central European Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Wed Dec 15 2021 18:03:57 GMT+0100 (Central European Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

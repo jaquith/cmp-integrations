@@ -35,10 +35,14 @@
   window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
 
   /**
-  * The name of the CMP.
+  * The name of the CMP part of the integration, mostly used for logging and debugging.
   * @name cmpName
   * @type {string}
   * @memberof! tealiumCmpIntegration
+  *
+  * @example
+window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
+window.tealiumCmpIntegration.cmpName = 'Usercentrics'
   */
   window.tealiumCmpIntegration.cmpName = window.tealiumCmpIntegration.cmpName || 'Unnamed CMP'
 
@@ -66,7 +70,7 @@
    * @default 'Tealium iQ Tag Management'
    * @example
 window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
-window.tealiumCmpIntegration.tiqGroupName = "Tealium iQ Tag Management"
+window.tealiumCmpIntegration.tiqGroupName = "TiQ"
    */
   var tiqGroupName = window.tealiumCmpIntegration.tiqGroupName || 'Tealium iQ Tag Management' // use the standard name here if not set
 
@@ -75,6 +79,14 @@ window.tealiumCmpIntegration.tiqGroupName = "Tealium iQ Tag Management"
    * @function cmpFetchCurrentConsentDecision
    * @memberof! tealiumCmpIntegration
    * @returns {*} The CMP response to use within other CMP-specific functions
+   *
+   * @example
+function cmpFetchCurrentConsentDecision () {
+  if (!window.UC_UI || typeof window.UC_UI.getServicesBaseInfo !== 'function') return false
+  var cmpRawOutput = window.UC_UI.getServicesBaseInfo()
+  return cmpRawOutput
+}
+window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision = cmpFetchCurrentConsentDecision
    */
   var cmpFetchCurrentConsentDecision = (typeof window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision === 'function' && window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision) || function () {}
 
@@ -84,6 +96,19 @@ window.tealiumCmpIntegration.tiqGroupName = "Tealium iQ Tag Management"
    * @memberof! tealiumCmpIntegration
    * @param cmpRawOutput the CMP output returned from cmpFetchCurrentConsentDecision
    * @returns {boolean} 'true' if the consent decision is well-formed, otherwise 'false'
+   *
+   * @example
+function cmpCheckForWellFormedDecision (cmpRawOutput) {
+  // treat things we don't understand as an opt-out
+  if (toString.call(cmpRawOutput) !== '[object Array]') return false
+  // use the first entry as a proxy for all
+  if (cmpRawOutput && cmpRawOutput[0] && typeof cmpRawOutput[0].name === 'string') {
+    return true
+  }
+  return false
+}
+window.tealiumCmpIntegration.cmpCheckForWellFormedDecision = cmpCheckForWellFormedDecision
+   *
    */
   var cmpCheckForWellFormedDecision = (typeof window.tealiumCmpIntegration.cmpCheckForWellFormedDecision === 'function' && window.tealiumCmpIntegration.cmpCheckForWellFormedDecision) || function () {}
 
@@ -91,6 +116,13 @@ window.tealiumCmpIntegration.tiqGroupName = "Tealium iQ Tag Management"
    * CMP-specific helper, expected to be provided by extension-2. Get the current CMP lookup key from the page, to use to find the right map.
    *
    * @returns {string} the ID/key to use for the tag map lookup, defaults to an empty string if none is found
+   *
+   * @example
+function cmpFetchCurrentLookupKey () {
+  return (window.UC_UI && typeof window.UC_UI.getSettings === 'function' && window.UC_UI.getSettings().id) || ''
+}
+window.tealiumCmpIntegration.cmpFetchCurrentLookupKey = cmpFetchCurrentLookupKey
+   *
    */
   var cmpFetchCurrentLookupKey = (typeof window.tealiumCmpIntegration.cmpFetchCurrentLookupKey === 'function' && window.tealiumCmpIntegration.cmpFetchCurrentLookupKey) || function () {}
 
@@ -100,6 +132,20 @@ window.tealiumCmpIntegration.tiqGroupName = "Tealium iQ Tag Management"
    * @memberof! tealiumCmpIntegration
    * @param cmpRawOutput the CMP output returned from cmpFetchCurrentConsentDecision
    * @returns {boolean} 'true' if the consent decision is EXPLICIT otherwise 'false'
+   *
+   * @example
+function cmpCheckForExplicitConsentDecision (cmpRawOutput) {
+  // treat things we don't understand as an opt-out
+  if (toString.call(cmpRawOutput) !== '[object Array]') return false
+  // use the first entry as a proxy for all
+  var consentHistory = (cmpRawOutput && cmpRawOutput[0] && cmpRawOutput[0].consent && cmpRawOutput[0].consent.history) || []
+  var lastHistoryEntryType = (consentHistory && consentHistory.length && consentHistory[consentHistory.length - 1].type) || ''
+  if (lastHistoryEntryType === 'explicit') {
+    return true
+  }
+  return false
+}
+window.tealiumCmpIntegration.cmpCheckForExplicitConsentDecision = cmpCheckForExplicitConsentDecision
    */
   var cmpCheckForExplicitConsentDecision = (typeof window.tealiumCmpIntegration.cmpCheckForExplicitConsentDecision === 'function' && window.tealiumCmpIntegration.cmpCheckForExplicitConsentDecision) || function () {}
 
@@ -109,6 +155,21 @@ window.tealiumCmpIntegration.tiqGroupName = "Tealium iQ Tag Management"
    * @memberof! tealiumCmpIntegration
    * @param cmpRawOutput the CMP output returned from cmpFetchCurrentConsentDecision
    * @returns {boolean} 'true' if TiQ is allowed to run, otherwise 'false'
+   *
+   * @example
+function cmpCheckForTiqConsent (cmpRawOutput) {
+  var foundOptIn = false
+  // treat things we don't understand as an opt-out
+  if (toString.call(cmpRawOutput) !== '[object Array]') return false
+  // check vendors if there's an object, look for at least one
+  cmpRawOutput.forEach(function (tagInfo) {
+    if ((tagInfo.consent && tagInfo.consent.status === true) && tagInfo.name === tiqGroupName) {
+      foundOptIn = true
+    }
+  })
+  return foundOptIn
+}
+window.tealiumCmpIntegration.cmpCheckForTiqConsent = cmpCheckForTiqConsent
    */
   var cmpCheckForTiqConsent = (typeof window.tealiumCmpIntegration.cmpCheckForTiqConsent === 'function' && window.tealiumCmpIntegration.cmpCheckForTiqConsent) || function () {}
 
@@ -118,6 +179,18 @@ window.tealiumCmpIntegration.tiqGroupName = "Tealium iQ Tag Management"
    * @memberof! tealiumCmpIntegration
    * @param cmpRawOutput the CMP output returned from cmpFetchCurrentConsentDecision
    * @returns {array} a simple list of the group names with permissions to fire, at the desired granularity
+   *
+   * @example
+function cmpConvertResponseToGroupList (cmpRawOutput) {
+  var vendorArray = []
+  cmpRawOutput && cmpRawOutput.forEach(function (tagConsent) {
+    if (tagConsent.consent && tagConsent.consent.status === true) {
+      vendorArray.push(tagConsent.name)
+    }
+  })
+  return vendorArray
+}
+window.tealiumCmpIntegration.cmpConvertResponseToGroupList = cmpConvertResponseToGroupList
    */
   var cmpConvertResponseToGroupList = (typeof window.tealiumCmpIntegration.cmpConvertResponseToGroupList === 'function' && window.tealiumCmpIntegration.cmpConvertResponseToGroupList) || function () {}
 
@@ -257,6 +330,16 @@ window.tealiumCmpIntegration && window.tealiumCmpIntegration.overrideUtagFunctio
    * @name map
    * @type {object}
    * @memberof! tealiumCmpIntegration
+   *
+   * @example
+window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
+// the arrays of numbers are tag UIDs from the TiQ user interface
+window.tealiumCmpIntegration.map = {
+  yPyIAIIxY: {
+    'Google Analytics': [6, 8, 10], // three Google Analytics tags in TiQ
+    'Another Tag': [11]
+  }
+}
    */
   var map = window.tealiumCmpIntegration.map || {}
 

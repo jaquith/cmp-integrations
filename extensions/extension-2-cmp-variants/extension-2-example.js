@@ -1,7 +1,7 @@
 /**
   * @module extension-2-example
   *
-  * @description The 'Pre Loader' CMP-specific component, see {@link tealiumCmpIntegration tealiumCmpIntegration} for specifics on inputs, or view the source to see a working example for an example CMP.
+  * @description The 'Pre Loader' CMP-specific component, see [tealiumCmpIntegration]{@link namespace:tealiumCmpIntegration} for specifics on inputs, or view the source to see a working example for an example CMP.
   *
   *
   */
