@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- https://medium.com/slack-developer-blog/everything-you-ever-wanted-to-know-about-unfurling-but-were-afraid-to-ask-or-how-to-make-your-e64b4bb9254 -->
+    <meta name="og:type" content="website">
+    <meta name="og:title" content="Tealium iQ / Usercentrics Browser SDK (CMP Version 2) Integration Test - No TCF">
+    <meta name="og:description" content="A Tealium Automated Testing summary report.">
+    <meta name="og:image" content="static-assets/images/beast-holding-bulb-351x328.png">
+
+    <link rel="shortcut icon" href="static-assets/images/favicon.ico" type="image/x-icon">
+
+    <title>Tealium iQ / Usercentrics Browser SDK (CMP Version 2) Integration Test - No TCF</title>
+
+    <script src="static-assets/js/jquery.3.3.1.min.js"></script>
+    <script src="static-assets/js/bootstrap.3.2.0.min.js"></script>
+    <link rel="stylesheet" href="static-assets/css/bootstrap.3.2.0.min.css">
+    <link rel="stylesheet" href="static-assets/css/reports.css">
+
+</head>
+
+<body>
+<div class="container">
+
+    <div id="wdio-html-report" class="page-header">
+        <h1>Tealium iQ / Usercentrics Browser SDK (CMP Version 2) Integration Test - No TCF</h1>
+    </div>
+    <div class='context large'><p>A suite of tests, intended to ensure the integration between Tealium iQ Tag Management and the Usercentrics Browser SDK (CMP v2) works as expected in multiple potential configuration cases.</p>
+<p>Includes some common error and misconfiguration cases.</p>
+<p>Does not include any TCF support, that setting is not checked.</p></div>
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Start</th>
+                <td>Wed November 4th 2020 11:38:50 +0100</td>
+            </tr>
+            <tr>
+                <th>End</th>
+                <td>Wed November 4th 2020 12:53:25 +0100</td>
+            </tr>
+            <tr>
+                <th>Duration</th>
+                <td>01:14:34</td>
+            </tr>
+            <tr>
+                <th>Browsers</th>
+                <td>
+                        1. Chrome Latest<br/>
+                        2. Firefox Latest<br/>
+                        3. MicrosoftEdge Latest<br/>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="">
+
+    </div>
+
+        <table>
+        <tr>
+        <td>
+            <table class="table table-bordered">
+                <tr>
+                    <td colspan="2">
+                        <table class="table table-bordered">
+                              <h2>Datalayer Listener TiQ Setup, User Opts In</h2>
+                            
+                            <h2 class="light-and-small">datalayer-listener_opt-in.js</h2>
+
+                              <div class='context'><p>A <a href="https://community.tealiumiq.com/t5/Customer-Data-Hub/Tealium-Collect-and-Google-Tag-Manager-GTM-Setup-Guide/ta-p/17939">dataLayer listener</a> TiQ setup, with some early events - user opts in.</p></div>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Browser Name</th>
+                                    <th>Browser Version</th>
+                                    <th>Platform Name</th>
+                                    <th>Duration</th>
+                                    <th>Details</th>
+                                    <th>Passed</th>
+                                    <th>Skipped</th>
+                                    <th>Failed</th>
+                                </tr>
+                                </thead)>
+                                <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Chrome</td>
+                                    <td>86.0.4240.75</td>
+                                    <td>Mac OS X</td>
+                                    <td>00:00:58</td>
+
+                                    <td>
+                                      <a href="runs/0/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>57</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Firefox</td>
+                                    <td>82.0</td>
+                                    <td>Windows</td>
+                                    <td>00:00:58</td>
+
+                                    <td>
+                                      <a href="runs/15/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>57</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>MSEdge</td>
+                                    <td>86.0.622.43</td>
+                                    <td>Windows</td>
+                                    <td>00:01:02</td>
+
+                                    <td>
+                                      <a href="runs/30/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>57</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </table>
+        <table>
+        <tr>
+        <td>
+            <table class="table table-bordered">
+                <tr>
+                    <td colspan="2">
+                        <table class="table table-bordered">
+                              <h2>Datalayer Listener TiQ Setup, User Opts Out</h2>
+                            
+                            <h2 class="light-and-small">datalayer-listener_opt-out.js</h2>
+
+                              <div class='context'><p>A <a href="https://community.tealiumiq.com/t5/Customer-Data-Hub/Tealium-Collect-and-Google-Tag-Manager-GTM-Setup-Guide/ta-p/17939">dataLayer listener</a> TiQ setup, with some early events - user opts out.</p></div>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Browser Name</th>
+                                    <th>Browser Version</th>
+                                    <th>Platform Name</th>
+                                    <th>Duration</th>
+                                    <th>Details</th>
+                                    <th>Passed</th>
+                                    <th>Skipped</th>
+                                    <th>Failed</th>
+                                </tr>
+                                </thead)>
+                                <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Chrome</td>
+                                    <td>86.0.4240.75</td>
+                                    <td>Mac OS X</td>
+                                    <td>00:00:55</td>
+
+                                    <td>
+                                      <a href="runs/1/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>44</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Firefox</td>
+                                    <td>82.0</td>
+                                    <td>Windows</td>
+                                    <td>00:00:58</td>
+
+                                    <td>
+                                      <a href="runs/16/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>44</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>MSEdge</td>
+                                    <td>86.0.622.43</td>
+                                    <td>Windows</td>
+                                    <td>00:01:04</td>
+
+                                    <td>
+                                      <a href="runs/31/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>44</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </table>
+        <table>
+        <tr>
+        <td>
+            <table class="table table-bordered">
+                <tr>
+                    <td colspan="2">
+                        <table class="table table-bordered">
+                              <h2>Standard TiQ Setup, Map Missing from Page, User Opts Out</h2>
+                            
+                            <h2 class="light-and-small">standard_no-map_opt-out.js</h2>
+
+                              <div class='context'><p>A Tealium iQ setup where the 'map' is missing (misconfiguration case).</p>
+<p>No tags should fire regardless of user choice.</p>
+<p>Opt-out case.</p></div>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Browser Name</th>
+                                    <th>Browser Version</th>
+                                    <th>Platform Name</th>
+                                    <th>Duration</th>
+                                    <th>Details</th>
+                                    <th>Passed</th>
+                                    <th>Skipped</th>
+                                    <th>Failed</th>
+                                </tr>
+                                </thead)>
+                                <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Chrome</td>
+                                    <td>86.0.4240.75</td>
+                                    <td>Mac OS X</td>
+                                    <td>00:00:47</td>
+
+                                    <td>
+                                      <a href="runs/10/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>22</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Firefox</td>
+                                    <td>82.0</td>
+                                    <td>Windows</td>
+                                    <td>00:00:53</td>
+
+                                    <td>
+                                      <a href="runs/25/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>22</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>MSEdge</td>
+                                    <td>86.0.622.43</td>
+                                    <td>Windows</td>
+                                    <td>00:01:07</td>
+
+                                    <td>
+                                      <a href="runs/40/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>22</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </table>
+        <table>
+        <tr>
+        <td>
+            <table class="table table-bordered">
+                <tr>
+                    <td colspan="2">
+                        <table class="table table-bordered">
+                              <h2>Standard TiQ Setup, &#x27;utag loader&#x27; Template Edit Missing, User Opts In</h2>
+                            
+                            <h2 class="light-and-small">standard_no-utag-edit_opt-in.js</h2>
+
+                              <div class='context'><p>A standard Tealium iQ setup where the TiQ operator has failed to edit utag.loader template (misconfiguration case).</p>
+<p>No tags should fire regardless of user choice, this test confirms the opt-in case.</p></div>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Browser Name</th>
+                                    <th>Browser Version</th>
+                                    <th>Platform Name</th>
+                                    <th>Duration</th>
+                                    <th>Details</th>
+                                    <th>Passed</th>
+                                    <th>Skipped</th>
+                                    <th>Failed</th>
+                                </tr>
+                                </thead)>
+                                <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Chrome</td>
+                                    <td>86.0.4240.75</td>
+                                    <td>Mac OS X</td>
+                                    <td>00:00:49</td>
+
+                                    <td>
+                                      <a href="runs/11/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>22</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Firefox</td>
+                                    <td>82.0</td>
+                                    <td>Windows</td>
+                                    <td>00:00:57</td>
+
+                                    <td>
+                                      <a href="runs/26/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>22</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>MSEdge</td>
+                                    <td>86.0.622.43</td>
+                                    <td>Windows</td>
+                                    <td>00:01:00</td>
+
+                                    <td>
+                                      <a href="runs/41/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>22</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </table>
+        <table>
+        <tr>
+        <td>
+            <table class="table table-bordered">
+                <tr>
+                    <td colspan="2">
+                        <table class="table table-bordered">
+                              <h2>Standard TiQ Setup, &#x27;utag loader&#x27; Template Edit Missing, User Opts Out</h2>
+                            
+                            <h2 class="light-and-small">standard_no-utag-edit_opt-out.js</h2>
+
+                              <div class='context'><p>A standard Tealium iQ setup where the TiQ operator has failed to edit utag.loader template (misconfiguration case).</p>
+<p>No tags should fire regardless of user choice, this test confirms the opt-out case.</p></div>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Browser Name</th>
+                                    <th>Browser Version</th>
+                                    <th>Platform Name</th>
+                                    <th>Duration</th>
+                                    <th>Details</th>
+                                    <th>Passed</th>
+                                    <th>Skipped</th>
+                                    <th>Failed</th>
+                                </tr>
+                                </thead)>
+                                <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Chrome</td>
+                                    <td>86.0.4240.75</td>
+                                    <td>Mac OS X</td>
+                                    <td>00:00:50</td>
+
+                                    <td>
+                                      <a href="runs/12/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>22</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Firefox</td>
+                                    <td>82.0</td>
+                                    <td>Windows</td>
+                                    <td>00:00:56</td>
+
+                                    <td>
+                                      <a href="runs/27/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>22</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>MSEdge</td>
+                                    <td>86.0.622.43</td>
+                                    <td>Windows</td>
+                                    <td>00:00:58</td>
+
+                                    <td>
+                                      <a href="runs/42/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>22</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </table>
+        <table>
+        <tr>
+        <td>
+            <table class="table table-bordered">
+                <tr>
+                    <td colspan="2">
+                        <table class="table table-bordered">
+                              <h2>Standard TiQ Setup, &#x27;utag loader&#x27; Template Edit Missing, User Opts In</h2>
+                            
+                            <h2 class="light-and-small">noview_no-utag-edit_opt-in.js</h2>
+
+                              <div class='context'><p>A Tealium iQ setup with the <a href="https://docs.tealium.com/platforms/javascript/settings/#noview">noview</a> setting active, where the TiQ operator has failed to edit utag.loader template (misconfiguration case).</p>
+<p>No tags should fire regardless of user choice, this test confirms the opt-in case.</p></div>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Browser Name</th>
+                                    <th>Browser Version</th>
+                                    <th>Platform Name</th>
+                                    <th>Duration</th>
+                                    <th>Details</th>
+                                    <th>Passed</th>
+                                    <th>Skipped</th>
+                                    <th>Failed</th>
+                                </tr>
+                                </thead)>
+                                <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Chrome</td>
+                                    <td>86.0.4240.75</td>
+                                    <td>Mac OS X</td>
+                                    <td>00:00:50</td>
+
+                                    <td>
+                                      <a href="runs/13/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>22</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Firefox</td>
+                                    <td>82.0</td>
+                                    <td>Windows</td>
+                                    <td>00:01:02</td>
+
+                                    <td>
+                                      <a href="runs/28/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>22</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>MSEdge</td>
+                                    <td>86.0.622.43</td>
+                                    <td>Windows</td>
+                                    <td>00:00:59</td>
+
+                                    <td>
+                                      <a href="runs/43/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>22</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </table>
+        <table>
+        <tr>
+        <td>
+            <table class="table table-bordered">
+                <tr>
+                    <td colspan="2">
+                        <table class="table table-bordered">
+                              <h2>Standard TiQ Setup, &#x27;utag loader&#x27; Template Edit Missing, User Opts Out</h2>
+                            
+                            <h2 class="light-and-small">noview_no-utag-edit_opt-out.js</h2>
+
+                              <div class='context'><p>A Tealium iQ setup with the <a href="https://docs.tealium.com/platforms/javascript/settings/#noview">noview</a> setting active, where the TiQ operator has failed to edit utag.loader template (misconfiguration case).</p>
+<p>No tags should fire regardless of user choice, this test confirms the opt-out case.</p></div>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Browser Name</th>
+                                    <th>Browser Version</th>
+                                    <th>Platform Name</th>
+                                    <th>Duration</th>
+                                    <th>Details</th>
+                                    <th>Passed</th>
+                                    <th>Skipped</th>
+                                    <th>Failed</th>
+                                </tr>
+                                </thead)>
+                                <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Chrome</td>
+                                    <td>86.0.4240.75</td>
+                                    <td>Mac OS X</td>
+                                    <td>00:00:50</td>
+
+                                    <td>
+                                      <a href="runs/14/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>22</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Firefox</td>
+                                    <td>82.0</td>
+                                    <td>Windows</td>
+                                    <td>00:00:53</td>
+
+                                    <td>
+                                      <a href="runs/29/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>22</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>MSEdge</td>
+                                    <td>86.0.622.43</td>
+                                    <td>Windows</td>
+                                    <td>00:01:14</td>
+
+                                    <td>
+                                      <a href="runs/44/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>22</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </table>
+        <table>
+        <tr>
+        <td>
+            <table class="table table-bordered">
+                <tr>
+                    <td colspan="2">
+                        <table class="table table-bordered">
+                              <h2>Standard TiQ Setup, User Opts In</h2>
+                            
+                            <h2 class="light-and-small">standard_opt-in.js</h2>
+
+                              <div class='context'><p>A standard Tealium iQ setup, where the Usercentrics integration is correctly configured and the user opts in.</p></div>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Browser Name</th>
+                                    <th>Browser Version</th>
+                                    <th>Platform Name</th>
+                                    <th>Duration</th>
+                                    <th>Details</th>
+                                    <th>Passed</th>
+                                    <th>Skipped</th>
+                                    <th>Failed</th>
+                                </tr>
+                                </thead)>
+                                <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Chrome</td>
+                                    <td>86.0.4240.75</td>
+                                    <td>Mac OS X</td>
+                                    <td>00:01:01</td>
+
+                                    <td>
+                                      <a href="runs/2/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>24</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Firefox</td>
+                                    <td>82.0</td>
+                                    <td>Windows</td>
+                                    <td>00:01:09</td>
+
+                                    <td>
+                                      <a href="runs/17/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>24</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>MSEdge</td>
+                                    <td>86.0.622.43</td>
+                                    <td>Windows</td>
+                                    <td>00:01:14</td>
+
+                                    <td>
+                                      <a href="runs/32/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>24</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </table>
+        <table>
+        <tr>
+        <td>
+            <table class="table table-bordered">
+                <tr>
+                    <td colspan="2">
+                        <table class="table table-bordered">
+                              <h2>Standard TiQ Setup, User Opts Out</h2>
+                            
+                            <h2 class="light-and-small">standard_opt-out.js</h2>
+
+                              <div class='context'><p>A standard Tealium iQ setup, where the Usercentrics integration is correctly set up and the user opts out.</p></div>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Browser Name</th>
+                                    <th>Browser Version</th>
+                                    <th>Platform Name</th>
+                                    <th>Duration</th>
+                                    <th>Details</th>
+                                    <th>Passed</th>
+                                    <th>Skipped</th>
+                                    <th>Failed</th>
+                                </tr>
+                                </thead)>
+                                <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Chrome</td>
+                                    <td>86.0.4240.75</td>
+                                    <td>Mac OS X</td>
+                                    <td>00:00:58</td>
+
+                                    <td>
+                                      <a href="runs/3/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>29</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Firefox</td>
+                                    <td>82.0</td>
+                                    <td>Windows</td>
+                                    <td>00:00:59</td>
+
+                                    <td>
+                                      <a href="runs/18/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>29</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>MSEdge</td>
+                                    <td>86.0.622.43</td>
+                                    <td>Windows</td>
+                                    <td>00:01:03</td>
+
+                                    <td>
+                                      <a href="runs/33/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>29</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </table>
+        <table>
+        <tr>
+        <td>
+            <table class="table table-bordered">
+                <tr>
+                    <td colspan="2">
+                        <table class="table table-bordered">
+                              <h2>&#x27;nocookie&#x27; Setting Active, User Opts In</h2>
+                            
+                            <h2 class="light-and-small">nocookie_opt-in.js</h2>
+
+                              <div class='context'><p>A Tealium iQ setup with the <a href="https://docs.tealium.com/platforms/javascript/settings/#nocookie">nocookie</a> setting active and the Usercentrics integration correctly set up.</p>
+<p>User opt-in case.</p></div>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Browser Name</th>
+                                    <th>Browser Version</th>
+                                    <th>Platform Name</th>
+                                    <th>Duration</th>
+                                    <th>Details</th>
+                                    <th>Passed</th>
+                                    <th>Skipped</th>
+                                    <th>Failed</th>
+                                </tr>
+                                </thead)>
+                                <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Chrome</td>
+                                    <td>86.0.4240.75</td>
+                                    <td>Mac OS X</td>
+                                    <td>00:00:55</td>
+
+                                    <td>
+                                      <a href="runs/4/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>24</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Firefox</td>
+                                    <td>82.0</td>
+                                    <td>Windows</td>
+                                    <td>00:01:00</td>
+
+                                    <td>
+                                      <a href="runs/19/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>24</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>MSEdge</td>
+                                    <td>86.0.622.43</td>
+                                    <td>Windows</td>
+                                    <td>00:01:08</td>
+
+                                    <td>
+                                      <a href="runs/34/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>24</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </table>
+        <table>
+        <tr>
+        <td>
+            <table class="table table-bordered">
+                <tr>
+                    <td colspan="2">
+                        <table class="table table-bordered">
+                              <h2>&#x27;nocookie&#x27; Setting Active, User Opts Out</h2>
+                            
+                            <h2 class="light-and-small">nocookie_opt-out.js</h2>
+
+                              <div class='context'><p>A Tealium iQ setup with the <a href="https://docs.tealium.com/platforms/javascript/settings/#nocookie">nocookie</a> setting active and the Usercentrics integration correctly set up.</p>
+<p>User opt-out case.</p></div>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Browser Name</th>
+                                    <th>Browser Version</th>
+                                    <th>Platform Name</th>
+                                    <th>Duration</th>
+                                    <th>Details</th>
+                                    <th>Passed</th>
+                                    <th>Skipped</th>
+                                    <th>Failed</th>
+                                </tr>
+                                </thead)>
+                                <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Chrome</td>
+                                    <td>86.0.4240.75</td>
+                                    <td>Mac OS X</td>
+                                    <td>00:00:49</td>
+
+                                    <td>
+                                      <a href="runs/5/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>29</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Firefox</td>
+                                    <td>82.0</td>
+                                    <td>Windows</td>
+                                    <td>00:00:56</td>
+
+                                    <td>
+                                      <a href="runs/20/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>29</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>MSEdge</td>
+                                    <td>86.0.622.43</td>
+                                    <td>Windows</td>
+                                    <td>00:01:06</td>
+
+                                    <td>
+                                      <a href="runs/35/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>29</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </table>
+        <table>
+        <tr>
+        <td>
+            <table class="table table-bordered">
+                <tr>
+                    <td colspan="2">
+                        <table class="table table-bordered">
+                              <h2>&#x27;noview&#x27; Setting Active, User Opts In</h2>
+                            
+                            <h2 class="light-and-small">noview_opt-in.js</h2>
+
+                              <div class='context'><p>A Tealium iQ setup with the <a href="https://docs.tealium.com/platforms/javascript/settings/#noview">noview</a> setting active and the Usercentrics integration correctly set up.</p>
+<p>User opt-in case.</p></div>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Browser Name</th>
+                                    <th>Browser Version</th>
+                                    <th>Platform Name</th>
+                                    <th>Duration</th>
+                                    <th>Details</th>
+                                    <th>Passed</th>
+                                    <th>Skipped</th>
+                                    <th>Failed</th>
+                                </tr>
+                                </thead)>
+                                <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Chrome</td>
+                                    <td>86.0.4240.75</td>
+                                    <td>Mac OS X</td>
+                                    <td>00:00:36</td>
+
+                                    <td>
+                                      <a href="runs/6/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>22</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Firefox</td>
+                                    <td>82.0</td>
+                                    <td>Windows</td>
+                                    <td>00:00:40</td>
+
+                                    <td>
+                                      <a href="runs/21/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>22</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>MSEdge</td>
+                                    <td>86.0.622.43</td>
+                                    <td>Windows</td>
+                                    <td>00:00:42</td>
+
+                                    <td>
+                                      <a href="runs/36/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>22</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </table>
+        <table>
+        <tr>
+        <td>
+            <table class="table table-bordered">
+                <tr>
+                    <td colspan="2">
+                        <table class="table table-bordered">
+                              <h2>&#x27;noview&#x27; Setting Active, User Opts Out</h2>
+                            
+                            <h2 class="light-and-small">noview_opt-out.js</h2>
+
+                              <div class='context'><p>A Tealium iQ setup with the <a href="https://docs.tealium.com/platforms/javascript/settings/#noview">noview</a> setting active and the Usercentrics integration correctly set up.</p>
+<p>User opt-out case.</p></div>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Browser Name</th>
+                                    <th>Browser Version</th>
+                                    <th>Platform Name</th>
+                                    <th>Duration</th>
+                                    <th>Details</th>
+                                    <th>Passed</th>
+                                    <th>Skipped</th>
+                                    <th>Failed</th>
+                                </tr>
+                                </thead)>
+                                <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Chrome</td>
+                                    <td>86.0.4240.75</td>
+                                    <td>Mac OS X</td>
+                                    <td>00:00:36</td>
+
+                                    <td>
+                                      <a href="runs/7/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>23</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Firefox</td>
+                                    <td>82.0</td>
+                                    <td>Windows</td>
+                                    <td>00:00:38</td>
+
+                                    <td>
+                                      <a href="runs/22/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>23</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>MSEdge</td>
+                                    <td>86.0.622.43</td>
+                                    <td>Windows</td>
+                                    <td>00:00:44</td>
+
+                                    <td>
+                                      <a href="runs/37/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>23</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </table>
+        <table>
+        <tr>
+        <td>
+            <table class="table table-bordered">
+                <tr>
+                    <td colspan="2">
+                        <table class="table table-bordered">
+                              <h2>Standard TiQ Setup, Usercentrics Missing from Page</h2>
+                            
+                            <h2 class="light-and-small">standard_no-usercentrics.js</h2>
+
+                              <div class='context'><p>A Tealium iQ setup where the Usercentrics CMP has not been added to the page (misconfiguration case, no way for the user to indicate a decision at all).</p>
+<p>No tags should fire.</p></div>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Browser Name</th>
+                                    <th>Browser Version</th>
+                                    <th>Platform Name</th>
+                                    <th>Duration</th>
+                                    <th>Details</th>
+                                    <th>Passed</th>
+                                    <th>Skipped</th>
+                                    <th>Failed</th>
+                                </tr>
+                                </thead)>
+                                <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Chrome</td>
+                                    <td>86.0.4240.75</td>
+                                    <td>Mac OS X</td>
+                                    <td>00:00:39</td>
+
+                                    <td>
+                                      <a href="runs/8/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>21</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Firefox</td>
+                                    <td>82.0</td>
+                                    <td>Windows</td>
+                                    <td>00:00:48</td>
+
+                                    <td>
+                                      <a href="runs/23/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>21</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>MSEdge</td>
+                                    <td>86.0.622.43</td>
+                                    <td>Windows</td>
+                                    <td>00:00:51</td>
+
+                                    <td>
+                                      <a href="runs/38/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>21</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </table>
+        <table>
+        <tr>
+        <td>
+            <table class="table table-bordered">
+                <tr>
+                    <td colspan="2">
+                        <table class="table table-bordered">
+                              <h2>Standard TiQ Setup, Map Missing from Configuration, User Opts In</h2>
+                            
+                            <h2 class="light-and-small">standard_no-map_opt-in.js</h2>
+
+                              <div class='context'><p>A Tealium iQ setup where the 'map' is missing (misconfiguration case).</p>
+<p>No tags should fire regardless of user choice.</p>
+<p>Opt-in case.</p></div>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Browser Name</th>
+                                    <th>Browser Version</th>
+                                    <th>Platform Name</th>
+                                    <th>Duration</th>
+                                    <th>Details</th>
+                                    <th>Passed</th>
+                                    <th>Skipped</th>
+                                    <th>Failed</th>
+                                </tr>
+                                </thead)>
+                                <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Chrome</td>
+                                    <td>86.0.4240.75</td>
+                                    <td>Mac OS X</td>
+                                    <td>00:00:47</td>
+
+                                    <td>
+                                      <a href="runs/9/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>22</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Firefox</td>
+                                    <td>82.0</td>
+                                    <td>Windows</td>
+                                    <td>00:00:53</td>
+
+                                    <td>
+                                      <a href="runs/24/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>22</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>MSEdge</td>
+                                    <td>86.0.622.43</td>
+                                    <td>Windows</td>
+                                    <td>00:00:57</td>
+
+                                    <td>
+                                      <a href="runs/39/report.html">Report</a>
+                                    </td>
+                                    <td class='test-pass'>22</td>
+                                    <td class=''>0</td>
+                                    <td class=''>0</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </table>
+    <div class="reporter-context">
+            <p>This report has been generated by Tealium's automated testing platform.</p>
+<p>These tests will have been created specifically for your project by a Tealium Implementation Engineer to verify a configuration or use case.</p>
+<p>The intent is to document the tests run on the completed configuration (acceptance tests). It can also serve as a limited regression test as work continues, to ensure that future projects don't break previous ones.
+For more information, see the <a href="https://jaquith.github.io/webdriverio-standalone/">developer documentation</a>.</p>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>Global - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-extension-1-example-map.html">extension-1-example-map</a></li><li><a href="module-extension-2-example.html">extension-2-example</a></li><li><a href="module-extension-3.html">extension-3</a></li><li><a href="module-extension-4.html">extension-4</a></li></ul><h3>Namespaces</h3><ul><li><a href="tealiumCmpIntegration.html">tealiumCmpIntegration</a><ul class='methods'><li data-type='method'><a href="tealiumCmpIntegration.html#..cmpCheckForExplicitConsentDecision">.cmpCheckForExplicitConsentDecision</a></li><li data-type='method'><a href="tealiumCmpIntegration.html#..cmpCheckForTiqConsent">.cmpCheckForTiqConsent</a></li><li data-type='method'><a href="tealiumCmpIntegration.html#..cmpCheckForWellFormedDecision">.cmpCheckForWellFormedDecision</a></li><li data-type='method'><a href="tealiumCmpIntegration.html#..cmpConvertResponseToGroupList">.cmpConvertResponseToGroupList</a></li><li data-type='method'><a href="tealiumCmpIntegration.html#..cmpFetchCurrentConsentDecision">.cmpFetchCurrentConsentDecision</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#ConsentDecision">ConsentDecision</a></li><li><a href="global.html#GroupToTagMap">GroupToTagMap</a></li><li><a href="global.html#QueuedEvent">QueuedEvent</a></li><li><a href="global.html#TagToGroupMap">TagToGroupMap</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Global</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        
+        </h2>
+        
+    
+</header>
+
+<article>
+    
+        <div class="container-overview">
+        
+            
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+            
+
+            
+        
+        </div>
+    
+
+    
+
+    
+
+    
+    
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="ConsentDecision"><span class="type-signature"></span>ConsentDecision<span class="type-signature"> :array</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line895">line 895</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the type of consent, will be either 'implicit' or 'explicit'</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<div class="description usertext">
+    <p>An array of CMP group names that have permission to run.</p>
+<p>Also includes a 'type' property that indicates whether the consent decision is IMPLICIT or EXPLICT.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">array</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>var exampleConsentDecision = window.tealiumCmpIntegration.getCurrentConsentDecision()
+
+JSON.stringify(exampleConsentDecision)
+// ["Google Analytics","Another Tag","Tealium iQ Tag Management"]
+
+exampleConsentDecision.type
+// "explicit"
+
+exampleConsentDecision.length
+// 3</code></pre>
+
+
+
+        
+            
+<h4 class="name" id="GroupToTagMap"><span class="type-signature"></span>GroupToTagMap<span class="type-signature"> :object</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line918">line 918</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Assigns Tealium iQ Tags to CMP Group names. Each group can contain multiple tags, but each tag can only be assigned to a single service. If the same tag UID appears in multiple Service arrays, all but one will be ignored.</p>
+<p>The keys for the main object are the configuration ID from the CMP, inside that are key/value pairs where the key is a CMP group name (granularity is flexible), and the value is an array of TagUIDs from Tealium iQ.</p>
+<p>This needs to be provided as per the example below, in tealiumCmpIntegration.map.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
+window.tealiumCmpIntegration.map = {
+  'yPyIAIIxY': {
+    'Google Analytics': [6, 8, 10],
+    'Mouseflow': [7, 9],
+    'Another Tag': [11]
+  }
+}</code></pre>
+
+
+
+        
+            
+<h4 class="name" id="QueuedEvent"><span class="type-signature"></span>QueuedEvent<span class="type-signature"> :object</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line962">line 962</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>event</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the type of tracking event, generally 'view' for pageviews or 'link' for other events</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the Universal Data Object associated with the event (from utag_data or the b object)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>cfg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>an optional configuration object that can have a 'cb' property (for a callback function) and a 'uids' array, which is a list of tag UIDs that should be triggered by the event, regardless of whether load rules are met.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<div class="description usertext">
+    <p>An object from the implicitEventQueue or earlyEventQueue, which represents a Tealium iQ tracking event that's been processed based on an IMPLICIT <a href="global.html#ConsentDecision">ConsentDecision</a></p>
+<p>Heavily based on the argument passed to <a href="https://community.tealiumiq.com/t5/Tealium-iQ-Tag-Management/utag-track-method/td-p/24578">utag.track</a>, since it's designed to be processed by that method.</p>
+<p>Initial pageviews (handled in the utag.loader.initdata override) will NOT have metadata like cookies, qps, etc - utag.track calls (handled in the utag.handler.trigger override) will. That's a byproduct of using utag.handler.trigger, which is later in the load - those metadata will be re-read when the queue is processed, and since this queue isn't persisted between pages, it should be fine like that - the only strange behavior will be that any metadata that aren't present on re-read will still be present after the re-read - only values that are still present will be replaced with new values.</p>
+<p>An alternative approach could be to manually remove 'cp.*', 'dom.*', 'ut.*', 'qp.*', 'meta.*' and possibly 'tealium_*' (except 'tealium_event') from the 'data' object before queueing - that hasn't been done so far.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>{
+  "event": "view",
+  "data": {
+    "page_type": "test_virtual_view",
+    "cp.utag_main_v_id": "0174492849d50013581219634d6103079004907101274",
+    "cp.utag_main__sn": "4",
+    "cp.utag_main__se": "4",
+    "cp.utag_main__ss": "0",
+    "cp.utag_main__st": "1598990152209",
+    "cp.utag_main_ses_id": "1598988112353",
+    "cp.utag_main__pn": "3",
+    "cp.utagdb": "true",
+    "dom.referrer": "",
+    "dom.title": "Usercentrics Test",
+    "dom.domain": "solutions.tealium.net",
+    "dom.query_string": "",
+    "dom.hash": "",
+    "dom.url": "https://solutions.tealium.net/hosted/usercentrics/test-page-standard.html",
+    "dom.pathname": "/hosted/usercentrics/test-page-standard.html",
+    "dom.viewport_height": 456,
+    "dom.viewport_width": 1825,
+    "ut.domain": "tealium.net",
+    "ut.version": "ut4.46.202009011921",
+    "ut.event": "view",
+    "ut.visitor_id": "0174492849d50013581219634d6103079004907101274",
+    "ut.session_id": "1598988112353",
+    "ut.account": "services-caleb",
+    "ut.profile": "usercentrics-by-tag",
+    "ut.env": "prod",
+    "tealium_event": "view",
+    "tealium_visitor_id": "0174492849d50013581219634d6103079004907101274",
+    "tealium_session_id": "1598988112353",
+    "tealium_session_number": "4",
+    "tealium_session_event_number": "4",
+    "tealium_datasource": "",
+    "tealium_account": "services-caleb",
+    "tealium_profile": "usercentrics-by-tag",
+    "tealium_environment": "prod",
+    "tealium_random": "2085060854215077",
+    "tealium_library_name": "utag.js",
+    "tealium_library_version": "4.46.0",
+    "tealium_timestamp_epoch": 1598988352,
+    "tealium_timestamp_utc": "2020-09-01T19:25:52.211Z",
+    "tealium_timestamp_local": "2020-09-01T21:25:52.211",
+    "usercentrics_services_with_consent": [
+      "Mouseflow",
+      "Tealium iQ Tag Management",
+      "Usercentrics Consent Management Platform"
+    ],
+    "usercentrics_consent_type": "implicit",
+    "_usercentrics_services_already_processed": [
+      "Mouseflow",
+      "Tealium iQ Tag Management",
+      "Usercentrics Consent Management Platform"
+    ]
+  },
+  "cfg": {
+    "cb": function myCallback () {console.log("Callback fired!")},
+    "uids": [
+      11
+    ],
+    "originalUids": [
+      7,
+      11
+    ],
+    "blockedTagUids": [
+      11
+    ]
+  }
+}</code></pre>
+
+
+
+        
+            
+<h4 class="name" id="TagToGroupMap"><span class="type-signature"></span>TagToGroupMap<span class="type-signature"> :object</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line940">line 940</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>A simple lookup, with Tealium iQ tag UIDs as keys and the associated CMP Groups as values. Each group can be associated with multiple tags, but each tag can be associated with one group.</p>
+<p>The example is based on the <a href="global.html#GroupToTagMap">GroupToTagMap</a> example, where the CMP Lookup Key (a Usercentrics Settings ID, in this case) on the active page is 'yPyIAIIxY'.</p>
+<p>This object is automatically generated by the getTagBasedMap method, and made available globally in tealiumCmpIntegration.tagBasedMap for debugging and use within the extensions.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>{
+  6: 'Google Analytics',
+  7: 'Mouseflow',
+  8: 'Google Analytics',
+  9: 'Mouseflow',
+  10: 'Google Analytics',
+  11: 'Another Tag'
+}</code></pre>
+
+
+
+        
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Wed Dec 15 2021 15:50:23 GMT+0100 (Central European Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>

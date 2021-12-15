@@ -1,0 +1,46 @@
+{
+  "tags": {
+    "allowUnknownTags": ["category"]
+  },
+  "source": {
+      "include": ["./extensions"],
+      "includePattern": ".js$",
+      "excludePattern": "(node_modules/|docs)"
+  },
+  "plugins": [
+    "plugins/markdown",
+    "node_modules/better-docs/category"
+  ],
+  "opts": {
+      "encoding": "utf8",
+      "destination": "./docs/",
+      "readme": "./docs-src/doc-home.md",
+      "recurse": true,
+      "verbose": true,
+      "template": "./node_modules/docdash/"
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false,
+    "search": false,
+    "default": {
+        "staticFiles": {
+          "include": [ "./docs-src/static/" ]
+        }
+    },
+    "docdash": {
+      "static": true,
+      "typedefs": true,
+      "navLevel": 3,
+      "menu": {                 // Adding additional menu items after Home
+        "GitHub Repo": {        // Menu item name
+            "href":"https://github.com/jaquith/cmp-integrations", //the rest of HTML properties to add to menu item
+            "target":"_blank",
+            "class":"menu-item",
+            "id":"github_link"
+        }
+      }
+    }
+  }
+}
+

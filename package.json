@@ -1,0 +1,43 @@
+{
+  "name": "cmp-integrations",
+  "version": "0.0.1-alpha",
+  "description": "An integration between Tealium iQ TMS and Usercentrics CMP",
+  "main": "index.js",
+  "scripts": {
+    "test": "bold=$(tput bold) && normal=$(tput sgr0) && echo \"${bold}Running linter...${normal}\" && standard --fix && echo \"${bold}Running unit tests...${normal}\" && ./node_modules/mocha/bin/mocha tests/*",
+    "lint": "standard --fix",
+    "generate-docs": "./node_modules/.bin/jsdoc --verbose -c ./docs-src/jsdoc.config.json && npm run-script open-docs || true",
+    "open-docs": "open docs/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaquith/usercentrics-integration.git"
+  },
+  "author": "Caleb Jaquith (Tealium)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jaquith/usercentrics-integration/issues"
+  },
+  "standard": {
+    "ignore": [
+      "docs/",
+      "docs-src/",
+      "extensions/example-map.js"
+    ]
+  },
+  "homepage": "https://github.com/jaquith/usercentrics-integration#readme",
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "chai-like": "^1.1.1",
+    "deep-equal-in-any-order": "^1.1.15",
+    "dirty-chai": "^2.0.1",
+    "docdash": "^1.2.0",
+    "eval": "^0.1.6",
+    "fs-extra": "^10.0.0",
+    "jsdoc": "^3.6.5",
+    "mocha": "^9.1.3",
+    "path": "^0.12.7",
+    "standard": "^14.3.4"
+  },
+  "dependencies": {}
+}

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>Home - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-extension-1-example-map.html">extension-1-example-map</a></li><li><a href="module-extension-2-example.html">extension-2-example</a></li><li><a href="module-extension-3.html">extension-3</a></li><li><a href="module-extension-4.html">extension-4</a></li></ul><h3>Namespaces</h3><ul><li><a href="tealiumCmpIntegration.html">tealiumCmpIntegration</a><ul class='methods'><li data-type='method'><a href="tealiumCmpIntegration.html#..cmpCheckForExplicitConsentDecision">.cmpCheckForExplicitConsentDecision</a></li><li data-type='method'><a href="tealiumCmpIntegration.html#..cmpCheckForTiqConsent">.cmpCheckForTiqConsent</a></li><li data-type='method'><a href="tealiumCmpIntegration.html#..cmpCheckForWellFormedDecision">.cmpCheckForWellFormedDecision</a></li><li data-type='method'><a href="tealiumCmpIntegration.html#..cmpConvertResponseToGroupList">.cmpConvertResponseToGroupList</a></li><li data-type='method'><a href="tealiumCmpIntegration.html#..cmpFetchCurrentConsentDecision">.cmpFetchCurrentConsentDecision</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#ConsentDecision">ConsentDecision</a></li><li><a href="global.html#GroupToTagMap">GroupToTagMap</a></li><li><a href="global.html#QueuedEvent">QueuedEvent</a></li><li><a href="global.html#TagToGroupMap">TagToGroupMap</a></li></ul>
+</nav>
+
+<div id="main">
+    
+
+    
+
+
+
+    
+
+
+    <section class="package">
+        <h3> </h3>		
+    </section>
+
+
+
+
+
+
+
+
+
+    
+
+
+
+    <section class="readme usertext">
+        <article><h4>Developer documentation for an integration between the Tealium iQ TMS and the Usercentrics Browser SDK (CMP Version 2)</h4>
+<hr>
+<h2>Approach</h2>
+<p>The purpose of this integration is to allow Tealium iQ customers to control <strong>individual tags</strong> based on a user's interactions with the Usercentrics Browser SDK (CMP Version 2).</p>
+<ul>
+<li>
+<p>Tealium iQ will not fire any tags, or set any cookies, until a consent decision is available from Usercentrics. If an expected settingId for Usercentrics is not active on the page, no tags will be allowed to fire at all.</p>
+</li>
+<li>
+<p>If a consent decision isn't found when Tealium iQ loads, this solution will continually poll until one is found.</p>
+</li>
+<li>
+<p>Until a consent decision is found, all events are queued, so they can be processed when a decision is found.</p>
+</li>
+<li>
+<p>When a consent decision (either implicit or explicit) is available from Usercentrics, tags will be fired in accordance with that consent for all events that have been queued.</p>
+</li>
+<li>
+<p>If the found consent decision is implicit, those events go into another queue after implicitly consented tags have been fired, so they can be re-processed for newly consented tags if the user makes an explicit decision. The solution will poll for an explicit decision until one is found.</p>
+</li>
+<li>
+<p>If the found consent decision is explicit, all queues are emptied and polling stops. Tags that have already been fired on implicit consent are not re-fired when the explicit consent decision is processed.</p>
+</li>
+<li>
+<p>If a user reopens Usercentrics and makes a new explicit consent decision, past events are NOT reprocessed with the new consent decision.</p>
+</li>
+<li>
+<p>For new events processed after initial Tealium iQ load, the fresh consent decision is retrieved from Usercentrics as each event is processed by Tealium iQ.</p>
+</li>
+</ul>
+<hr>
+<h4>What does it do?</h4>
+<ul>
+<li>Allows individual Tealium iQ tags to be associated with a Usercentrics service name (like &quot;Google Analytics&quot; or &quot;Tealium iQ Tag Management&quot;).</li>
+<li>Blocks any tags without consent from firing. The blocking logic works even for tags that are explicitly called using the 'uids' array (which circumvents load rules).</li>
+<li>Allows any implicitly allowed tags to fire immediately (before user decision), then reprocesses the same event(s) for new tags only if the user makes an explicit choice.</li>
+<li>Makes the consent information available in each tracking event (in the <em>b</em> object), as
+<ul>
+<li><code>b.usercentrics_services_with_consent</code> - array of allowed service names</li>
+<li><code>b.usercentrics_consent_type</code> - 'explicit' or 'implicit'</li>
+</ul>
+</li>
+<li>Allows more than one tag to be mapped to a given service name.</li>
+</ul>
+<h4>What does it NOT do?</h4>
+<ul>
+<li>Doesn't use any of Tealium iQ's built-in Consent Manager (or Privacy Manager) functionality, to avoid interference with legacy setups and allow more granular blocking.</li>
+<li>Doesn't set any cookies, add any entries to localStorage, or read any localStorage entries directly (instead, it uses Usercentrics methods to check consent as needed).</li>
+<li>Doesn't allow more than one service name to be mapped to a given tag.</li>
+<li><strong>Doesn't support TCF 2.0 or CCPA (so far). Relevant Tasks: <a href="https://tealium.atlassian.net/browse/CMPI-14">TCF 2.0</a> <a href="https://tealium.atlassian.net/browse/CMPI-18">CCPA</a></strong></li>
+</ul>
+<p>The only per-profile** configuration required is a map of service names to tag UIDs for each relevant Usercentrics settings ID, see <a href="https://jaquith.github.io/usercentrics-integration-v2/global.html#GroupToTagMap">GroupToTagMap</a> for more detailed information.</p>
+<hr>
+<h2>Using this Documentation</h2>
+<p>This documentation is intended for developers, and was generated using <a href="https://jsdoc.app/">JSDoc</a>.</p>
+<p>The menu headings offered by JSDoc don't fit our needs perfectly.  You should read the headings as follows:</p>
+<ul>
+<li><strong>MODULES</strong> - Tealium iQ extensions / JS files</li>
+<li><strong>NAMESPACES</strong> - global object(s) on the page (window-scoped)</li>
+<li><strong>GLOBAL</strong> -  key data structures.  Classes seem like they'd be better, but would include misleading constructors declarations.</li>
+</ul>
+<hr>
+<h2>Configuration Steps</h2>
+<p>Those steps are available in the README of the <a href="https://github.com/jaquith/usercentrics-v2-integration">repo</a>.</p>
+<p>Since this integration is still being formalized, the repo hasn't been made public. Early access is possible on <a href="mailto:julian.llorente@tealium.com">request</a>.</p>
+<hr>
+<h2>Test Report</h2>
+<p>Some preliminary cross-browser tests have been run using a separate under-development testing tool - the most recent results can be viewed <a href="https://jaquith.github.io/usercentrics-v2-integration/integration-test-report">here</a>.</p>
+<hr>
+<p><a href="https://github.com/standard/standard"><img src="https://cdn.rawgit.com/standard/standard/master/badge.svg" alt="JavaScript Style Guide"></a></p></article>
+    </section>
+
+
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Wed Dec 15 2021 15:50:23 GMT+0100 (Central European Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>
