@@ -38,8 +38,8 @@ The purpose of this integration is to allow Tealium iQ customers to control **in
  - Blocks any tags without consent from firing. The blocking logic works even for tags that are explicitly called using the `uids` array (which circumvents load rules).
  - Allows any implicitly allowed tags to fire immediately (before user decision), then reprocesses the same event(s) for new tags only if the user makes an explicit choice.
  - Makes the consent information available in each tracking event (in the `b` object), as 
-   - `b.groups_with_consent` - array of allowed groups, name can be overridden by specific CMPs (`b.usercentrics_services_with_consent` in the example)
-   - `b.consent_type` - 'explicit' or 'implicit' ((name can be overridden by specific CMPs (`b.usercentrics_services_with_consent` in the example))
+   - `b.groups_with_consent` - array of allowed groups, name can be overridden by specific CMPs
+   - `b.consent_type` - 'explicit' or 'implicit' ((name can be overridden by specific CMPs
  - Allows more than one tag to be mapped to a given service name.
 
 ## What does it NOT do?
@@ -50,10 +50,6 @@ The purpose of this integration is to allow Tealium iQ customers to control **in
 
 
 The only per-profile** configuration required is a map of service names to tag UIDs for each relevant Usercentrics settings ID, see [GroupToTagMap](https://jaquith.github.io/cmp-integrations/global.html#GroupToTagMap) for more detailed information.
-
-## What needs to be defined for each CMP?
-
-
 
 ----
 
