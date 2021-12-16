@@ -1,12 +1,19 @@
-#### Developer documentation for a CMP Integration Framework for Tealium iQ.
+### Developer documentation for a CMP Integration Framework for Tealium iQ.
 
 ----
 
 # Approach
 
-The purpose of this integration is to allow Tealium iQ customers to control **individual tags** based on a user's interactions with the Usercentrics Browser SDK (CMP Version 2).
+The purpose of this integration is to allow Tealium iQ customers to control **individual tags** based on a user's interactions with various Consent Management Platforms.
 
- - Tealium iQ will not fire any tags, or set any cookies, until a consent decision is available from Usercentrics. If an expected settingId for Usercentrics is not active on the page, no tags will be allowed to fire at all.
+## Flow Illustration
+
+<center><img src='tiq-cmp-integration-flow.png'/></center>
+
+
+## Core Behaviors
+
+ - Tealium iQ will not fire any tags, or set any cookies, until a consent decision is available from the CMP. The expected CMP is not active on the page, no tags will be allowed to fire at all, and no cookies will be set.
 
  - If a consent decision isn't found when Tealium iQ loads, this solution will continually poll until one is found.
 
@@ -21,6 +28,7 @@ The purpose of this integration is to allow Tealium iQ customers to control **in
  - If a user reopens Usercentrics and makes a new explicit consent decision, past events are NOT reprocessed with the new consent decision.
  
  - For new events processed after initial Tealium iQ load, the fresh consent decision is retrieved from Usercentrics as each event is processed by Tealium iQ.
+
 
 ----
 
@@ -43,6 +51,10 @@ The purpose of this integration is to allow Tealium iQ customers to control **in
 
 The only per-profile** configuration required is a map of service names to tag UIDs for each relevant Usercentrics settings ID, see [GroupToTagMap](https://jaquith.github.io/cmp-integrations/global.html#GroupToTagMap) for more detailed information.
 
+## What needs to be defined for each CMP?
+
+
+
 ----
 
 # Using this Documentation
@@ -57,6 +69,12 @@ The menu headings offered by JSDoc don't fit our needs perfectly.  You should re
 
 ----
 
+# Known Limitations
+
+This framework presently uses polling, and expects a synchronous response from the `cmpFetchCurrentConsentDecision` method - patterns like callbacks and event listeners will be explored in subsequent iterations.
+
+----
+
 # Configuration Steps
 
 Those steps are available in the README of the [repo](https://github.com/jaquith/cmp-integrations). 
@@ -64,7 +82,7 @@ Those steps are available in the README of the [repo](https://github.com/jaquith
 
 # Test Report
 
-Some preliminary cross-browser tests have been run using a separate under-development testing tool - the most recent results can be viewed [here](https://jaquith.github.io/usercentrics-v2-integration/integration-test-report).
+ - Usercentrics Example tested [here](https://jaquith.github.io/cmp-integration/usercentrics-v2-integration-test-report).
 
 ----
 

@@ -29,5 +29,14 @@
       "typedefs": true,
       "navLevel": 3
     }
-  }
+  },
+  "default": {
+    "includeDate": false,
+     "staticFiles": {
+       "include": [
+           "./docs-src/statics",
+           "./docs-src/favicon.png"
+       ]
+     }
+ }
 }
