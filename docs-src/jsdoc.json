@@ -1,15 +1,11 @@
 {
-  "tags": {
-    "allowUnknownTags": ["category"]
-  },
   "source": {
       "include": ["./extensions"],
       "includePattern": ".js$",
       "excludePattern": "(node_modules/|docs)"
   },
   "plugins": [
-    "plugins/markdown",
-    "node_modules/better-docs/category"
+    "plugins/markdown"
   ],
   "opts": {
       "encoding": "utf8",
@@ -17,15 +13,13 @@
       "readme": "./docs-src/doc-home.md",
       "recurse": true,
       "verbose": true,
-      "template": "./node_modules/docdash/"
+      "template": "./node_modules/docdash"
   },
   "templates": {
-    "cleverLinks": false,
     "monospaceLinks": true,
-    "search": false,
     "default": {
         "staticFiles": {
-          "include": [ "./docs-src/static/" ]
+          "include": [ "./docs-src/static" ]
         }
     },
     "docdash": {
@@ -37,4 +31,3 @@
     }
   }
 }
-

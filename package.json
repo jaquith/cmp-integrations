@@ -1,12 +1,12 @@
 {
   "name": "cmp-integrations",
-  "version": "0.0.1-alpha",
-  "description": "An integration between Tealium iQ TMS and Usercentrics CMP",
+  "version": "0.0.1-alpha-1",
+  "description": "An integration framework between Tealium iQ Tag Manager and market-leading Consent Management Platforms",
   "main": "index.js",
   "scripts": {
     "test": "bold=$(tput bold) && normal=$(tput sgr0) && echo \"${bold}Running linter...${normal}\" && standard --fix && echo \"${bold}Running unit tests...${normal}\" && ./node_modules/mocha/bin/mocha tests/*",
     "lint": "standard --fix",
-    "generate-docs": "./node_modules/.bin/jsdoc -c ./docs-src/jsdoc.json",
+    "generate-docs": "./node_modules/.bin/jsdoc --verbose -c ./docs-src/jsdoc.json && npm run-script open-docs",
     "open-docs": "open docs/index.html"
   },
   "repository": {
