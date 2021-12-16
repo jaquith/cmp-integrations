@@ -8,7 +8,7 @@ The purpose of this integration is to allow Tealium iQ customers to control **in
 
 ## Flow Illustration
 
-<center><img style="max-width: 1300px;" src='tiq-cmp-integration-flow.png'/></center>
+<center><img style="max-width: 1200px;" src='tiq-cmp-integration-flow.png'/></center>
 
 
 ## Core Behaviors
