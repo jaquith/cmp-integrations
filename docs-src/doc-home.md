@@ -19,27 +19,27 @@ The purpose of this integration is to allow Tealium iQ customers to control **in
 
  - Until a consent decision is found, all events are queued, so they can be processed when a decision is found.
 
- - When a consent decision (either implicit or explicit) is available from Usercentrics, tags will be fired in accordance with that consent for all events that have been queued.
+ - When a consent decision (either implicit or explicit) is available from the CMP, tags will be fired in accordance with that consent for all events that have been queued.
 
  - If the found consent decision is implicit, those events go into another queue after implicitly consented tags have been fired, so they can be re-processed for newly consented tags if the user makes an explicit decision. The solution will poll for an explicit decision until one is found.
  
  - If the found consent decision is explicit, all queues are emptied and polling stops. Tags that have already been fired on implicit consent are not re-fired when the explicit consent decision is processed.
 
- - If a user reopens Usercentrics and makes a new explicit consent decision, past events are NOT reprocessed with the new consent decision.
+ - If a user reopens the CMP's interactive layer and makes a new explicit consent decision, past events are NOT reprocessed with the new consent decision.
  
- - For new events processed after initial Tealium iQ load, the fresh consent decision is retrieved from Usercentrics as each event is processed by Tealium iQ.
+ - For new events processed after initial Tealium iQ load, the fresh consent decision is retrieved from the CMP as each event is processed by Tealium iQ.
 
 
 ----
 
 ## What does it do?
 
- - Allows individual Tealium iQ tags to be associated with a Usercentrics service name (like "Google Analytics" or "Tealium iQ Tag Management").
- - Blocks any tags without consent from firing. The blocking logic works even for tags that are explicitly called using the 'uids' array (which circumvents load rules).
+ - Allows individual Tealium iQ tags to be associated with a CMP group name (like "Google Analytics" or "Tealium iQ Tag Management" or "Analytics").
+ - Blocks any tags without consent from firing. The blocking logic works even for tags that are explicitly called using the `uids` array (which circumvents load rules).
  - Allows any implicitly allowed tags to fire immediately (before user decision), then reprocesses the same event(s) for new tags only if the user makes an explicit choice.
- - Makes the consent information available in each tracking event (in the _b_ object), as 
-   - `b.usercentrics_services_with_consent` - array of allowed service names
-   - `b.usercentrics_consent_type` - 'explicit' or 'implicit'
+ - Makes the consent information available in each tracking event (in the `b` object), as 
+   - `b.groups_with_consent` - array of allowed groups, name can be overridden by specific CMPs (`b.usercentrics_services_with_consent` in the example)
+   - `b.consent_type` - 'explicit' or 'implicit' ((name can be overridden by specific CMPs (`b.usercentrics_services_with_consent` in the example))
  - Allows more than one tag to be mapped to a given service name.
 
 ## What does it NOT do?
@@ -78,11 +78,12 @@ This framework presently uses polling, and expects a synchronous response from t
 # Configuration Steps
 
 Those steps are available in the README of the [repo](https://github.com/jaquith/cmp-integrations). 
+
 ----
 
-# Test Report
+# Tests
 
- - Usercentrics Example tested [here](https://jaquith.github.io/cmp-integration/usercentrics-v2-integration-test-report).
+ - [Usercentrics V2 cross-browser tests](usercentrics-v2-integration-test-report/index.html).
 
 ----
 
