@@ -79,7 +79,12 @@ Those steps are available in the README of the [repo](https://github.com/jaquith
 
 # Tests
 
- - [Usercentrics V2 cross-browser tests](usercentrics-v2-integration-test-report/index.html).
+## Unit Tests
+
+There are unit tests set up for each CMP integration, you can run them (and the linter) with `npm test`
+
+## Integration Tests
+ - [Usercentrics V2](usercentrics-v2-integration-test-report/index.html).
 
 ----
 
