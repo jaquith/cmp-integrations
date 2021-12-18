@@ -1,4 +1,4 @@
-exports.implicitResponse = [
+exports.implicitRaw = [
   {
     categorySlug: 'marketing',
     consent: {
@@ -301,7 +301,7 @@ exports.implicitResponse = [
   }
 ]
 
-exports.explicitOptIn = [
+exports.explicitOptInRaw = [
   {
     categorySlug: 'marketing',
     consent: {
@@ -724,7 +724,7 @@ exports.explicitOptIn = [
   }
 ]
 
-exports.explicitOptOut = [
+exports.explicitOptOutRaw = [
   {
     categorySlug: 'marketing',
     consent: {

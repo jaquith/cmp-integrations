@@ -69,23 +69,23 @@ exports.getCmpTestSuite = function (cmpHelper) {
   return function () {
     describe('implicit case', basicTests({
       isExplicit: false,
-      rawDecision: cmpHelper.implicitResponse,
+      rawDecision: cmpHelper.implicitRaw,
       expectedGroups: cmpHelper.expectedImplicitList,
-      windowSpoof: cmpHelper.getWindowSpoof(cmpHelper.implicitResponse)
+      windowSpoof: cmpHelper.getWindowSpoof(cmpHelper.implicitRaw)
     }))
 
     describe('explicit opt-in case', basicTests({
       isExplicit: true,
-      rawDecision: cmpHelper.explicitOptIn,
+      rawDecision: cmpHelper.explicitOptInRaw,
       expectedGroups: cmpHelper.expectedExplicitOptInList,
-      windowSpoof: cmpHelper.getWindowSpoof(cmpHelper.explicitOptIn)
+      windowSpoof: cmpHelper.getWindowSpoof(cmpHelper.explicitOptInRaw)
     }))
 
     describe('explicit opt-out case', basicTests({
       isExplicit: true,
-      rawDecision: cmpHelper.explicitOptOut,
+      rawDecision: cmpHelper.explicitOptOutRaw,
       expectedGroups: cmpHelper.expectedImplicitList, // not a typo, these should always be the same
-      windowSpoof: cmpHelper.getWindowSpoof(cmpHelper.explicitOptOut)
+      windowSpoof: cmpHelper.getWindowSpoof(cmpHelper.explicitOptOutRaw)
     }))
   }
 }
