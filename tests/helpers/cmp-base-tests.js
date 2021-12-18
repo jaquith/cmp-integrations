@@ -12,6 +12,60 @@ const code = stringFunctions.getVanillaJsFile('extensions/extension-2-cmp-varian
 
 const expectedFunctions = ['cmpFetchCurrentConsentDecision', 'cmpFetchCurrentLookupKey', 'cmpCheckForWellFormedDecision', 'cmpCheckForExplicitConsentDecision', 'cmpCheckForTiqConsent', 'cmpConvertResponseToGroupList']
 
+exports.getCmpTestSuite = function (cmpHelper) {
+  return function () {
+    describe('no CMP / not loaded', basicTests({
+      isExplicit: false,
+      findSettingId: false,
+      isWellFormed: false,
+      hasTiqConsent: false,
+      rawDecision: false,
+      expectedGroups: [],
+      windowSpoof: {}
+    }))
+
+    describe('empty response', basicTests({
+      isExplicit: false,
+      findSettingId: true,
+      isWellFormed: false,
+      hasTiqConsent: false,
+      rawDecision: false,
+      expectedGroups: [],
+      windowSpoof: cmpHelper.getWindowSpoof(false)
+    }))
+
+    describe('implicit case', basicTests({
+      isExplicit: false,
+      findSettingId: true,
+      isWellFormed: true,
+      hasTiqConsent: true,
+      rawDecision: cmpHelper.implicitRaw,
+      expectedGroups: cmpHelper.expectedImplicitList,
+      windowSpoof: cmpHelper.getWindowSpoof(cmpHelper.implicitRaw)
+    }))
+
+    describe('explicit opt-in case', basicTests({
+      isExplicit: true,
+      findSettingId: true,
+      isWellFormed: true,
+      hasTiqConsent: true,
+      rawDecision: cmpHelper.explicitOptInRaw,
+      expectedGroups: cmpHelper.expectedExplicitOptInList,
+      windowSpoof: cmpHelper.getWindowSpoof(cmpHelper.explicitOptInRaw)
+    }))
+
+    describe('explicit opt-out case', basicTests({
+      isExplicit: true,
+      findSettingId: true,
+      isWellFormed: true,
+      hasTiqConsent: true,
+      rawDecision: cmpHelper.explicitOptOutRaw,
+      expectedGroups: cmpHelper.expectedImplicitList, // not a typo, these should always be the same
+      windowSpoof: cmpHelper.getWindowSpoof(cmpHelper.explicitOptOutRaw)
+    }))
+  }
+}
+
 function basicTests (settings) {
   let cmpSettings
   settings = settings || {}
@@ -43,49 +97,24 @@ function basicTests (settings) {
       chai.expect(cmpSettings.cmpFetchCurrentConsentDecision()).to.deep.equal(settings.rawDecision)
     })
 
-    it('cmpFetchCurrentLookupKey should return "test-config"', function () {
-      chai.expect(cmpSettings.cmpFetchCurrentLookupKey()).to.equal('test-config')
+    it(`cmpFetchCurrentLookupKey should return ${settings.findSettingId ? '"test-config"' : 'an empty string'}`, function () {
+      chai.expect(cmpSettings.cmpFetchCurrentLookupKey()).to.equal(settings.findSettingId ? 'test-config' : '')
     })
 
-    it('cmpCheckForWellFormedDecision should be true', function () {
-      chai.expect(cmpSettings.cmpCheckForWellFormedDecision(settings.rawDecision)).to.equal(true)
+    it(`cmpCheckForWellFormedDecision should be ${settings.isWellFormed}`, function () {
+      chai.expect(cmpSettings.cmpCheckForWellFormedDecision(settings.rawDecision)).to.equal(settings.isWellFormed)
     })
 
     it(`cmpCheckForExplicitConsentDecision should be ${settings.isExplicit}`, function () {
       chai.expect(cmpSettings.cmpCheckForExplicitConsentDecision(settings.rawDecision)).to.equal(settings.isExplicit)
     })
 
-    it('cmpCheckForTiqConsent should be true', function () {
-      chai.expect(cmpSettings.cmpCheckForTiqConsent(settings.rawDecision)).to.equal(true)
+    it(`cmpCheckForTiqConsent should be ${settings.hasTiqConsent}`, function () {
+      chai.expect(cmpSettings.cmpCheckForTiqConsent(settings.rawDecision)).to.equal(settings.hasTiqConsent)
     })
 
     it('cmpConvertResponseToGroupList should return the correct group list', function () {
       chai.expect(cmpSettings.cmpConvertResponseToGroupList(settings.rawDecision)).to.deep.equalInAnyOrder(settings.expectedGroups)
     })
-  }
-}
-
-exports.getCmpTestSuite = function (cmpHelper) {
-  return function () {
-    describe('implicit case', basicTests({
-      isExplicit: false,
-      rawDecision: cmpHelper.implicitRaw,
-      expectedGroups: cmpHelper.expectedImplicitList,
-      windowSpoof: cmpHelper.getWindowSpoof(cmpHelper.implicitRaw)
-    }))
-
-    describe('explicit opt-in case', basicTests({
-      isExplicit: true,
-      rawDecision: cmpHelper.explicitOptInRaw,
-      expectedGroups: cmpHelper.expectedExplicitOptInList,
-      windowSpoof: cmpHelper.getWindowSpoof(cmpHelper.explicitOptInRaw)
-    }))
-
-    describe('explicit opt-out case', basicTests({
-      isExplicit: true,
-      rawDecision: cmpHelper.explicitOptOutRaw,
-      expectedGroups: cmpHelper.expectedImplicitList, // not a typo, these should always be the same
-      windowSpoof: cmpHelper.getWindowSpoof(cmpHelper.explicitOptOutRaw)
-    }))
   }
 }
