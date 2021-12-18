@@ -92,7 +92,7 @@ function basicTests (settings) {
       })
     })
 
-    it('cmpFetchCurrentConsentDecision should return the raw response', function () {
+    it(`cmpFetchCurrentConsentDecision should return ${typeof settings.rawDecision === 'object' ? 'the expected (spoofed) raw response object' : settings.rawDecision}`, function () {
       chai.expect(cmpSettings).to.be.an('object').with.property('cmpFetchCurrentConsentDecision').that.is.a('function')
       chai.expect(cmpSettings.cmpFetchCurrentConsentDecision()).to.deep.equal(settings.rawDecision)
     })
@@ -113,7 +113,7 @@ function basicTests (settings) {
       chai.expect(cmpSettings.cmpCheckForTiqConsent(settings.rawDecision)).to.equal(settings.hasTiqConsent)
     })
 
-    it('cmpConvertResponseToGroupList should return the correct group list', function () {
+    it(`cmpConvertResponseToGroupList should return the expected consented group list with ${settings.expectedGroups.length} members`, function () {
       chai.expect(cmpSettings.cmpConvertResponseToGroupList(settings.rawDecision)).to.deep.equalInAnyOrder(settings.expectedGroups)
     })
   }
