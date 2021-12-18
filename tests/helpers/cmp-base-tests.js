@@ -1,4 +1,4 @@
-/* global it */
+/* global describe it */
 
 'use strict'
 
@@ -12,26 +12,12 @@ const code = stringFunctions.getVanillaJsFile('extensions/extension-2-cmp-varian
 
 const expectedFunctions = ['cmpFetchCurrentConsentDecision', 'cmpFetchCurrentLookupKey', 'cmpCheckForWellFormedDecision', 'cmpCheckForExplicitConsentDecision', 'cmpCheckForTiqConsent', 'cmpConvertResponseToGroupList']
 
-exports.basicTests = function (settings) {
+function basicTests (settings) {
   let cmpSettings
   settings = settings || {}
   settings.decisionFunctionPath = (typeof settings.decisionFunctionPath === 'string' && settings.decisionFunctionPath) || ''
 
-  const windowSpoof = {}
-  let parent = windowSpoof
-  settings.decisionFunctionPath.split('.').forEach(function (child, i, arr) {
-    if (child === 'window' || child === 'self') return // skip top-level references
-    if (i === arr.length - 1) {
-      // the end, define the spoofed function
-      parent[child] = function () {
-        return settings.rawDecision || 'missing - issue with spoofed function in test'
-      }
-      return
-    }
-    // not the end yet, keep making parents
-    parent[child] = {}
-    parent = parent[child]
-  })
+  const windowSpoof = settings.windowSpoof || {}
 
   return function () {
     it('should export without error', function () {
@@ -57,11 +43,15 @@ exports.basicTests = function (settings) {
       chai.expect(cmpSettings.cmpFetchCurrentConsentDecision()).to.deep.equal(settings.rawDecision)
     })
 
+    it('cmpFetchCurrentLookupKey should return "test-config"', function () {
+      chai.expect(cmpSettings.cmpFetchCurrentLookupKey()).to.equal('test-config')
+    })
+
     it('cmpCheckForWellFormedDecision should be true', function () {
       chai.expect(cmpSettings.cmpCheckForWellFormedDecision(settings.rawDecision)).to.equal(true)
     })
 
-    it('cmpCheckForExplicitConsentDecision should be true', function () {
+    it(`cmpCheckForExplicitConsentDecision should be ${settings.isExplicit}`, function () {
       chai.expect(cmpSettings.cmpCheckForExplicitConsentDecision(settings.rawDecision)).to.equal(settings.isExplicit)
     })
 
@@ -72,5 +62,30 @@ exports.basicTests = function (settings) {
     it('cmpConvertResponseToGroupList should return the correct group list', function () {
       chai.expect(cmpSettings.cmpConvertResponseToGroupList(settings.rawDecision)).to.deep.equalInAnyOrder(settings.expectedGroups)
     })
+  }
+}
+
+exports.getCmpTestSuite = function (cmpHelper) {
+  return function () {
+    describe('implicit case', basicTests({
+      isExplicit: false,
+      rawDecision: cmpHelper.implicitResponse,
+      expectedGroups: cmpHelper.expectedImplicitList,
+      windowSpoof: cmpHelper.getWindowSpoof(cmpHelper.implicitResponse)
+    }))
+
+    describe('explicit opt-in case', basicTests({
+      isExplicit: true,
+      rawDecision: cmpHelper.explicitOptIn,
+      expectedGroups: cmpHelper.expectedExplicitOptInList,
+      windowSpoof: cmpHelper.getWindowSpoof(cmpHelper.explicitOptIn)
+    }))
+
+    describe('explicit opt-out case', basicTests({
+      isExplicit: true,
+      rawDecision: cmpHelper.explicitOptOut,
+      expectedGroups: cmpHelper.expectedImplicitList, // not a typo, these should always be the same
+      windowSpoof: cmpHelper.getWindowSpoof(cmpHelper.explicitOptOut)
+    }))
   }
 }

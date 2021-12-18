@@ -1703,3 +1703,18 @@ exports.expectedExplicitOptInList = [
   'Mouseflow',
   'Usercentrics Consent Management Platform'
 ]
+
+exports.getWindowSpoof = function (rawDecision) {
+  return {
+    UC_UI: {
+      getServicesBaseInfo: function () {
+        return rawDecision
+      },
+      getSettings: function () {
+        return {
+          id: 'test-config'
+        }
+      }
+    }
+  }
+}
