@@ -8,15 +8,14 @@ chai.use(require('dirty-chai')) // appease the linter
 chai.use(require('deep-equal-in-any-order'))
 
 const stringFunctions = require('../helpers/stringFunctions.js')
-const code = stringFunctions.getVanillaJsFile('extensions/extension-2-cmp-variants/extension-2-usercentrics-v2.js')
 
 const expectedFunctions = ['cmpFetchCurrentConsentDecision', 'cmpFetchCurrentLookupKey', 'cmpCheckForWellFormedDecision', 'cmpCheckForExplicitConsentDecision', 'cmpCheckForTiqConsent', 'cmpConvertResponseToGroupList']
 
-exports.getCmpTestSuite = function (cmpHelper) {
+exports.getCmpTestSuite = function (code, cmpHelper) {
   return function () {
-    describe('no CMP / not loaded', basicTests({
+    describe('no CMP / not loaded', basicTests(code, {
       isExplicit: false,
-      findSettingId: false,
+      expectedSettingLookupKey: false,
       isWellFormed: false,
       hasTiqConsent: false,
       rawDecision: false,
@@ -24,9 +23,9 @@ exports.getCmpTestSuite = function (cmpHelper) {
       windowSpoof: {}
     }))
 
-    describe('empty response', basicTests({
+    describe('empty response', basicTests(code, {
       isExplicit: false,
-      findSettingId: true,
+      expectedSettingLookupKey: false,
       isWellFormed: false,
       hasTiqConsent: false,
       rawDecision: false,
@@ -34,9 +33,9 @@ exports.getCmpTestSuite = function (cmpHelper) {
       windowSpoof: cmpHelper.getWindowSpoof(false)
     }))
 
-    describe('implicit case', basicTests({
+    describe('implicit case', basicTests(code, {
       isExplicit: false,
-      findSettingId: true,
+      expectedSettingLookupKey: cmpHelper.expectedSettingLookupKey,
       isWellFormed: true,
       hasTiqConsent: true,
       rawDecision: cmpHelper.implicitRaw,
@@ -44,9 +43,9 @@ exports.getCmpTestSuite = function (cmpHelper) {
       windowSpoof: cmpHelper.getWindowSpoof(cmpHelper.implicitRaw)
     }))
 
-    describe('explicit opt-in case', basicTests({
+    describe('explicit opt-in case', basicTests(code, {
       isExplicit: true,
-      findSettingId: true,
+      expectedSettingLookupKey: cmpHelper.expectedSettingLookupKey,
       isWellFormed: true,
       hasTiqConsent: true,
       rawDecision: cmpHelper.explicitOptInRaw,
@@ -54,19 +53,19 @@ exports.getCmpTestSuite = function (cmpHelper) {
       windowSpoof: cmpHelper.getWindowSpoof(cmpHelper.explicitOptInRaw)
     }))
 
-    describe('explicit opt-out case', basicTests({
+    describe('explicit opt-out case', basicTests(code, {
       isExplicit: true,
-      findSettingId: true,
+      expectedSettingLookupKey: cmpHelper.expectedSettingLookupKey,
       isWellFormed: true,
       hasTiqConsent: true,
       rawDecision: cmpHelper.explicitOptOutRaw,
-      expectedGroups: cmpHelper.expectedImplicitList, // not a typo, these should always be the same
+      expectedGroups: cmpHelper.expectedExplicitOptOutList,
       windowSpoof: cmpHelper.getWindowSpoof(cmpHelper.explicitOptOutRaw)
     }))
   }
 }
 
-function basicTests (settings) {
+function basicTests (code, settings) {
   let cmpSettings
   settings = settings || {}
   settings.decisionFunctionPath = (typeof settings.decisionFunctionPath === 'string' && settings.decisionFunctionPath) || ''
@@ -97,8 +96,8 @@ function basicTests (settings) {
       chai.expect(cmpSettings.cmpFetchCurrentConsentDecision()).to.deep.equal(settings.rawDecision)
     })
 
-    it(`cmpFetchCurrentLookupKey should return ${settings.findSettingId ? '"test-config"' : 'an empty string'}`, function () {
-      chai.expect(cmpSettings.cmpFetchCurrentLookupKey()).to.equal(settings.findSettingId ? 'test-config' : '')
+    it(`cmpFetchCurrentLookupKey should return ${settings.expectedSettingLookupKey ? settings.expectedSettingLookupKey : 'an empty string'}`, function () {
+      chai.expect(cmpSettings.cmpFetchCurrentLookupKey()).to.equal(settings.expectedSettingLookupKey ? settings.expectedSettingLookupKey : '')
     })
 
     it(`cmpCheckForWellFormedDecision should be ${settings.isWellFormed}`, function () {
@@ -113,7 +112,8 @@ function basicTests (settings) {
       chai.expect(cmpSettings.cmpCheckForTiqConsent(settings.rawDecision)).to.equal(settings.hasTiqConsent)
     })
 
-    it(`cmpConvertResponseToGroupList should return the expected consented group list with ${settings.expectedGroups.length} members`, function () {
+    it(`cmpConvertResponseToGroupList should return the expected consented group list with ${settings.expectedGroups && settings.expectedGroups.length} members`, function () {
+      chai.expect(settings.expectedGroups.length).to.be.a('number')
       chai.expect(cmpSettings.cmpConvertResponseToGroupList(settings.rawDecision)).to.deep.equalInAnyOrder(settings.expectedGroups)
     })
   }

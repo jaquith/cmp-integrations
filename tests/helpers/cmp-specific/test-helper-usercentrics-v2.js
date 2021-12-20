@@ -1685,11 +1685,12 @@ exports.explicitOptOutRaw = [
   }
 ]
 
-exports.expectedImplicitList = [
+var implicitList = [
   'Tealium iQ Tag Management',
   'Mouseflow',
   'Usercentrics Consent Management Platform'
 ]
+exports.expectedImplicitList = implicitList
 
 exports.expectedExplicitOptInList = [
   'Google Analytics',
@@ -1704,6 +1705,10 @@ exports.expectedExplicitOptInList = [
   'Usercentrics Consent Management Platform'
 ]
 
+exports.expectedExplicitOptOutList = implicitList // expected to be the same for GDPR cases
+
+exports.expectedSettingLookupKey = 'test-config'
+
 exports.getWindowSpoof = function (rawDecision) {
   return {
     UC_UI: {
@@ -1711,9 +1716,9 @@ exports.getWindowSpoof = function (rawDecision) {
         return rawDecision
       },
       getSettings: function () {
-        return {
+        return (rawDecision && {
           id: 'test-config'
-        }
+        }) || ''
       }
     }
   }
