@@ -22,12 +22,7 @@
 
   window.tealiumCmpIntegration.cmpName = 'OneTrust'
 
-  // for the consent information in the b object
-  // window.tealiumCmpIntegration.nameOfVendorOptInArray = 'onetrust_services_with_consent'
-  // window.tealiumCmpIntegration.nameOfConsentTypeString = 'usercentrics_consent_type'
-
-  // use the mapping if found, with a fallback (Usercentrics default value) if not specified in the mapping
-  var tiqGroupName = window.tealiumCmpIntegration.tiqGroupName || 'Strictly Necessary Cookies'
+  window.tealiumCmpIntegration.tiqGroupName = window.tealiumCmpIntegration.tiqGroupName || 'tiq-group-name-missing'
 
   function cmpFetchCurrentConsentDecision () {
     if (!window.OneTrust || typeof window.OneTrust.GetDomainData !== 'function') return false
@@ -97,7 +92,7 @@
     if (cmpCheckForWellFormedDecision(cmpRawOutput) !== true) return false
 
     var allowedGroups = cmpConvertResponseToGroupList(cmpRawOutput)
-    return allowedGroups.indexOf(tiqGroupName) !== -1
+    return allowedGroups.indexOf(window.tealiumCmpIntegration.tiqGroupName) !== -1
   }
 
   window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision = cmpFetchCurrentConsentDecision
