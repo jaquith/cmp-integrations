@@ -3,13 +3,13 @@
  *  Condition   : n/a
  *  Description : CMP Integration Element 2/4 - CMP Specific Preloader component
  *
- *                CMP-specific  Logic for OneTrust v2
+ *                CMP-specific  Logic for OneTrust
  */
 
 /**
-  * @module integration-onetrust-v2
+  * @module integration-onetrust
   *
-  * @description The 'Pre Loader' CMP-specific component for OneTrust V2.
+  * @description The 'Pre Loader' CMP-specific component for OneTrust.
   * @private
   *
   *
