@@ -22,6 +22,14 @@
 
   window.tealiumCmpIntegration.cmpName = 'OneTrust'
 
+  function cmpCheckIfOptInModel () {
+    var decision = cmpFetchCurrentConsentDecision()
+    if (decision && decision.ConsentModel && decision.ConsentModel.Name === 'opt-in') {
+      return true
+    }
+    return false
+  }
+
   function cmpFetchCurrentConsentDecision () {
     if (!window.OneTrust || typeof window.OneTrust.GetDomainData !== 'function') return false
     var cmpRawOutput = window.OneTrust.GetDomainData()
@@ -96,6 +104,7 @@
 
   window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision = cmpFetchCurrentConsentDecision
   window.tealiumCmpIntegration.cmpFetchCurrentLookupKey = cmpFetchCurrentLookupKey
+  window.tealiumCmpIntegration.cmpCheckIfOptInModel = cmpCheckIfOptInModel
   window.tealiumCmpIntegration.cmpCheckForWellFormedDecision = cmpCheckForWellFormedDecision
   window.tealiumCmpIntegration.cmpCheckForExplicitConsentDecision = cmpCheckForExplicitConsentDecision
   window.tealiumCmpIntegration.cmpCheckForTiqConsent = cmpCheckForTiqConsent

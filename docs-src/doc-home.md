@@ -79,9 +79,7 @@ The menu headings offered by JSDoc don't fit our needs perfectly.  You should re
 
 This framework presently uses polling, and expects a synchronous response from the `cmpFetchCurrentConsentDecision` method - patterns like callbacks and event listeners will be explored in subsequent iterations.
 
-So far, only the Opt-In pattern has been implemented and tested.
-
-Maintaining a map in JSON is not as good as a UI to organize tags.
+Maintaining a map in JSON is worse than a UI for mapping tags to groups.
 
 ----
 

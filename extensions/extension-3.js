@@ -196,6 +196,24 @@ window.tealiumCmpIntegration.cmpConvertResponseToGroupList = cmpConvertResponseT
   var cmpConvertResponseToGroupList = (typeof window.tealiumCmpIntegration.cmpConvertResponseToGroupList === 'function' && window.tealiumCmpIntegration.cmpConvertResponseToGroupList) || function () {}
 
   /**
+   * CMP-specific helper, expected to be provided by extension-2. Indicates if the CMP is running in opt-in (GDPR-like) or opt-out (CCPA-like) mode
+   * @function cmpCheckIfOptInModel
+   * @memberof! tealiumCmpIntegration
+   * @returns {boolean} true if the CMP is in opt-in mode (like for GDPR), false if opt-out mode (like for CCPA)
+   *
+   * @example
+   *
+  function cmpCheckIfOptInModel () {
+    var decision = cmpFetchCurrentConsentDecision()
+    if (decision.ConsentModel.Name === 'opt-in') {
+      return true
+    }
+    return false
+  }
+  */
+  var cmpCheckIfOptInModel = (typeof window.tealiumCmpIntegration.cmpCheckIfOptInModel === 'function' && window.tealiumCmpIntegration.cmpCheckIfOptInModel) || function () {}
+
+  /**
    * The current version designation (for extensions 3/4)
    * @name version
    * @type {string}
@@ -414,6 +432,18 @@ window.tealiumCmpIntegration.map = {
     var tiqIsAllowedToFire = cmpCheckForTiqConsent(cmpResponse, tiqGroupName)
     var tiqIsLoaded = window.utag && window.utag.handler && window.utag.handler.iflag === 1
 
+    // poll
+    function checkLater () {
+      return window.setTimeout(recheckForCmpAndConsent, consentTimeoutInterval)
+    }
+
+    // poll, but only if we're waiting for an explicit decision in an opt-in model
+    function checkLaterIfNeeded () {
+      if (cmpCheckIfOptInModel() === true) {
+        return window.setTimeout(recheckForCmpAndConsent, consentTimeoutInterval)
+      }
+    }
+
     if (!cmpFound) {
       /**
        * CASE A1: no CMP found
@@ -422,7 +452,7 @@ window.tealiumCmpIntegration.map = {
        * RETRY after a delay
        */
       if (messageNotLoggedYet(1)) logger('No CMP found on page.\n\nStopping TiQ (no cookies set/removed, no tags fired).\n\nPolling for changes.')
-      window.setTimeout(recheckForCmpAndConsent, consentTimeoutInterval)
+      checkLater()
       stopTiq()
     } else if (!foundMapEntryForActiveSetting) {
       /**
@@ -440,17 +470,17 @@ window.tealiumCmpIntegration.map = {
        * RETRY after a delay
        */
       if (messageNotLoggedYet(3)) logger('Found CMP and got response, but didn\'t understand the response.\n\nStopping TiQ (no cookies set/removed, no tags fired).\n\nPolling for changes.')
-      window.setTimeout(recheckForCmpAndConsent, consentTimeoutInterval)
+      checkLater()
       stopTiq()
     } else if (!tiqIsAllowedToFire) {
       /**
-       * CASE A3: Usercentrics CMS found and consent response was well-formed, BUT TiQ didn't have an opt-in
+       * CASE A3: CMP found and consent response was well-formed, BUT TiQ didn't have an opt-in
        *
        * STOP and fire nothing at all
        * RETRY after a delay
        */
       if (messageNotLoggedYet(4)) logger('Found CMP and got well-formed response, but TiQ isn\'t allowed to run based on the response.\n\nStopping TiQ (no cookies set/removed, no tags fired).\n\nPolling for changes.')
-      window.setTimeout(recheckForCmpAndConsent, consentTimeoutInterval)
+      checkLaterIfNeeded()
       stopTiq()
     } else if (!foundExplicitConsent) {
       /**
@@ -459,12 +489,12 @@ window.tealiumCmpIntegration.map = {
        * ALLOW TO LOAD for any 'default opt-in' tags (filter logic in Extension B)
        * RETRY after a delay (in case there's an explicit decision, since implicit decisions usually mean the prompt is displayed)
        */
-      if (messageNotLoggedYet(5)) logger('Found CMP and got well-formed IMPLICIT response which includes TiQ.\n\nAllowing certain tags to fire based on IMPLICIT consent.\n\nPolling for changes.')
-      window.setTimeout(recheckForCmpAndConsent, consentTimeoutInterval)
+      if (messageNotLoggedYet(5)) logger(`Found CMP and got well-formed IMPLICIT response which includes TiQ.\n\nAllowing certain tags to fire based on IMPLICIT consent.${cmpCheckIfOptInModel() === true ? '\n\nPolling for changes.' : '\n\nNo further polling.'}`)
+      checkLaterIfNeeded()
       if (tiqIsLoaded) {
         processEarlyQueue()
       } else {
-        window.setTimeout(recheckForCmpAndConsent, consentTimeoutInterval)
+        checkLaterIfNeeded()
       }
       triggerOrQueue()
     } else if (foundExplicitConsent) {
@@ -479,7 +509,7 @@ window.tealiumCmpIntegration.map = {
         processEarlyQueue()
         processImplicitQueue()
       } else {
-        window.setTimeout(recheckForCmpAndConsent, consentTimeoutInterval)
+        checkLater()
       }
       triggerOrQueue()
     } else {

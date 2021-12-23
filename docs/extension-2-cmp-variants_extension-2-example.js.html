@@ -27,7 +27,7 @@
 
 <nav >
     
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-extension-1-example-map.html">extension-1-example-map</a></li><li><a href="module-extension-2-example.html">extension-2-example</a></li><li><a href="module-extension-3.html">extension-3</a></li><li><a href="module-extension-4.html">extension-4</a></li></ul><h3>Namespaces</h3><ul><li><a href="tealiumCmpIntegration.html">tealiumCmpIntegration</a><ul class='methods'><li data-type='method'><a href="tealiumCmpIntegration.html#..cmpCheckForExplicitConsentDecision">.cmpCheckForExplicitConsentDecision</a></li><li data-type='method'><a href="tealiumCmpIntegration.html#..cmpCheckForTiqConsent">.cmpCheckForTiqConsent</a></li><li data-type='method'><a href="tealiumCmpIntegration.html#..cmpCheckForWellFormedDecision">.cmpCheckForWellFormedDecision</a></li><li data-type='method'><a href="tealiumCmpIntegration.html#..cmpConvertResponseToGroupList">.cmpConvertResponseToGroupList</a></li><li data-type='method'><a href="tealiumCmpIntegration.html#..cmpFetchCurrentConsentDecision">.cmpFetchCurrentConsentDecision</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#ConsentDecision">ConsentDecision</a></li><li><a href="global.html#GroupToTagMap">GroupToTagMap</a></li><li><a href="global.html#QueuedEvent">QueuedEvent</a></li><li><a href="global.html#TagToGroupMap">TagToGroupMap</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-extension-1-example-map.html">extension-1-example-map</a></li><li><a href="module-extension-2-example.html">extension-2-example</a></li><li><a href="module-extension-3.html">extension-3</a></li><li><a href="module-extension-4.html">extension-4</a></li></ul><h3>Namespaces</h3><ul><li><a href="tealiumCmpIntegration.html">tealiumCmpIntegration</a><ul class='methods'><li data-type='method'><a href="tealiumCmpIntegration.html#..cmpCheckForExplicitConsentDecision">.cmpCheckForExplicitConsentDecision</a></li><li data-type='method'><a href="tealiumCmpIntegration.html#..cmpCheckForTiqConsent">.cmpCheckForTiqConsent</a></li><li data-type='method'><a href="tealiumCmpIntegration.html#..cmpCheckForWellFormedDecision">.cmpCheckForWellFormedDecision</a></li><li data-type='method'><a href="tealiumCmpIntegration.html#..cmpCheckIfOptInModel">.cmpCheckIfOptInModel</a></li><li data-type='method'><a href="tealiumCmpIntegration.html#..cmpConvertResponseToGroupList">.cmpConvertResponseToGroupList</a></li><li data-type='method'><a href="tealiumCmpIntegration.html#..cmpFetchCurrentConsentDecision">.cmpFetchCurrentConsentDecision</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#ConsentDecision">ConsentDecision</a></li><li><a href="global.html#GroupToTagMap">GroupToTagMap</a></li><li><a href="global.html#QueuedEvent">QueuedEvent</a></li><li><a href="global.html#TagToGroupMap">TagToGroupMap</a></li></ul>
 </nav>
 
 <div id="main">
@@ -50,8 +50,8 @@
   *
   */
 
-// Usercentrics v2 setup as example here
-(function usercentricsBrowserSdkV2 (window) {
+// Usercentrics v2 used as example
+;(function usercentricsBrowserSdkV2 (window) {
   // CMP specific functionality and labels
   window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
 
@@ -61,9 +61,6 @@
   window.tealiumCmpIntegration.nameOfVendorOptInArray = 'usercentrics_services_with_consent'
   window.tealiumCmpIntegration.nameOfConsentTypeString = 'usercentrics_consent_type'
 
-  // use the mapping if found, with a fallback (Usercentrics default value) if not specified in the mapping
-  var tiqGroupName = window.tealiumCmpIntegration.tiqGroupName || 'Tealium iQ Tag Management'
-
   function cmpFetchCurrentConsentDecision () {
     if (!window.UC_UI || typeof window.UC_UI.getServicesBaseInfo !== 'function') return false
     var cmpRawOutput = window.UC_UI.getServicesBaseInfo()
@@ -72,6 +69,10 @@
 
   function cmpFetchCurrentLookupKey () {
     return (window.UC_UI &amp;&amp; typeof window.UC_UI.getSettings === 'function' &amp;&amp; window.UC_UI.getSettings().id) || ''
+  }
+
+  function cmpCheckIfOptInModel () {
+    return window.UC_UI &amp;&amp; window.UC_UI.getSettingsCore &amp;&amp; window.UC_UI.getSettingsCore().acceptAllImplicitlyOutsideEU === true
   }
 
   function cmpCheckForWellFormedDecision (cmpRawOutput) {
@@ -96,10 +97,13 @@
     return false
   }
 
-  function cmpCheckForTiqConsent (cmpRawOutput) {
+  function cmpCheckForTiqConsent (cmpRawOutput, tiqGroupName) {
     var foundOptIn = false
     // treat things we don't understand as an opt-out
     if (toString.call(cmpRawOutput) !== '[object Array]') return false
+    // use the mapping if found, with a fallback (Usercentrics default value) if not specified in the mapping
+
+    tiqGroupName = tiqGroupName || 'tiq-group-name-missing'
     // check vendors if there's an object, look for at least one
     cmpRawOutput.forEach(function (tagInfo) {
       if ((tagInfo.consent &amp;&amp; tagInfo.consent.status === true) &amp;&amp; tagInfo.name === tiqGroupName) {
@@ -121,6 +125,7 @@
 
   window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision = cmpFetchCurrentConsentDecision
   window.tealiumCmpIntegration.cmpFetchCurrentLookupKey = cmpFetchCurrentLookupKey
+  window.tealiumCmpIntegration.cmpCheckIfOptInModel = cmpCheckIfOptInModel
   window.tealiumCmpIntegration.cmpCheckForWellFormedDecision = cmpCheckForWellFormedDecision
   window.tealiumCmpIntegration.cmpCheckForExplicitConsentDecision = cmpCheckForExplicitConsentDecision
   window.tealiumCmpIntegration.cmpCheckForTiqConsent = cmpCheckForTiqConsent
@@ -140,7 +145,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Thu Dec 23 2021 16:49:35 GMT+0100 (Central European Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Thu Dec 23 2021 22:02:57 GMT+0100 (Central European Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

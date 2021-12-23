@@ -27,7 +27,7 @@
 
 <nav >
     
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-extension-1-example-map.html">extension-1-example-map</a></li><li><a href="module-extension-2-example.html">extension-2-example</a></li><li><a href="module-extension-3.html">extension-3</a></li><li><a href="module-extension-4.html">extension-4</a></li></ul><h3>Namespaces</h3><ul><li><a href="tealiumCmpIntegration.html">tealiumCmpIntegration</a><ul class='methods'><li data-type='method'><a href="tealiumCmpIntegration.html#..cmpCheckForExplicitConsentDecision">.cmpCheckForExplicitConsentDecision</a></li><li data-type='method'><a href="tealiumCmpIntegration.html#..cmpCheckForTiqConsent">.cmpCheckForTiqConsent</a></li><li data-type='method'><a href="tealiumCmpIntegration.html#..cmpCheckForWellFormedDecision">.cmpCheckForWellFormedDecision</a></li><li data-type='method'><a href="tealiumCmpIntegration.html#..cmpConvertResponseToGroupList">.cmpConvertResponseToGroupList</a></li><li data-type='method'><a href="tealiumCmpIntegration.html#..cmpFetchCurrentConsentDecision">.cmpFetchCurrentConsentDecision</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#ConsentDecision">ConsentDecision</a></li><li><a href="global.html#GroupToTagMap">GroupToTagMap</a></li><li><a href="global.html#QueuedEvent">QueuedEvent</a></li><li><a href="global.html#TagToGroupMap">TagToGroupMap</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-extension-1-example-map.html">extension-1-example-map</a></li><li><a href="module-extension-2-example.html">extension-2-example</a></li><li><a href="module-extension-3.html">extension-3</a></li><li><a href="module-extension-4.html">extension-4</a></li></ul><h3>Namespaces</h3><ul><li><a href="tealiumCmpIntegration.html">tealiumCmpIntegration</a><ul class='methods'><li data-type='method'><a href="tealiumCmpIntegration.html#..cmpCheckForExplicitConsentDecision">.cmpCheckForExplicitConsentDecision</a></li><li data-type='method'><a href="tealiumCmpIntegration.html#..cmpCheckForTiqConsent">.cmpCheckForTiqConsent</a></li><li data-type='method'><a href="tealiumCmpIntegration.html#..cmpCheckForWellFormedDecision">.cmpCheckForWellFormedDecision</a></li><li data-type='method'><a href="tealiumCmpIntegration.html#..cmpCheckIfOptInModel">.cmpCheckIfOptInModel</a></li><li data-type='method'><a href="tealiumCmpIntegration.html#..cmpConvertResponseToGroupList">.cmpConvertResponseToGroupList</a></li><li data-type='method'><a href="tealiumCmpIntegration.html#..cmpFetchCurrentConsentDecision">.cmpFetchCurrentConsentDecision</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#ConsentDecision">ConsentDecision</a></li><li><a href="global.html#GroupToTagMap">GroupToTagMap</a></li><li><a href="global.html#QueuedEvent">QueuedEvent</a></li><li><a href="global.html#TagToGroupMap">TagToGroupMap</a></li></ul>
 </nav>
 
 <div id="main">
@@ -216,7 +216,7 @@ window.tealiumCmpIntegration.cmpName = 'Usercentrics'</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line328">line 328</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line347">line 347</a>
     </li></ul></dd>
     
 
@@ -552,7 +552,7 @@ window.tealiumCmpIntegration.cmpCheckForExplicitConsentDecision = cmpCheckForExp
 
     
 
-    <h4 class="name" id="..cmpCheckForTiqConsent"><span class="type-signature">(static) </span>.cmpCheckForTiqConsent<span class="signature">(cmpRawOutput)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    <h4 class="name" id="..cmpCheckForTiqConsent"><span class="type-signature">(static) </span>.cmpCheckForTiqConsent<span class="signature">(cmpRawOutput, tiqGroupName)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
 
     
 
@@ -671,6 +671,24 @@ window.tealiumCmpIntegration.cmpCheckForTiqConsent = cmpCheckForTiqConsent</code
             
 
             <td class="description last"><p>the CMP output returned from cmpFetchCurrentConsentDecision</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>tiqGroupName</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the Group Name designation for Tealium iQ in the CMP</p></td>
         </tr>
 
     
@@ -889,6 +907,126 @@ window.tealiumCmpIntegration.cmpCheckForWellFormedDecision = cmpCheckForWellForm
 
     
 
+    <h4 class="name" id="..cmpCheckIfOptInModel"><span class="type-signature">(static) </span>.cmpCheckIfOptInModel<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line198">line 198</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>CMP-specific helper, expected to be provided by extension-2. Indicates if the CMP is running in opt-in (GDPR-like) or opt-out (CCPA-like) mode</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>function cmpCheckIfOptInModel () {
+    var decision = cmpFetchCurrentConsentDecision()
+    if (decision.ConsentModel.Name === 'opt-in') {
+      return true
+    }
+    return false
+  }</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>true if the CMP is in opt-in mode (like for GDPR), false if opt-out mode (like for CCPA)</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
     <h4 class="name" id="..cmpConvertResponseToGroupList"><span class="type-signature">(static) </span>.cmpConvertResponseToGroupList<span class="signature">(cmpRawOutput)</span><span class="type-signature"> &rarr; {array}</span></h4>
 
     
@@ -901,7 +1039,7 @@ window.tealiumCmpIntegration.cmpCheckForWellFormedDecision = cmpCheckForWellForm
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line176">line 176</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line177">line 177</a>
     </li></ul></dd>
     
 
@@ -1190,7 +1328,7 @@ window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision = cmpFetchCurrentCon
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Thu Dec 23 2021 16:49:35 GMT+0100 (Central European Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Thu Dec 23 2021 22:02:57 GMT+0100 (Central European Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

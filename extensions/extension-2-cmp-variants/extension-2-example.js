@@ -6,8 +6,8 @@
   *
   */
 
-// Usercentrics v2 setup as example here
-(function usercentricsBrowserSdkV2 (window) {
+// Usercentrics v2 used as example
+;(function usercentricsBrowserSdkV2 (window) {
   // CMP specific functionality and labels
   window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
 
@@ -17,9 +17,6 @@
   window.tealiumCmpIntegration.nameOfVendorOptInArray = 'usercentrics_services_with_consent'
   window.tealiumCmpIntegration.nameOfConsentTypeString = 'usercentrics_consent_type'
 
-  // use the mapping if found, with a fallback (Usercentrics default value) if not specified in the mapping
-  var tiqGroupName = window.tealiumCmpIntegration.tiqGroupName || 'Tealium iQ Tag Management'
-
   function cmpFetchCurrentConsentDecision () {
     if (!window.UC_UI || typeof window.UC_UI.getServicesBaseInfo !== 'function') return false
     var cmpRawOutput = window.UC_UI.getServicesBaseInfo()
@@ -28,6 +25,10 @@
 
   function cmpFetchCurrentLookupKey () {
     return (window.UC_UI && typeof window.UC_UI.getSettings === 'function' && window.UC_UI.getSettings().id) || ''
+  }
+
+  function cmpCheckIfOptInModel () {
+    return window.UC_UI && window.UC_UI.getSettingsCore && window.UC_UI.getSettingsCore().acceptAllImplicitlyOutsideEU === true
   }
 
   function cmpCheckForWellFormedDecision (cmpRawOutput) {
@@ -52,10 +53,13 @@
     return false
   }
 
-  function cmpCheckForTiqConsent (cmpRawOutput) {
+  function cmpCheckForTiqConsent (cmpRawOutput, tiqGroupName) {
     var foundOptIn = false
     // treat things we don't understand as an opt-out
     if (toString.call(cmpRawOutput) !== '[object Array]') return false
+    // use the mapping if found, with a fallback (Usercentrics default value) if not specified in the mapping
+
+    tiqGroupName = tiqGroupName || 'tiq-group-name-missing'
     // check vendors if there's an object, look for at least one
     cmpRawOutput.forEach(function (tagInfo) {
       if ((tagInfo.consent && tagInfo.consent.status === true) && tagInfo.name === tiqGroupName) {
@@ -77,6 +81,7 @@
 
   window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision = cmpFetchCurrentConsentDecision
   window.tealiumCmpIntegration.cmpFetchCurrentLookupKey = cmpFetchCurrentLookupKey
+  window.tealiumCmpIntegration.cmpCheckIfOptInModel = cmpCheckIfOptInModel
   window.tealiumCmpIntegration.cmpCheckForWellFormedDecision = cmpCheckForWellFormedDecision
   window.tealiumCmpIntegration.cmpCheckForExplicitConsentDecision = cmpCheckForExplicitConsentDecision
   window.tealiumCmpIntegration.cmpCheckForTiqConsent = cmpCheckForTiqConsent
