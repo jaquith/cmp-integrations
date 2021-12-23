@@ -26,9 +26,6 @@
   window.tealiumCmpIntegration.nameOfVendorOptInArray = 'usercentrics_services_with_consent'
   window.tealiumCmpIntegration.nameOfConsentTypeString = 'usercentrics_consent_type'
 
-  // use the mapping if found, with a fallback (Usercentrics default value) if not specified in the mapping
-  var tiqGroupName = window.tealiumCmpIntegration.tiqGroupName || 'Tealium iQ Tag Management'
-
   function cmpFetchCurrentConsentDecision () {
     if (!window.UC_UI || typeof window.UC_UI.getServicesBaseInfo !== 'function') return false
     var cmpRawOutput = window.UC_UI.getServicesBaseInfo()
@@ -61,10 +58,13 @@
     return false
   }
 
-  function cmpCheckForTiqConsent (cmpRawOutput) {
+  function cmpCheckForTiqConsent (cmpRawOutput, tiqGroupName) {
     var foundOptIn = false
     // treat things we don't understand as an opt-out
     if (toString.call(cmpRawOutput) !== '[object Array]') return false
+    // use the mapping if found, with a fallback (Usercentrics default value) if not specified in the mapping
+
+    tiqGroupName = tiqGroupName || 'tiq-group-name-missing'
     // check vendors if there's an object, look for at least one
     cmpRawOutput.forEach(function (tagInfo) {
       if ((tagInfo.consent && tagInfo.consent.status === true) && tagInfo.name === tiqGroupName) {

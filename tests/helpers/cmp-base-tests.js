@@ -20,7 +20,8 @@ exports.getCmpTestSuite = function (code, cmpHelper) {
       hasTiqConsent: false,
       rawDecision: false,
       expectedGroups: [],
-      windowSpoof: {}
+      windowSpoof: {},
+      tiqGroupName: cmpHelper.tiqGroupName
     }))
 
     describe('empty response', basicTests(code, {
@@ -30,7 +31,8 @@ exports.getCmpTestSuite = function (code, cmpHelper) {
       hasTiqConsent: false,
       rawDecision: false,
       expectedGroups: [],
-      windowSpoof: cmpHelper.getWindowSpoof(false)
+      windowSpoof: cmpHelper.getWindowSpoof(false),
+      tiqGroupName: cmpHelper.tiqGroupName
     }))
 
     describe('implicit case', basicTests(code, {
@@ -40,7 +42,8 @@ exports.getCmpTestSuite = function (code, cmpHelper) {
       hasTiqConsent: true,
       rawDecision: cmpHelper.implicitRaw,
       expectedGroups: cmpHelper.expectedImplicitList,
-      windowSpoof: cmpHelper.getWindowSpoof(cmpHelper.implicitRaw)
+      windowSpoof: cmpHelper.getWindowSpoof(cmpHelper.implicitRaw),
+      tiqGroupName: cmpHelper.tiqGroupName
     }))
 
     describe('explicit opt-in case', basicTests(code, {
@@ -50,7 +53,8 @@ exports.getCmpTestSuite = function (code, cmpHelper) {
       hasTiqConsent: true,
       rawDecision: cmpHelper.explicitOptInRaw,
       expectedGroups: cmpHelper.expectedExplicitOptInList,
-      windowSpoof: cmpHelper.getWindowSpoof(cmpHelper.explicitOptInRaw)
+      windowSpoof: cmpHelper.getWindowSpoof(cmpHelper.explicitOptInRaw),
+      tiqGroupName: cmpHelper.tiqGroupName
     }))
 
     describe('explicit opt-out case', basicTests(code, {
@@ -60,7 +64,8 @@ exports.getCmpTestSuite = function (code, cmpHelper) {
       hasTiqConsent: true,
       rawDecision: cmpHelper.explicitOptOutRaw,
       expectedGroups: cmpHelper.expectedExplicitOptOutList,
-      windowSpoof: cmpHelper.getWindowSpoof(cmpHelper.explicitOptOutRaw)
+      windowSpoof: cmpHelper.getWindowSpoof(cmpHelper.explicitOptOutRaw),
+      tiqGroupName: cmpHelper.tiqGroupName
     }))
   }
 }
@@ -109,7 +114,7 @@ function basicTests (code, settings) {
     })
 
     it(`cmpCheckForTiqConsent should be ${settings.hasTiqConsent}`, function () {
-      chai.expect(cmpSettings.cmpCheckForTiqConsent(settings.rawDecision)).to.equal(settings.hasTiqConsent)
+      chai.expect(cmpSettings.cmpCheckForTiqConsent(settings.rawDecision, settings.tiqGroupName)).to.equal(settings.hasTiqConsent)
     })
 
     it(`cmpConvertResponseToGroupList should return the expected consented group list with ${settings.expectedGroups && settings.expectedGroups.length} members`, function () {

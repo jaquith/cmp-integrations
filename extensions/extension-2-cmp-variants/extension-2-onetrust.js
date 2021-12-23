@@ -22,8 +22,6 @@
 
   window.tealiumCmpIntegration.cmpName = 'OneTrust'
 
-  window.tealiumCmpIntegration.tiqGroupName = window.tealiumCmpIntegration.tiqGroupName || 'tiq-group-name-missing'
-
   function cmpFetchCurrentConsentDecision () {
     if (!window.OneTrust || typeof window.OneTrust.GetDomainData !== 'function') return false
     var cmpRawOutput = window.OneTrust.GetDomainData()
@@ -87,12 +85,13 @@
     return vendorArray
   }
 
-  function cmpCheckForTiqConsent (cmpRawOutput) {
+  function cmpCheckForTiqConsent (cmpRawOutput, tiqGroupName) {
     // treat things we don't understand as an opt-out
     if (cmpCheckForWellFormedDecision(cmpRawOutput) !== true) return false
 
+    tiqGroupName = tiqGroupName || 'tiq-group-name-missing'
     var allowedGroups = cmpConvertResponseToGroupList(cmpRawOutput)
-    return allowedGroups.indexOf(window.tealiumCmpIntegration.tiqGroupName) !== -1
+    return allowedGroups.indexOf(tiqGroupName) !== -1
   }
 
   window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision = cmpFetchCurrentConsentDecision

@@ -6373,6 +6373,8 @@ exports.explicitOptOutRaw = {
 var implicitList = ['Strictly Necessary Cookies']
 exports.expectedImplicitList = implicitList
 
+exports.tiqGroupName = 'Strictly Necessary Cookies'
+
 exports.expectedExplicitOptInList = ['Strictly Necessary Cookies', 'Analytics Cookies', 'Functional Cookies', 'Targeting Cookies']
 
 exports.expectedExplicitOptOutList = implicitList // expected to be the same for GDPR cases

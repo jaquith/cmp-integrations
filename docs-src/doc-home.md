@@ -1,14 +1,24 @@
 ### Developer documentation for a CMP Integration Framework for Tealium iQ.
 
+<span style="color:red; font-size:2em">This is a proof-of-concept-in-progress, and should not be used without appropriate validation and testing - use at your own risk!</span>
+
 ----
 
 # Approach
 
 The purpose of this integration is to allow Tealium iQ customers to control **individual tags** based on a user's interactions with various Consent Management Platforms.
 
-## Flow Illustration
+## Opt-In Flow
 
-<center><img style="max-width: 1200px;" src='tiq-cmp-integration-flow.png'/></center>
+For regulations like GDPR.
+
+<img style="max-width: 1200px;" src='tiq-cmp-integration-flow-opt-in.png'/>
+
+## Opt-Out Flow
+
+For regulations like CCPA.
+
+<img style="max-width: 1200px;" src='tiq-cmp-integration-flow-opt-out.png'/>
 
 
 ## Core Behaviors
@@ -21,7 +31,7 @@ The purpose of this integration is to allow Tealium iQ customers to control **in
 
  - When a consent decision (either implicit or explicit) is available from the CMP, tags will be fired in accordance with that consent for all events that have been queued.
 
- - If the found consent decision is implicit, those events go into another queue after implicitly consented tags have been fired, so they can be re-processed for newly consented tags if the user makes an explicit decision. The solution will poll for an explicit decision until one is found.
+ - If the found consent decision is implicit and the opt-in pattern is active, events go into another queue after implicitly consented tags have been fired, so they can be re-processed for newly consented tags if the user makes an explicit decision. The solution will poll for an explicit decision until one is found, when appropriate.
  
  - If the found consent decision is explicit, all queues are emptied and polling stops. Tags that have already been fired on implicit consent are not re-fired when the explicit consent decision is processed.
 
@@ -68,6 +78,10 @@ The menu headings offered by JSDoc don't fit our needs perfectly.  You should re
 # Known Limitations
 
 This framework presently uses polling, and expects a synchronous response from the `cmpFetchCurrentConsentDecision` method - patterns like callbacks and event listeners will be explored in subsequent iterations.
+
+So far, only the Opt-In pattern has been implemented and tested.
+
+Maintaining a map in JSON is not as good as a UI to organize tags.
 
 ----
 

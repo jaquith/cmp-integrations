@@ -1692,6 +1692,8 @@ var implicitList = [
 ]
 exports.expectedImplicitList = implicitList
 
+exports.tiqGroupName = 'Tealium iQ Tag Management'
+
 exports.expectedExplicitOptInList = [
   'Google Analytics',
   'Facebook Pixel',

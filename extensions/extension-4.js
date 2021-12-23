@@ -45,6 +45,23 @@ if (currentlyAllowedVendors.type === 'explicit') {
   implicitServices = b[nameOfImplicitConsentArray] // use the previously stored array, from the queued event
 }
 
+/**
+ * Allows us to make sure we don't log certain messages more than once, especially useful while polling to avoid overwhelming the user.
+ * @function messageNotLoggedYet
+ * @param {*} messageId a string or number to uniquely identify a message for the purposes of deduplication
+ * @private
+ * @returns {boolean} 'true' if the message hasn't been logged yet (and should be logged), otherwise 'false'
+ */
+var alreadyLoggedMessageIds = {}
+function messageNotLoggedYet (messageId) {
+  var output = false
+  if (typeof alreadyLoggedMessageIds[messageId] === 'undefined') {
+    alreadyLoggedMessageIds[messageId] = true
+    output = true
+  }
+  return output
+}
+
 logger('Called block logic:\n\nAllowed: ' + JSON.stringify(currentlyAllowedVendors, null, 2) + '\n\nAlready processed: ' + (implicitServices ? JSON.stringify(implicitServices, null, 2) : '(none)'))
 
 logger('Map:\n\n' + JSON.stringify(map, null, 2) + '\n\nActive CMP Lookup Key: ' + cmpFetchCurrentLookupKey() + '\n\nMap has entry for current settingsId: ' + (typeof map[cmpFetchCurrentLookupKey()] === 'object' ? 'true' : 'false') + '\n\nTag-based map for the active key: ' + JSON.stringify(tagBasedMap, null, 2))
@@ -79,7 +96,9 @@ function blockTagsBasedOnConsent (tagBasedMap, configObject, consentedServices, 
   var utagFunctionsHaveBeenOverridden = window.utag.handler.trigger.toString().indexOf('tealiumCmpIntegration') !== -1
   if (utagFunctionsHaveBeenOverridden !== true) {
     window.utag.handler.trigger = function () {
-      logger('Tags have been disabled because the required utag.loader edit hasn\'t been done successfully and the tealiumCmpIntegration is active.')
+      if (messageNotLoggedYet(1)) {
+        logger('Tags have been disabled because the required utag.loader edit hasn\'t been done successfully and the tealiumCmpIntegration is active.')
+      }
     }
     consentedServices = []
   }
@@ -113,6 +132,8 @@ function blockTagsBasedOnConsent (tagBasedMap, configObject, consentedServices, 
       deactivatedTags.push(allTagUids[i])
     }
   }
-  logger('Blocked tags: ' + JSON.stringify(deactivatedTags, null, 2) + (tiqIsAllowed ? '' : '\n\nAll tags blocked because Tealium iQ isn\'t allowed to fire.'))
+  if (messageNotLoggedYet(2)) {
+    logger('Blocked tags: ' + JSON.stringify(deactivatedTags, null, 2) + (tiqIsAllowed ? '' : '\n\nAll tags blocked because Tealium iQ isn\'t allowed to fire.'))
+  }
   return configObject
 }
