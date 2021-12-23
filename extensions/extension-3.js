@@ -72,7 +72,7 @@ window.tealiumCmpIntegration.cmpName = 'Usercentrics'
 window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
 window.tealiumCmpIntegration.tiqGroupName = "TiQ"
    */
-  var tiqGroupName = window.tealiumCmpIntegration.tiqGroupName || 'Tealium iQ Tag Management' // use the standard name here if not set
+  var tiqGroupName = window.tealiumCmpIntegration.tiqGroupName || '_missing_' // make sure there's no match if it's not set
 
   /**
    * CMP-specific helper, expected to be provided by extension-2. Expects a function that gets the current consent decision from the CMP.
@@ -154,6 +154,7 @@ window.tealiumCmpIntegration.cmpCheckForExplicitConsentDecision = cmpCheckForExp
    * @function cmpCheckForTiqConsent
    * @memberof! tealiumCmpIntegration
    * @param cmpRawOutput the CMP output returned from cmpFetchCurrentConsentDecision
+   * @param tiqGroupName the Group Name designation for Tealium iQ in the CMP
    * @returns {boolean} 'true' if TiQ is allowed to run, otherwise 'false'
    *
    * @example
@@ -388,7 +389,7 @@ window.tealiumCmpIntegration.map = {
 
     vendorArray.type = cmpCheckForExplicitConsentDecision(cmpRawOutput) ? 'explicit' : 'implicit'
 
-    if (cmpCheckForTiqConsent(cmpRawOutput) === false) {
+    if (cmpCheckForTiqConsent(cmpRawOutput, tiqGroupName) === false) {
       // change the consent type, but leave the array for debugging purposes
       vendorArray.type = 'missing-tiq-consent'
     }
@@ -410,7 +411,7 @@ window.tealiumCmpIntegration.map = {
     var tagBasedMap = generateTagBasedMap()
     var foundMapEntryForActiveSetting = Object.keys(tagBasedMap).length > 0
     var foundExplicitConsent = cmpCheckForExplicitConsentDecision(cmpResponse)
-    var tiqIsAllowedToFire = cmpCheckForTiqConsent(cmpResponse)
+    var tiqIsAllowedToFire = cmpCheckForTiqConsent(cmpResponse, tiqGroupName)
     var tiqIsLoaded = window.utag && window.utag.handler && window.utag.handler.iflag === 1
 
     if (!cmpFound) {
