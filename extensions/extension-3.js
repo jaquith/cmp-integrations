@@ -374,7 +374,7 @@ window.tealiumCmpIntegration.map = {
   // if noload is set to 'true', don't interfere, just return to exit this function and allow that setting to stop TiQ load as usual.
   if (window.utag_cfg_ovrd && window.utag_cfg_ovrd.noload === true) return false
 
-  logger('TiQ CMP integration active: ' + window.tealiumCmpIntegration.cmpName + ' in ' + (window.tealiumCmpIntegration.cmpCheckIfOptInModel() === false ? 'Opt-out' : 'Opt-in') + ' mode' + (tiqInDebugMode ? "\n\nDEBUGGING TIP: Use /SENDING|\\*\\*\\*\\*/ in the browser console as the 'filter' to show only CMP and tag send notifications." : '\n\nActivate TiQ Debug Mode for more details: https://docs.tealium.com/platforms/javascript/debugging/'), true)
+  logger('TiQ CMP integration active: ' + window.tealiumCmpIntegration.cmpName + (tiqInDebugMode ? "\n\nDEBUGGING TIP: Use /SENDING|\\*\\*\\*\\*/ in the browser console as the 'filter' to show only CMP and tag send notifications." : '\n\nActivate TiQ Debug Mode for more details: https://docs.tealium.com/platforms/javascript/debugging/'), true)
   var cmpResponse = cmpFetchCurrentConsentDecision()
   // core business/GDPR logic, decides if TiQ should load at all
   reactToCmpResponse(cmpResponse)
@@ -491,9 +491,9 @@ window.tealiumCmpIntegration.map = {
        */
       if (cmpCheckIfOptInModel() === true) {
         checkLaterIfNeeded()
-        if (messageNotLoggedYet(5)) logger('Found CMP and got well-formed IMPLICIT response which includes TiQ.\n\nAllowing certain tags to fire based on IMPLICIT consent.\n\nPolling for changes.')
+        if (messageNotLoggedYet(5)) logger('Found CMP and got well-formed IMPLICIT response which includes TiQ.\n\nAllowing certain tags to fire based on IMPLICIT consent.\n\nPolling for changes (opt-in mode).')
       } else {
-        if (messageNotLoggedYet(5)) logger('Found CMP and got well-formed IMPLICIT response which includes TiQ.\n\nAllowing certain tags to fire based on IMPLICIT consent.\n\nNo further polling.')
+        if (messageNotLoggedYet(5)) logger('Found CMP and got well-formed IMPLICIT response which includes TiQ.\n\nAllowing certain tags to fire based on IMPLICIT consent.\n\nNo further polling (opt-out mode)')
       }
       if (tiqIsLoaded) {
         processEarlyQueue()
