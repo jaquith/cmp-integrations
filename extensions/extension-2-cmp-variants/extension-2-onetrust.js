@@ -24,10 +24,10 @@
 
   function cmpCheckIfOptInModel () {
     var decision = cmpFetchCurrentConsentDecision()
-    if (decision && decision.ConsentModel && decision.ConsentModel.Name === 'opt-in') {
-      return true
+    if (decision && decision.ConsentModel && decision.ConsentModel.Name === 'opt-out') {
+      return false
     }
-    return false
+    return true
   }
 
   function cmpFetchCurrentConsentDecision () {

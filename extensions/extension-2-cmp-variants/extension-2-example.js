@@ -28,7 +28,8 @@
   }
 
   function cmpCheckIfOptInModel () {
-    return window.UC_UI && window.UC_UI.getSettingsCore && window.UC_UI.getSettingsCore().acceptAllImplicitlyOutsideEU === true
+    if (window.UC_UI && window.UC_UI.getSettingsCore && window.UC_UI.getSettingsCore().acceptAllImplicitlyOutsideEU === false) return false
+    return true
   }
 
   function cmpCheckForWellFormedDecision (cmpRawOutput) {

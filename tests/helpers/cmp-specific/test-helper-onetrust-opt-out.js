@@ -77,7 +77,7 @@ exports.implicitRaw = {
     }
   },
   ConsentModel: {
-    Name: 'opt-in'
+    Name: 'opt-out'
   },
   CookieListDescription: 'A cookie is a small piece of data (text file) that a website – when visited by a user – asks your browser to store on your device in order to remember information about you, such as your language preference or login information. Those cookies are set by us and called first-party cookies. We also use third-party cookies – which are cookies from a domain different than the domain of the website you are visiting – for our advertising and marketing efforts. More specifically, we use cookies and other tracking technologies for the following purposes:',
   CookieListTitle: 'Cookie List',
@@ -2201,7 +2201,7 @@ exports.explicitOptInRaw = {
     }
   },
   ConsentModel: {
-    Name: 'opt-in'
+    Name: 'opt-out'
   },
   CookieListDescription: 'A cookie is a small piece of data (text file) that a website – when visited by a user – asks your browser to store on your device in order to remember information about you, such as your language preference or login information. Those cookies are set by us and called first-party cookies. We also use third-party cookies – which are cookies from a domain different than the domain of the website you are visiting – for our advertising and marketing efforts. More specifically, we use cookies and other tracking technologies for the following purposes:',
   CookieListTitle: 'Cookie List',
@@ -4325,7 +4325,7 @@ exports.explicitOptOutRaw = {
     }
   },
   ConsentModel: {
-    Name: 'opt-in'
+    Name: 'opt-out'
   },
   CookieListDescription: 'A cookie is a small piece of data (text file) that a website – when visited by a user – asks your browser to store on your device in order to remember information about you, such as your language preference or login information. Those cookies are set by us and called first-party cookies. We also use third-party cookies – which are cookies from a domain different than the domain of the website you are visiting – for our advertising and marketing efforts. More specifically, we use cookies and other tracking technologies for the following purposes:',
   CookieListTitle: 'Cookie List',
@@ -6374,6 +6374,8 @@ var implicitList = ['Strictly Necessary Cookies']
 exports.expectedImplicitList = implicitList
 
 exports.tiqGroupName = 'Strictly Necessary Cookies'
+
+exports.expectOptInModel = false
 
 exports.expectedExplicitOptInList = ['Strictly Necessary Cookies', 'Analytics Cookies', 'Functional Cookies', 'Targeting Cookies']
 

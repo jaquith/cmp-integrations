@@ -9,13 +9,14 @@ chai.use(require('deep-equal-in-any-order'))
 
 const stringFunctions = require('../helpers/stringFunctions.js')
 
-const expectedFunctions = ['cmpFetchCurrentConsentDecision', 'cmpFetchCurrentLookupKey', 'cmpCheckForWellFormedDecision', 'cmpCheckForExplicitConsentDecision', 'cmpCheckForTiqConsent', 'cmpConvertResponseToGroupList']
+const expectedFunctions = ['cmpFetchCurrentConsentDecision', 'cmpFetchCurrentLookupKey', 'cmpCheckIfOptInModel', 'cmpCheckForWellFormedDecision', 'cmpCheckForExplicitConsentDecision', 'cmpCheckForTiqConsent', 'cmpConvertResponseToGroupList']
 
-exports.getCmpTestSuite = function (code, cmpHelper) {
+exports.getCmpTestSuite = function (code, cmpHelper, expectOptInModel) {
   return function () {
     describe('no CMP / not loaded', basicTests(code, {
       isExplicit: false,
       expectedSettingLookupKey: false,
+      expectOptInModel: true,
       isWellFormed: false,
       hasTiqConsent: false,
       rawDecision: false,
@@ -27,44 +28,48 @@ exports.getCmpTestSuite = function (code, cmpHelper) {
     describe('empty response', basicTests(code, {
       isExplicit: false,
       expectedSettingLookupKey: false,
+      expectOptInModel: true,
       isWellFormed: false,
       hasTiqConsent: false,
       rawDecision: false,
       expectedGroups: [],
-      windowSpoof: cmpHelper.getWindowSpoof(false),
+      windowSpoof: cmpHelper.getWindowSpoof(false, ''),
       tiqGroupName: cmpHelper.tiqGroupName
     }))
 
     describe('implicit case', basicTests(code, {
       isExplicit: false,
       expectedSettingLookupKey: cmpHelper.expectedSettingLookupKey,
+      expectOptInModel: expectOptInModel,
       isWellFormed: true,
       hasTiqConsent: true,
       rawDecision: cmpHelper.implicitRaw,
       expectedGroups: cmpHelper.expectedImplicitList,
-      windowSpoof: cmpHelper.getWindowSpoof(cmpHelper.implicitRaw),
+      windowSpoof: cmpHelper.getWindowSpoof(cmpHelper.implicitRaw, expectOptInModel),
       tiqGroupName: cmpHelper.tiqGroupName
     }))
 
     describe('explicit opt-in case', basicTests(code, {
       isExplicit: true,
       expectedSettingLookupKey: cmpHelper.expectedSettingLookupKey,
+      expectOptInModel: expectOptInModel,
       isWellFormed: true,
       hasTiqConsent: true,
       rawDecision: cmpHelper.explicitOptInRaw,
       expectedGroups: cmpHelper.expectedExplicitOptInList,
-      windowSpoof: cmpHelper.getWindowSpoof(cmpHelper.explicitOptInRaw),
+      windowSpoof: cmpHelper.getWindowSpoof(cmpHelper.explicitOptInRaw, expectOptInModel),
       tiqGroupName: cmpHelper.tiqGroupName
     }))
 
     describe('explicit opt-out case', basicTests(code, {
       isExplicit: true,
       expectedSettingLookupKey: cmpHelper.expectedSettingLookupKey,
+      expectOptInModel: expectOptInModel,
       isWellFormed: true,
       hasTiqConsent: true,
       rawDecision: cmpHelper.explicitOptOutRaw,
       expectedGroups: cmpHelper.expectedExplicitOptOutList,
-      windowSpoof: cmpHelper.getWindowSpoof(cmpHelper.explicitOptOutRaw),
+      windowSpoof: cmpHelper.getWindowSpoof(cmpHelper.explicitOptOutRaw, expectOptInModel),
       tiqGroupName: cmpHelper.tiqGroupName
     }))
   }
@@ -99,6 +104,10 @@ function basicTests (code, settings) {
     it(`cmpFetchCurrentConsentDecision should return ${typeof settings.rawDecision === 'object' ? 'the expected (spoofed) raw response object' : settings.rawDecision}`, function () {
       chai.expect(cmpSettings).to.be.an('object').with.property('cmpFetchCurrentConsentDecision').that.is.a('function')
       chai.expect(cmpSettings.cmpFetchCurrentConsentDecision()).to.deep.equal(settings.rawDecision)
+    })
+
+    it(`cmpCheckIfOptInModel should return ${typeof settings.expectOptInModel === 'boolean' ? settings.expectOptInModel : '(missing from CMP test config)'}`, function () {
+      chai.expect(cmpSettings.cmpCheckIfOptInModel()).to.equal(typeof settings.expectOptInModel === 'boolean' ? settings.expectOptInModel : '(missing from CMP test config)')
     })
 
     it(`cmpFetchCurrentLookupKey should return ${settings.expectedSettingLookupKey ? settings.expectedSettingLookupKey : 'an empty string'}`, function () {

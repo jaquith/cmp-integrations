@@ -1709,9 +1709,11 @@ exports.expectedExplicitOptInList = [
 
 exports.expectedExplicitOptOutList = implicitList // expected to be the same for GDPR cases
 
+exports.expectOptInModel = false
+
 exports.expectedSettingLookupKey = 'test-config'
 
-exports.getWindowSpoof = function (rawDecision) {
+exports.getWindowSpoof = function (rawDecision, useOptInModel) {
   return {
     UC_UI: {
       getServicesBaseInfo: function () {
@@ -1721,6 +1723,11 @@ exports.getWindowSpoof = function (rawDecision) {
         return (rawDecision && {
           id: 'test-config'
         }) || ''
+      },
+      getSettingsCore: function () {
+        return {
+          acceptAllImplicitlyOutsideEU: useOptInModel
+        }
       }
     }
   }
