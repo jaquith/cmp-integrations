@@ -490,11 +490,11 @@ window.tealiumCmpIntegration.map = {
        * RETRY after a delay (in case there's an explicit decision, since implicit decisions usually mean the prompt is displayed)
        */
       if (cmpCheckIfOptInModel() === true) {
+        checkLaterIfNeeded()
         if (messageNotLoggedYet(5)) logger('Found CMP and got well-formed IMPLICIT response which includes TiQ.\n\nAllowing certain tags to fire based on IMPLICIT consent.\n\nPolling for changes.')
       } else {
         if (messageNotLoggedYet(5)) logger('Found CMP and got well-formed IMPLICIT response which includes TiQ.\n\nAllowing certain tags to fire based on IMPLICIT consent.\n\nNo further polling.')
       }
-      checkLaterIfNeeded()
       if (tiqIsLoaded) {
         processEarlyQueue()
       } else {
