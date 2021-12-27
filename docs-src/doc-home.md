@@ -1,27 +1,12 @@
 ### Developer documentation for a CMP Integration Framework for Tealium iQ.
 
-<span style="color:red; font-size:2em">This is a proof-of-concept-in-progress, and should not be used without appropriate validation and testing - use at your own risk!</span>
-
 ----
 
 # Approach
 
 The purpose of this integration is to allow Tealium iQ customers to control **individual tags** based on a user's interactions with various Consent Management Platforms.
 
-## Opt-In Flow
-
-For regulations like GDPR.
-
-<img style="max-width: 1200px;" src='tiq-cmp-integration-flow-opt-in.png'/>
-
-## Opt-Out Flow
-
-For regulations like CCPA.
-
-<img style="max-width: 1200px;" src='tiq-cmp-integration-flow-opt-out.png'/>
-
-
-## Core Behaviors
+## Core Behaviors (Opt-In Model)
 
  - Tealium iQ will not fire any tags, or set any cookies, until a consent decision is available from the CMP. The expected CMP is not active on the page, no tags will be allowed to fire at all, and no cookies will be set.
 
@@ -39,10 +24,21 @@ For regulations like CCPA.
  
  - For new events processed after initial Tealium iQ load, the fresh consent decision is retrieved from the CMP as each event is processed by Tealium iQ.
 
+## Opt-In Flow
+
+For regulations like GDPR.
+
+<img style="max-width: 1200px;" src='tiq-cmp-integration-flow-opt-in.png'/>
+
+## Opt-Out Flow
+
+For regulations like CCPA - the opt-in flow also works, but this simplified flow is more efficient.
+
+<img style="max-width: 1200px;" src='tiq-cmp-integration-flow-opt-out.png'/>
 
 ----
 
-## What does it do?
+# What does it do?
 
  - Allows individual Tealium iQ tags to be associated with a CMP group name (like "Google Analytics" or "Tealium iQ Tag Management" or "Analytics").
  - Blocks any tags without consent from firing. The blocking logic works even for tags that are explicitly called using the `uids` array (which circumvents load rules).
@@ -52,7 +48,7 @@ For regulations like CCPA.
    - `b.consent_type` - 'explicit' or 'implicit' ((name can be overridden by specific CMPs
  - Allows more than one tag to be mapped to a given service name.
 
-## What does it NOT do?
+# What does it NOT do?
 
  - Doesn't use any of Tealium iQ's built-in Consent Manager (or Privacy Manager) functionality, to avoid interference with legacy setups and allow more granular blocking.
  - Doesn't set any cookies, add any entries to localStorage, or read any localStorage entries directly (instead, it uses Usercentrics methods to check consent as needed).
@@ -81,6 +77,10 @@ This framework presently uses polling, and expects a synchronous response from t
 
 Maintaining a map in JSON is worse than a UI for mapping tags to groups.
 
+So far, the follow integrations are prebuilt:
+ - OneTrust (opt-in and opt-out)
+ - Usercentrics V2 (opt-in)
+
 ----
 
 # Configuration Steps
@@ -89,14 +89,14 @@ Those steps are available in the README of the [repo](https://github.com/jaquith
 
 ----
 
-# Tests
+# Testing
 
 ## Unit Tests
 
 There are unit tests set up for each CMP integration, you can run them (and the linter) with `npm test`
 
 ## Integration Tests
- - [Usercentrics V2](usercentrics-v2-integration-test-report/index.html).
+ - [Usercentrics V2 (Opt-in model)](usercentrics-v2-integration-test-report/index.html).
 
 ----
 

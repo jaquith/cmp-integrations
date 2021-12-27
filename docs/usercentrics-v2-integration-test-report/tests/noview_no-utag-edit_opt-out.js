@@ -17,11 +17,10 @@ describe('STEP 1 - initial visit to test page', function () {
     chai.expect(title).to.equal('Usercentrics v2 Test')
   })
 
-  it('should have a utag_main cookie', async function () {
+  it('should NOT have a utag_main cookie', async function () {
     await browser.waitForTraffic()
-    reporterHelper.logMessage('TiQ will run because we can\'t detect the absence of the needed edit before load, but no tags should be fired.')
     const cookie = await browser.getCookieByName('utag_main')
-    chai.expect(cookie).to.be.an('object').with.property('value').that.is.a('string')
+    chai.expect(cookie).to.be.undefined()
   })
 
   it('should have a visible Usercentrics banner', async function () {

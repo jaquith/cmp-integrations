@@ -2,28 +2,6 @@
 
 A series of integrations between the Tealium iQ Tag Manager and various Consent Management Platforms (CMPs).
 
-----
-
-# Approach
-
-The purpose of these integrations is to allow Tealium iQ customers to control **individual tags** based on a user's interactions with the CMP of their choice.
-
- - Tealium iQ will not fire any tags, or set any cookies, until a consent decision is available from the CMP. If the expected CMP is not active on the page, no tags will be allowed to fire at all.
-
- - If a consent decision isn't found when Tealium iQ loads, this solution will continually poll until one is found.
-
- - Until a consent decision is found, all events are queued, so they can be processed when a decision is found.
-
- - When a consent decision (either implicit or explicit) is available from the CMP, tags will be fired in accordance with that consent for all events that have been queued.
-
- - If the found consent decision is implicit, those events go into another queue after implicitly consented tags have been fired, so they can be re-processed for newly consented tags if the user makes an explicit decision. The solution will poll for an explicit decision until one is found.
- 
- - If the found consent decision is explicit, all queues are emptied and polling stops. Tags that have already been fired on implicit consent are not re-fired when the explicit consent decision is processed.
-
- - If a user reopens the CMP's interactive layer and makes a new explicit consent decision, past events are NOT reprocessed with the new consent decision.
- 
- - For new events processed after initial Tealium iQ load, the fresh consent decision is retrieved from the CMP as each event is processed by Tealium iQ, to ensure the CMP is treated as the universal source of truth.
-
  ----
 
 # Configuration Steps
@@ -51,6 +29,28 @@ Until this is added as a turnkey extension, it can be implemented as follows:
 5. Publish (to Dev/QA) and test - detailed logging designed to help with troubleshooting and debugging will be displayed in the console if you [activate debug mode](https://docs.tealium.com/platforms/javascript/debugging/).
 
 ----
+
+# Approach
+
+The purpose of these integrations is to allow Tealium iQ customers to control **individual tags** based on a user's interactions with the CMP of their choice.
+
+ - Tealium iQ will not fire any tags, or set any cookies, until a consent decision is available from the CMP. If the expected CMP is not active on the page, no tags will be allowed to fire at all.
+
+ - If a consent decision isn't found when Tealium iQ loads, this solution will continually poll until one is found.
+
+ - Until a consent decision is found, all events are queued, so they can be processed when a decision is found.
+
+ - When a consent decision (either implicit or explicit) is available from the CMP, tags will be fired in accordance with that consent for all events that have been queued.
+
+ - If the found consent decision is implicit, those events go into another queue after implicitly consented tags have been fired, so they can be re-processed for newly consented tags if the user makes an explicit decision. The solution will poll for an explicit decision until one is found.
+ 
+ - If the found consent decision is explicit, all queues are emptied and polling stops. Tags that have already been fired on implicit consent are not re-fired when the explicit consent decision is processed.
+
+ - If a user reopens the CMP's interactive layer and makes a new explicit consent decision, past events are NOT reprocessed with the new consent decision.
+ 
+ - For new events processed after initial Tealium iQ load, the fresh consent decision is retrieved from the CMP as each event is processed by Tealium iQ, to ensure the CMP is treated as the universal source of truth.
+
+ ----
 
 
 # Notes
