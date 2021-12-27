@@ -55,7 +55,7 @@ For regulations like CCPA - the opt-in flow also works, but this simplified flow
  - Doesn't allow more than one service name to be mapped to a given tag.
 
 
-The only per-profile** configuration required is a map of service names to tag UIDs for each relevant Usercentrics settings ID, see [GroupToTagMap](https://jaquith.github.io/cmp-integrations/global.html#GroupToTagMap) for more detailed information.
+The only per-profile** configuration required is a map of service names to tag UIDs for each relevant CMP setting ID, see [GroupToTagMap](https://jaquith.github.io/cmp-integrations/global.html#GroupToTagMap) for more detailed information.
 
 ----
 
