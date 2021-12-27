@@ -51,7 +51,7 @@ For regulations like CCPA - the opt-in flow also works, but this simplified flow
 # What does it NOT do?
 
  - Doesn't use any of Tealium iQ's built-in Consent Manager (or Privacy Manager) functionality, to avoid interference with legacy setups and allow more granular blocking.
- - Doesn't set any cookies, add any entries to localStorage, or read any localStorage entries directly (instead, it uses Usercentrics methods to check consent as needed).
+ - Doesn't set any cookies, add any entries to localStorage, or read any localStorage entries directly (instead, it uses CMP methods to check consent as needed).
  - Doesn't allow more than one service name to be mapped to a given tag.
 
 
