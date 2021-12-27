@@ -23,7 +23,7 @@
 ;(function avoidGlobalScopeUnlessExplicit (window) {
   // set names for key objects and variables to make them easy to change if needed
 
-  var version = 'v1.0.0-alpha-2'
+  var version = 'v1.0.0-alpha-3'
 
   /**
  * A window-scoped (global) object used to expose or define selected functionality.
@@ -481,7 +481,7 @@ window.tealiumCmpIntegration.map = {
        * STOP and fire nothing at all
        * RETRY after a delay
        */
-      if (messageNotLoggedYet(4)) logger('Found CMP and got well-formed response, but TiQ isn\'t allowed to run based on the response.\n\nStopping TiQ (no cookies set/removed, no tags fired).\n\nPolling for changes.')
+      if (messageNotLoggedYet(4)) logger('Found CMP and got well-formed response, but TiQ (window.tealiumCmpIntegration.tiqGroupName, defined as ' + window.tealiumCmpIntegration.tiqGroupName + ') isn\'t allowed to run based on the response.\n\nStopping TiQ (no cookies set/removed, no tags fired).\n\nPolling for changes.')
       checkLaterIfNeeded()
       stopTiq()
     } else if (!foundExplicitConsent) {
