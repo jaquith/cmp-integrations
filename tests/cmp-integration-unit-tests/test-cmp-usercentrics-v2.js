@@ -10,5 +10,6 @@ const code = stringFunctions.getVanillaJsFile('extensions/extension-2-cmp-varian
 
 describe('Usercentrics V2 Integration', function () {
   describe('Opt-in Model tests', tests.getCmpTestSuite(code, cmpHelperOptIn, true))
-  describe('Opt-out Model tests', tests.getCmpTestSuite(code, cmpHelperOptOut, false))
+  // haven't added this support yet - opt-in model covers this case as well, but is wasteful (unneeded polling)
+  describe.skip('Opt-out Model tests', tests.getCmpTestSuite(code, cmpHelperOptOut, false))
 })

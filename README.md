@@ -39,12 +39,12 @@ Until this is added as a turnkey extension, it can be implemented as follows:
     - `extension-3.js` - Pre Loader, decides if TiQ should load and overrides some system functions.  No need to modify.  Should be the LAST 'Pre Loader' extension.
     - `extension-4.js` - All Tags - After Load Rules (should be the last extension in the list), blocks or allows tags based on implicit/explicit consent. No need to modify. Should be the LAST 'All Tags - After Load Rules' extension.
 
-3. Modify the `example-map.js` extension to match your Usercentrics / TiQ configuration.  There is a helper script in the comments of that extension that will generate the basis.
+3. Modify the `example-map.js` extension to match your CMP / TiQ configuration.  There is a helper script in the comments of that extension that will generate the basis.
 
 4. Edit the utag loader template to include this line directly after `##UTGEN##`
 
     ````javascript
-    // override a couple utag functions for the Usercentrics integration (stopgap solution)
+    // override a couple utag functions for the CMP integration (stopgap solution)
     window.tealiumCmpIntegration && window.tealiumCmpIntegration.overrideUtagFunctions && window.tealiumCmpIntegration.overrideUtagFunctions()
     ````
 

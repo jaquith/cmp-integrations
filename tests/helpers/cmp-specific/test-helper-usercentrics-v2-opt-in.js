@@ -1726,7 +1726,7 @@ exports.getWindowSpoof = function (rawDecision, useOptInModel) {
       },
       getSettingsCore: function () {
         return {
-          acceptAllImplicitlyOutsideEU: useOptInModel
+          acceptAllImplicitlyOutsideEU: !useOptInModel
         }
       }
     }

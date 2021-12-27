@@ -36,8 +36,8 @@
     return (window.UC_UI && typeof window.UC_UI.getSettings === 'function' && window.UC_UI.getSettings().id) || ''
   }
 
+  // only support opt-In model for Usercentrics for now, can be added if needed
   function cmpCheckIfOptInModel () {
-    if (window.UC_UI && window.UC_UI.getSettingsCore && window.UC_UI.getSettingsCore().acceptAllImplicitlyOutsideEU === false) return false
     return true
   }
 

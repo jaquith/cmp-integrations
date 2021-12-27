@@ -25,18 +25,6 @@ exports.getCmpTestSuite = function (code, cmpHelper, expectOptInModel) {
       tiqGroupName: cmpHelper.tiqGroupName
     }))
 
-    describe('empty response', basicTests(code, {
-      isExplicit: false,
-      expectedSettingLookupKey: false,
-      expectOptInModel: true,
-      isWellFormed: false,
-      hasTiqConsent: false,
-      rawDecision: false,
-      expectedGroups: [],
-      windowSpoof: cmpHelper.getWindowSpoof(false, ''),
-      tiqGroupName: cmpHelper.tiqGroupName
-    }))
-
     describe('implicit case', basicTests(code, {
       isExplicit: false,
       expectedSettingLookupKey: cmpHelper.expectedSettingLookupKey,
