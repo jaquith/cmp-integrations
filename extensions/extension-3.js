@@ -23,7 +23,7 @@
 ;(function avoidGlobalScopeUnlessExplicit (window) {
   // set names for key objects and variables to make them easy to change if needed
 
-  var version = 'v1.0.0-alpha-1'
+  var version = 'v1.0.0-alpha-2'
 
   /**
  * A window-scoped (global) object used to expose or define selected functionality.
@@ -406,6 +406,8 @@ window.tealiumCmpIntegration.map = {
     }
 
     vendorArray.type = cmpCheckForExplicitConsentDecision(cmpRawOutput) ? 'explicit' : 'implicit'
+
+    var tiqGroupName = window.tealiumCmpIntegration.tiqGroupName || '_missing_'
 
     if (cmpCheckForTiqConsent(cmpRawOutput, tiqGroupName) === false) {
       // change the consent type, but leave the array for debugging purposes
