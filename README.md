@@ -6,7 +6,7 @@ A series of integrations between the Tealium iQ Tag Manager and various Consent 
 
 # Configuration Steps
 
-Until this is added as a turnkey extension, it can be implemented as follows:
+Until this functionality is natively available in Tealium iQ, it can be implemented as follows:
 
 1. Add your CMP to the appropriate pages on your site - either directly, or with a JavaScript extension scoped to Pre Loader. **Integrating the CMP as a tag won't work (because Tealium iQ won't fire tags without a signal from the CMP).**
 
