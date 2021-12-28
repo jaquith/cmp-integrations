@@ -13,8 +13,11 @@ Until this functionality is natively available in Tealium iQ, it can be implemen
 2. Add 4 extensions from the extensions folder, making sure to update the `example-map` extension to match your setup.
 
     - `extension-1-example-map.js` - Pre Loader, provides the mapping of TiQ tag UIDs to CMP groups.  **Requires modification and maintenance per customer implementation.**
-    - `extension-2-cmp-variants.js` - Pre Loader, provides the CMP-specific logic needed for each supported integration.  **Requires modification for each CMP, but no per-customer changes.**
+
+    - `extension-2-cmp-variants.js` - Pre Loader, provides the CMP-specific logic needed for each supported integration. If needed, a new variant can be created to support a new CMP.
+
     - `extension-3.js` - Pre Loader, decides if TiQ should load and overrides some system functions.  No need to modify.  Should be the LAST 'Pre Loader' extension.
+
     - `extension-4.js` - All Tags - After Load Rules (should be the last extension in the list), blocks or allows tags based on implicit/explicit consent. No need to modify. Should be the LAST 'All Tags - After Load Rules' extension.
 
 3. Modify the `example-map.js` extension to match your CMP / TiQ configuration.  There is a helper script in the comments of that extension that will generate the basis.
