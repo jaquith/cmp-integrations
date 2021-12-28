@@ -15,7 +15,6 @@
   *
   */
 
-// Usercentrics v2 setup
 ;(function oneTrust (window) {
   // CMP specific functionality and labels
   window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
