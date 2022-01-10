@@ -7,22 +7,6 @@
  *                Must be Pre Loader, BEFORE the other Pre Loader extensions.
  */
 
-/*
-  TIP: You can run the below script in the Developer Tools console on your page (with Usercentrics active).
-  The result will be copied to the clipboard, you just need to paste to get the basis of your map.
-
-  // start map generation snippet
-
-  var myMap = {}
-  myMap[usercentrics.settingsId] = {}
-  usercentrics.getConsents().forEach((obj) => {
-    myMap[usercentrics.settingsId][obj.dataProcessingService] = []
-  })
-  copy(myMap)
-
-  // end map generation snippet
-*/
-
 /**
  * @module extension-1-example-map
  *

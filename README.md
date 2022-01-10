@@ -20,7 +20,7 @@ Until this functionality is natively available in Tealium iQ, it can be implemen
 
     - `extension-4.js` - All Tags - After Load Rules (should be the last extension in the list), blocks or allows tags based on implicit/explicit consent. No need to modify. Should be the LAST 'All Tags - After Load Rules' extension.
 
-3. Modify the `example-map.js` extension to match your CMP / TiQ configuration.  There is a helper script in the comments of that extension that will generate the basis.
+3. Modify the `example-map.js` extension to match your CMP / TiQ configuration.
 
 4. Edit the utag loader template to include this line directly after `##UTGEN##`
 
