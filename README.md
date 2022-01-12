@@ -6,8 +6,6 @@ A series of integrations between the Tealium iQ Tag Manager and various Consent 
 
 # Approach
 
-*More detail [here](https://jaquith.github.io/cmp-integrations/).*
-
 The purpose of these integrations is to allow Tealium iQ customers to control **individual tags** based on a user's interactions with the CMP of their choice.
 
  - Tealium iQ will not fire any tags, or set any cookies, until a consent decision is available from the CMP. If the expected CMP is not active on the page, no tags will be allowed to fire at all.
@@ -25,6 +23,8 @@ The purpose of these integrations is to allow Tealium iQ customers to control **
  - If a user reopens the CMP's interactive layer and makes a new explicit consent decision, past events are NOT reprocessed with the new consent decision.
  
  - For new events processed after initial Tealium iQ load, the fresh consent decision is retrieved from the CMP as each event is processed by Tealium iQ, to ensure the CMP is treated as the universal source of truth.
+
+ *More detail [here](https://jaquith.github.io/cmp-integrations/).*
 
 ----
 
@@ -79,7 +79,7 @@ The CMP-specific component of the integration is defined in `extension-2` on the
 - `.cmpCheckForExplicitConsentDecision` - checks if the raw consent decision is explicit or implicit
 - `.cmpConvertResponseToGroupList` - transforms the raw decision from the CMP into 
 
-More detail [here](https://jaquith.github.io/cmp-integrations/tealiumCmpIntegration.html)
+*More detail [here](https://jaquith.github.io/cmp-integrations/tealiumCmpIntegration.html).*
 
 ----
 
