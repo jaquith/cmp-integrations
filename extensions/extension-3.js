@@ -35,7 +35,7 @@
   window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
 
   /**
-  * The name of the CMP part of the integration, mostly used for logging and debugging.
+  * The name of the CMP, provided by extension-2, mostly used for logging and debugging.
   * @name cmpName
   * @type {string}
   * @memberof! tealiumCmpIntegration
@@ -63,7 +63,7 @@ window.tealiumCmpIntegration.cmpName = 'Usercentrics'
   var tealiumEnvironment = getTealiumEnvironment() || 'prod' // fall back to prod (stops logging) if something goes wrong with the function
 
   /**
-   * CMP-specific helper, expected to be provided by extension-2 (and possibly via mapping). The Group Name for Tealium iQ in the CMP (used to decide if the TMS is allowed to run). Uses a standard name if not provided.
+   * Profile-specific helper, expected to be provided by extension-2 (and possibly overridden via extension-1). The Group Name for Tealium iQ in the CMP (used to decide if the TMS is allowed to run). Uses a standard name if not provided.
    * @name tiqGroupName
    * @type {object}
    * @memberof! tealiumCmpIntegration

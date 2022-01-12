@@ -4,7 +4,7 @@ A series of integrations between the Tealium iQ Tag Manager and various Consent 
 
  ----
 
-# Configuration Steps
+# Setting Up in Tealium iQ
 
 Until this functionality is natively available in Tealium iQ, it can be implemented as follows:
 
@@ -12,7 +12,7 @@ Until this functionality is natively available in Tealium iQ, it can be implemen
 
 2. Add 4 extensions from the extensions folder, making sure to update the `example-map` extension to match your setup.
 
-    - `extension-1-example-map.js` - Pre Loader, provides the mapping of TiQ tag UIDs to CMP groups.  **Requires modification and maintenance per customer implementation.**
+    - `extension-1-example-map.js` - Pre Loader, provides the mapping of TiQ tag UIDs to CMP groups.  **Must be updated for each implementation.**
 
     - `extension-2-cmp-variants.js` - Pre Loader, provides the CMP-specific logic needed for each supported integration. If needed, a new variant can be created to support a new CMP.
 
@@ -33,7 +33,34 @@ Until this functionality is natively available in Tealium iQ, it can be implemen
 
 ----
 
+# Integrating a New CMP
+
+To add a new integration, you can use the existing integrations and provided examples as a guide - OneTrust is the most complete.
+
+The CMP-specific component of the integration is defined in `extension-2`, and is comprised of short helper functions:
+
+## Determine operating mode
+
+- `.cmpCheckIfOptInModel` - determines if the integration should operate in 'opt-in' or 'opt-out' mode
+
+## Fetch decision
+
+- `.cmpFetchCurrentConsentDecision` - gets the current raw consent decision (raw, from the CMP)
+
+## Validate and standardize the decision
+
+- `.cmpCheckForWellFormedDecision` - checks if the raw consent decision (from cmpFetchCurrentConsentDecision) is well-formed and understandable
+- `.cmpCheckForTiqConsent` - checks if the raw consent decision includes permission for Tealium iQ to process data (otherwise nothing runs)
+- `.cmpCheckForExplicitConsentDecision` - checks if the raw consent decision is explicit or implicit
+- `.cmpConvertResponseToGroupList` - transforms the raw decision from the CMP into 
+
+More detail [here](https://jaquith.github.io/cmp-integrations/tealiumCmpIntegration.html)
+
+----
+
 # Approach
+
+*More detail [here](https://jaquith.github.io/cmp-integrations/).*
 
 The purpose of these integrations is to allow Tealium iQ customers to control **individual tags** based on a user's interactions with the CMP of their choice.
 
@@ -62,11 +89,6 @@ The purpose of these integrations is to allow Tealium iQ customers to control **
 
 ----
 
-# Further Documentation
-
-Developer documentation is available [here](https://jaquith.github.io/cmp-integrations/).
-
-----
 
 
 [![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)

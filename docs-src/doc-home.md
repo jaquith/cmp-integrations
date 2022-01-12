@@ -2,9 +2,15 @@
 
 ----
 
+# Configuration
+
+Guides to setting up this solution in Tealium iQ, and adding a new CMP, are available in the README of the [repo](https://github.com/jaquith/cmp-integrations). 
+
+----
+
 # Approach
 
-The purpose of this integration is to allow Tealium iQ customers to control **individual tags** based on a user's interactions with various Consent Management Platforms.
+The purpose of this integration is to allow Tealium iQ customers to control **individual tags** based on a user's interactions with various Consent Management Platforms (CMPs).
 
 ## Core Behaviors (Opt-In Model)
 
@@ -80,12 +86,6 @@ Maintaining a map in JSON is worse than a UI for mapping tags to groups.
 So far, the follow integrations are prebuilt:
  - OneTrust (opt-in and opt-out)
  - Usercentrics V2 (opt-in)
-
-----
-
-# Configuration Steps
-
-Those steps are available in the README of the [repo](https://github.com/jaquith/cmp-integrations). 
 
 ----
 
