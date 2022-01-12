@@ -12,7 +12,7 @@ Until this functionality is natively available in Tealium iQ, it can be implemen
 
 2. Add 4 extensions from the extensions folder, making sure to update the `example-map` extension to match your setup.
 
-    - `extension-1-example-map.js` - Pre Loader, provides the mapping of TiQ tag UIDs to CMP groups.  **Must be updated for each implementation.**
+    - `extension-1-example-map.js` - Pre Loader, provides the mapping of TiQ tag UIDs to CMP groups.  **Update for each implementation.**
 
     - `extension-2-cmp-variants.js` - Pre Loader, provides the CMP-specific logic needed for each supported integration. If needed, a new variant can be created to support a new CMP.
 
@@ -37,17 +37,17 @@ Until this functionality is natively available in Tealium iQ, it can be implemen
 
 To add a new integration, you can use the existing integrations and provided examples as a guide - OneTrust is the most complete.
 
-The CMP-specific component of the integration is defined in `extension-2`, and is comprised of short helper functions:
+The CMP-specific component of the integration is defined in `extension-2` on the `window.tealiumCmpIntegration` object, and is comprised of a name (`.cmpName`), a version indicator (`.cmpIntegrationVersion`), and a few helper functions:
 
-## Determine operating mode
+### Determine operating mode
 
 - `.cmpCheckIfOptInModel` - determines if the integration should operate in 'opt-in' or 'opt-out' mode
 
-## Fetch decision
+### Fetch decision
 
 - `.cmpFetchCurrentConsentDecision` - gets the current raw consent decision (raw, from the CMP)
 
-## Validate and standardize the decision
+### Validate and standardize the decision
 
 - `.cmpCheckForWellFormedDecision` - checks if the raw consent decision (from cmpFetchCurrentConsentDecision) is well-formed and understandable
 - `.cmpCheckForTiqConsent` - checks if the raw consent decision includes permission for Tealium iQ to process data (otherwise nothing runs)

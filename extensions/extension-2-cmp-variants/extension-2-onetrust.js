@@ -20,6 +20,7 @@
   window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
 
   window.tealiumCmpIntegration.cmpName = 'OneTrust'
+  window.tealiumCmpIntegration.cmpIntegrationVersion = 'onetrust-1.0.0'
 
   function cmpCheckIfOptInModel () {
     var decision = cmpFetchCurrentConsentDecision()

@@ -21,6 +21,7 @@
   window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
 
   window.tealiumCmpIntegration.cmpName = 'Usercentrics Browser SDK'
+  window.tealiumCmpIntegration.cmpIntegrationVersion = 'usercentrics-1.0.0'
 
   // for the consent information in the b object
   window.tealiumCmpIntegration.nameOfVendorOptInArray = 'usercentrics_services_with_consent'

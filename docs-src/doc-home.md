@@ -85,7 +85,7 @@ Maintaining a map in JSON is worse than a UI for mapping tags to groups.
 
 So far, the follow integrations are prebuilt:
  - OneTrust (opt-in and opt-out)
- - Usercentrics V2 (opt-in)
+ - Usercentrics Browser SDK (opt-in)
 
 ----
 
@@ -96,7 +96,7 @@ So far, the follow integrations are prebuilt:
 There are unit tests set up for each CMP integration, you can run them (and the linter) with `npm test`
 
 ## Integration Tests
- - [Usercentrics V2 (Opt-in model)](usercentrics-v2-integration-test-report/index.html).
+ - [Usercentrics Browser SDK (Opt-in model)](usercentrics-v2-integration-test-report/index.html).
 
 ----
 

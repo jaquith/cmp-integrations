@@ -3,10 +3,10 @@
 const stringFunctions = require('../helpers/stringFunctions.js')
 const tests = require('../helpers/cmp-base-tests')
 
-const cmpHelperOptIn = require('../helpers/cmp-specific/test-helper-usercentrics-v2-opt-in.js')
-const cmpHelperOptOut = require('../helpers/cmp-specific/test-helper-usercentrics-v2-opt-out.js')
+const cmpHelperOptIn = require('../helpers/cmp-specific/test-helper-usercentrics-opt-in.js')
+const cmpHelperOptOut = require('../helpers/cmp-specific/test-helper-usercentrics-opt-out.js')
 
-const code = stringFunctions.getVanillaJsFile('extensions/extension-2-cmp-variants/extension-2-usercentrics-v2.js')
+const code = stringFunctions.getVanillaJsFile('extensions/extension-2-cmp-variants/extension-2-usercentrics.js')
 
 describe('Usercentrics V2 Integration', function () {
   describe('Opt-in Model tests', tests.getCmpTestSuite(code, cmpHelperOptIn, true))

@@ -89,6 +89,16 @@ function basicTests (code, settings) {
       })
     })
 
+    it('should have a name', function () {
+      chai.expect(cmpSettings).to.be.an('object')
+      chai.expect(cmpSettings).to.have.property('cmpName').that.is.a('string')
+    })
+
+    it('should have a version', function () {
+      chai.expect(cmpSettings).to.be.an('object')
+      chai.expect(cmpSettings).to.have.property('cmpIntegrationVersion').that.is.a('string')
+    })
+
     it(`cmpFetchCurrentConsentDecision should return ${typeof settings.rawDecision === 'object' ? 'the expected (spoofed) raw response object' : settings.rawDecision}`, function () {
       chai.expect(cmpSettings).to.be.an('object').with.property('cmpFetchCurrentConsentDecision').that.is.a('function')
       chai.expect(cmpSettings.cmpFetchCurrentConsentDecision()).to.deep.equal(settings.rawDecision)
