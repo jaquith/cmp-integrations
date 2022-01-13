@@ -6,7 +6,6 @@
   *
   */
 
-
 // Use OneTrust integration as the example
 ;(function oneTrust (window) {
   // CMP specific functionality and labels
