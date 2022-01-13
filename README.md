@@ -37,13 +37,13 @@ Until this functionality is natively available in Tealium iQ, it can be implemen
 
 2. Add 4 extensions from the extensions folder, making sure to update the `example-map` extension to match your setup.
 
-    - `extension-1-example-map` - Pre Loader, provides the mapping of TiQ tag UIDs to CMP groups.  **Update for each implementation.**
+    - `extension-1-example-map` <br/> Pre Loader, provides the mapping of TiQ tag UIDs to CMP groups.  **Update for each implementation.**
 
-    - `extension-2-cmp-variants` - Pre Loader, provides the CMP-specific logic needed for each supported integration. If needed, a new variant can be created to support a new CMP.
+    - `extension-2-cmp-variants` <br/> Pre Loader, provides the CMP-specific logic needed for each supported integration. If needed, a new variant can be created to support a new CMP.
 
-    - `extension-3` - Pre Loader, decides if TiQ should load and overrides some system functions.  No need to modify.  Should be the LAST 'Pre Loader' extension.
+    - `extension-3` <br/> Pre Loader, decides if TiQ should load and overrides some system functions.  No need to modify.  Should be the LAST 'Pre Loader' extension.
 
-    - `extension-4` - All Tags - After Load Rules (should be the last extension in the list), blocks or allows tags based on implicit/explicit consent. No need to modify. Should be the LAST 'All Tags - After Load Rules' extension.
+    - `extension-4` <br/> All Tags - After Load Rules (should be the last extension in the list), blocks or allows tags based on implicit/explicit consent. No need to modify. Should be the LAST 'All Tags - After Load Rules' extension.
 
 3. Modify `extension-1` to match your CMP / TiQ configuration.
 
@@ -62,25 +62,27 @@ Until this functionality is natively available in Tealium iQ, it can be implemen
 
 To add a new integration, you can use the existing integrations and provided examples as a guide - OneTrust is the most complete.
 
-The CMP-specific component of the integration is defined in `extension-2` on the `window.tealiumCmpIntegration` object, and is comprised of a name (`.cmpName`), a version indicator (`.cmpIntegrationVersion`), and a few helper functions:
+The CMP-specific component of the integration is defined in `extension-2` on the `window.tealiumCmpIntegration` object.
+
+It consists of a name (`.cmpName`), a version indicator (`.cmpIntegrationVersion`), and the following functions:
 
 ### Determine operating mode
 
-- `.cmpCheckIfOptInModel` - determine if the integration should operate in 'opt-in' or 'opt-out' mode
+- `.cmpCheckIfOptInModel` <br/> Determine if the integration should operate on the 'opt-in' or 'opt-out' model
 
 ### Fetch decision
 
-- `.cmpFetchCurrentConsentDecision` - get the current raw consent decision (raw, from the CMP)
+- `.cmpFetchCurrentConsentDecision` <br/> Get the current raw consent decision (raw, from the CMP)
 
 ### Validate and standardize the decision
 
-- `.cmpCheckForWellFormedDecision` - check if the raw consent decision (from cmpFetchCurrentConsentDecision) is well-formed and understandable
+- `.cmpCheckForWellFormedDecision` <br/> Check if the raw consent decision (from cmpFetchCurrentConsentDecision) is well-formed and understandable
 
-- `.cmpCheckForTiqConsent` - check if the raw consent decision includes permission for Tealium iQ to process data (otherwise nothing runs)
+- `.cmpCheckForTiqConsent` <br/> Check if the raw consent decision includes permission for Tealium iQ to process data (otherwise nothing runs)
 
-- `.cmpCheckForExplicitConsentDecision` - check if the raw consent decision is explicit or implicit
+- `.cmpCheckForExplicitConsentDecision` <br/> Check if the raw consent decision is explicit or implicit
 
-- `.cmpConvertResponseToGroupList` - transform the raw decision from the CMP into an array of the allowed group names (should match the group names in the mapping in `extension-1`)
+- `.cmpConvertResponseToGroupList` <br/> Transform the raw decision from the CMP into a simple array of the allowed group names (should match the group names in the mapping in `extension-1`)
 
 *More detail [here](https://jaquith.github.io/cmp-integrations/tealiumCmpIntegration.html).*
 
