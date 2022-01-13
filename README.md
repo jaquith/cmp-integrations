@@ -37,15 +37,15 @@ Until this functionality is natively available in Tealium iQ, it can be implemen
 
 2. Add 4 extensions from the extensions folder, making sure to update the `example-map` extension to match your setup.
 
-    - `extension-1-example-map.js` - Pre Loader, provides the mapping of TiQ tag UIDs to CMP groups.  **Update for each implementation.**
+    - `extension-1-example-map` - Pre Loader, provides the mapping of TiQ tag UIDs to CMP groups.  **Update for each implementation.**
 
-    - `extension-2-cmp-variants.js` - Pre Loader, provides the CMP-specific logic needed for each supported integration. If needed, a new variant can be created to support a new CMP.
+    - `extension-2-cmp-variants` - Pre Loader, provides the CMP-specific logic needed for each supported integration. If needed, a new variant can be created to support a new CMP.
 
-    - `extension-3.js` - Pre Loader, decides if TiQ should load and overrides some system functions.  No need to modify.  Should be the LAST 'Pre Loader' extension.
+    - `extension-3` - Pre Loader, decides if TiQ should load and overrides some system functions.  No need to modify.  Should be the LAST 'Pre Loader' extension.
 
-    - `extension-4.js` - All Tags - After Load Rules (should be the last extension in the list), blocks or allows tags based on implicit/explicit consent. No need to modify. Should be the LAST 'All Tags - After Load Rules' extension.
+    - `extension-4` - All Tags - After Load Rules (should be the last extension in the list), blocks or allows tags based on implicit/explicit consent. No need to modify. Should be the LAST 'All Tags - After Load Rules' extension.
 
-3. Modify the `example-map.js` extension to match your CMP / TiQ configuration.
+3. Modify `extension-1` to match your CMP / TiQ configuration.
 
 4. Edit the utag loader template to include this line directly after `##UTGEN##`
 
@@ -77,9 +77,25 @@ The CMP-specific component of the integration is defined in `extension-2` on the
 - `.cmpCheckForWellFormedDecision` - checks if the raw consent decision (from cmpFetchCurrentConsentDecision) is well-formed and understandable
 - `.cmpCheckForTiqConsent` - checks if the raw consent decision includes permission for Tealium iQ to process data (otherwise nothing runs)
 - `.cmpCheckForExplicitConsentDecision` - checks if the raw consent decision is explicit or implicit
-- `.cmpConvertResponseToGroupList` - transforms the raw decision from the CMP into 
+- `.cmpConvertResponseToGroupList` - transforms the raw decision from the CMP into an array of the allowed group names (should match the group names in the mapping in `extension-1`)
 
 *More detail [here](https://jaquith.github.io/cmp-integrations/tealiumCmpIntegration.html).*
+
+----
+
+# Supported CMPs and Demo Pages
+
+This framework is allowed to make it easy to support new CMPs, so please reach out / raise an issue if you've built something that should be added here so we can validate it and set up the unit tests together before adding it.
+
+### Usercentrics Browser SDK
+ - Supports opt-in mode (which also technically works for opt-out mode, but with unneeded polling)
+ - [Bare-bones demo page](https://solutions.tealium.net/hosted/usercentrics-v2/test-page-standard.html)
+ - [Bare-bones dataLayer listener demo page](https://solutions.tealium.net/hosted/usercentrics-v2/test-page-datalayer-listener.html)
+ - [Integration Test Report](https://jaquith.github.io/cmp-integrations/usercentrics-integration-test-report/index.html)
+
+### OneTrust
+ - Supports both opt-in and opt-out modes
+ - [OneTrust-managed Demo](https://demo9.otprivacy.com/files/EN/TagManagerDemo/OTKicks_Tealium/index.html)
 
 ----
 

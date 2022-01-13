@@ -79,13 +79,9 @@ The menu headings offered by JSDoc don't fit our needs perfectly.  You should re
 
 # Known Limitations
 
-This framework presently uses polling, and expects a synchronous response from the `cmpFetchCurrentConsentDecision` method - patterns like callbacks and event listeners will be explored in subsequent iterations.
+This framework presently uses polling, and expects a synchronous response from the `cmpFetchCurrentConsentDecision` method - patterns like callbacks and event listeners will be explored in subsequent iterations, and will be more resource-efficient (less polling, but likely still a bit to solve the CMP/TiQ race).  For now, we've prioritized simplicity and reliability.
 
-Maintaining a map in JSON is worse than a UI for mapping tags to groups.
-
-So far, the follow integrations are prebuilt:
- - OneTrust (opt-in and opt-out)
- - Usercentrics Browser SDK (opt-in)
+Maintaining a map in JSON not an ideal user experience - we're working to formalize this approach natively in Tealium iQ.
 
 ----
 
@@ -93,10 +89,12 @@ So far, the follow integrations are prebuilt:
 
 ## Unit Tests
 
-There are unit tests set up for each CMP integration, you can run them (and the linter) with `npm test`
+There are unit tests set up for each CMP integration, you can run them (and the linter) with `npm test`, and it's set up to easily test new integrations with very little effort.
 
 ## Integration Tests
- - [Usercentrics Browser SDK (Opt-in model)](usercentrics-v2-integration-test-report/index.html).
+ - [Usercentrics Browser SDK (Opt-in model)](usercentrics-integration-test-report/index.html).
+
+A list of supported CMPs and demo pages is available in the README of the [repo](https://github.com/jaquith/cmp-integrations)
 
 ----
 
