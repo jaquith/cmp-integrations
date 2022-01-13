@@ -66,18 +66,21 @@ The CMP-specific component of the integration is defined in `extension-2` on the
 
 ### Determine operating mode
 
-- `.cmpCheckIfOptInModel` - determines if the integration should operate in 'opt-in' or 'opt-out' mode
+- `.cmpCheckIfOptInModel` - determine if the integration should operate in 'opt-in' or 'opt-out' mode
 
 ### Fetch decision
 
-- `.cmpFetchCurrentConsentDecision` - gets the current raw consent decision (raw, from the CMP)
+- `.cmpFetchCurrentConsentDecision` - get the current raw consent decision (raw, from the CMP)
 
 ### Validate and standardize the decision
 
-- `.cmpCheckForWellFormedDecision` - checks if the raw consent decision (from cmpFetchCurrentConsentDecision) is well-formed and understandable
-- `.cmpCheckForTiqConsent` - checks if the raw consent decision includes permission for Tealium iQ to process data (otherwise nothing runs)
-- `.cmpCheckForExplicitConsentDecision` - checks if the raw consent decision is explicit or implicit
-- `.cmpConvertResponseToGroupList` - transforms the raw decision from the CMP into an array of the allowed group names (should match the group names in the mapping in `extension-1`)
+- `.cmpCheckForWellFormedDecision` - check if the raw consent decision (from cmpFetchCurrentConsentDecision) is well-formed and understandable
+
+- `.cmpCheckForTiqConsent` - check if the raw consent decision includes permission for Tealium iQ to process data (otherwise nothing runs)
+
+- `.cmpCheckForExplicitConsentDecision` - check if the raw consent decision is explicit or implicit
+
+- `.cmpConvertResponseToGroupList` - transform the raw decision from the CMP into an array of the allowed group names (should match the group names in the mapping in `extension-1`)
 
 *More detail [here](https://jaquith.github.io/cmp-integrations/tealiumCmpIntegration.html).*
 
