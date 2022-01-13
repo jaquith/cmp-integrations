@@ -6,79 +6,93 @@
   *
   */
 
-// Usercentrics v2 used as example
-;(function usercentricsBrowserSdkV2 (window) {
+
+// Use OneTrust integration as the example
+;(function oneTrust (window) {
   // CMP specific functionality and labels
   window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
 
-  window.tealiumCmpIntegration.cmpName = 'Usercentrics Browser SDK'
-  window.tealiumCmpIntegration.cmpIntegrationVersion = 'usercentrics-1.0.0'
+  window.tealiumCmpIntegration.cmpName = 'OneTrust'
+  window.tealiumCmpIntegration.cmpIntegrationVersion = 'onetrust-1.0.0'
 
-  // for the consent information in the b object
-  window.tealiumCmpIntegration.nameOfVendorOptInArray = 'usercentrics_services_with_consent'
-  window.tealiumCmpIntegration.nameOfConsentTypeString = 'usercentrics_consent_type'
+  function cmpCheckIfOptInModel () {
+    var decision = cmpFetchCurrentConsentDecision()
+    if (decision && decision.ConsentModel && decision.ConsentModel.Name === 'opt-out') {
+      return false
+    }
+    return true
+  }
 
   function cmpFetchCurrentConsentDecision () {
-    if (!window.UC_UI || typeof window.UC_UI.getServicesBaseInfo !== 'function') return false
-    var cmpRawOutput = window.UC_UI.getServicesBaseInfo()
+    if (!window.OneTrust || typeof window.OneTrust.GetDomainData !== 'function') return false
+    var cmpRawOutput = window.OneTrust.GetDomainData()
     return cmpRawOutput
   }
 
   function cmpFetchCurrentLookupKey () {
-    return (window.UC_UI && typeof window.UC_UI.getSettings === 'function' && window.UC_UI.getSettings().id) || ''
-  }
-
-  function cmpCheckIfOptInModel () {
-    if (window.UC_UI && window.UC_UI.getSettingsCore && window.UC_UI.getSettingsCore().acceptAllImplicitlyOutsideEU === false) return false
-    return true
+    if (!window.OneTrust || typeof window.OneTrust.GetDomainData !== 'function') return ''
+    var id = window.OneTrust.GetDomainData().cctId
+    return id || ''
   }
 
   function cmpCheckForWellFormedDecision (cmpRawOutput) {
     // treat things we don't understand as an opt-out
-    if (toString.call(cmpRawOutput) !== '[object Array]') return false
-    // use the first entry as a proxy for all
-    if (cmpRawOutput && cmpRawOutput[0] && typeof cmpRawOutput[0].name === 'string') {
-      return true
-    }
-    return false
+    if (typeof cmpRawOutput !== 'object') return false
+    if (typeof cmpRawOutput.ConsentIntegrationData !== 'object') return false
+    if (typeof cmpRawOutput.ConsentIntegrationData.consentPayload !== 'object') return false
+    if (toString.call(cmpRawOutput.Groups) !== '[object Array]') return false
+    return true
   }
 
   function cmpCheckForExplicitConsentDecision (cmpRawOutput) {
     // treat things we don't understand as an opt-out
-    if (toString.call(cmpRawOutput) !== '[object Array]') return false
-    // use the first entry as a proxy for all
-    var consentHistory = (cmpRawOutput && cmpRawOutput[0] && cmpRawOutput[0].consent && cmpRawOutput[0].consent.history) || []
-    var lastHistoryEntryType = (consentHistory && consentHistory.length && consentHistory[consentHistory.length - 1].type) || ''
-    if (lastHistoryEntryType === 'explicit') {
+    if (cmpCheckForWellFormedDecision(cmpRawOutput) !== true) return false
+
+    // check for any logged interaction - OneTrust seems to only log decisions, not other clicks in the UI
+    if (cmpRawOutput.ConsentIntegrationData && cmpRawOutput.ConsentIntegrationData.consentPayload &&
+      cmpRawOutput.ConsentIntegrationData.consentPayload.dsDataElements &&
+      cmpRawOutput.ConsentIntegrationData.consentPayload.dsDataElements.InteractionType !== '') {
       return true
     }
     return false
   }
 
-  function cmpCheckForTiqConsent (cmpRawOutput, tiqGroupName) {
-    var foundOptIn = false
-    // treat things we don't understand as an opt-out
-    if (toString.call(cmpRawOutput) !== '[object Array]') return false
-    // use the mapping if found, with a fallback (Usercentrics default value) if not specified in the mapping
-
-    tiqGroupName = tiqGroupName || 'tiq-group-name-missing'
-    // check vendors if there's an object, look for at least one
-    cmpRawOutput.forEach(function (tagInfo) {
-      if ((tagInfo.consent && tagInfo.consent.status === true) && tagInfo.name === tiqGroupName) {
-        foundOptIn = true
-      }
-    })
-    return foundOptIn
-  }
-
   function cmpConvertResponseToGroupList (cmpRawOutput) {
+    // convert from array of objects to object for easier lookups
+    var decisionByPurpose = {}
+    if (cmpRawOutput && cmpRawOutput.ConsentIntegrationData &&
+        cmpRawOutput.ConsentIntegrationData.consentPayload &&
+        cmpRawOutput.ConsentIntegrationData.consentPayload.purposes
+    ) {
+      cmpRawOutput.ConsentIntegrationData.consentPayload.purposes.forEach(function (obj) {
+        decisionByPurpose[obj.Id] = obj.TransactionType
+      })
+    } else {
+      return []
+    }
+
+    var decisionByGroupName = {}
+    cmpRawOutput.Groups.forEach(function (groupInfo) {
+      decisionByGroupName[groupInfo.GroupName] = decisionByPurpose[groupInfo.PurposeId] || 'ERROR-MISSING'
+    })
+
     var vendorArray = []
-    cmpRawOutput && cmpRawOutput.forEach(function (tagConsent) {
-      if (tagConsent.consent && tagConsent.consent.status === true) {
-        vendorArray.push(tagConsent.name)
+    var groupNames = Object.keys(decisionByGroupName)
+    groupNames.forEach(function (groupName) {
+      if (decisionByGroupName[groupName] === 'NO_CHOICE' || decisionByGroupName[groupName] === 'CONFIRMED') {
+        vendorArray.push(groupName)
       }
     })
     return vendorArray
+  }
+
+  function cmpCheckForTiqConsent (cmpRawOutput, tiqGroupName) {
+    // treat things we don't understand as an opt-out
+    if (cmpCheckForWellFormedDecision(cmpRawOutput) !== true) return false
+
+    tiqGroupName = tiqGroupName || 'tiq-group-name-missing'
+    var allowedGroups = cmpConvertResponseToGroupList(cmpRawOutput)
+    return allowedGroups.indexOf(tiqGroupName) !== -1
   }
 
   window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision = cmpFetchCurrentConsentDecision

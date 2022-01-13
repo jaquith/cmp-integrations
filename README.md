@@ -8,6 +8,8 @@ A series of integrations between the Tealium iQ Tag Manager and various Consent 
 
 The purpose of these integrations is to allow Tealium iQ customers to control **individual tags** based on a user's interactions with the CMP of their choice.
 
+### Opt-In Model
+
  - Tealium iQ will not fire any tags, or set any cookies, until a consent decision is available from the CMP. If the expected CMP is not active on the page, no tags will be allowed to fire at all.
 
  - If a consent decision isn't found when Tealium iQ loads, this solution will continually poll until one is found.
@@ -24,7 +26,7 @@ The purpose of these integrations is to allow Tealium iQ customers to control **
  
  - For new events processed after initial Tealium iQ load, the fresh consent decision is retrieved from the CMP as each event is processed by Tealium iQ, to ensure the CMP is treated as the universal source of truth.
 
- *More detail [here](https://jaquith.github.io/cmp-integrations/).*
+ *The opt-out model is very similar but simpler, more detail [here](https://jaquith.github.io/cmp-integrations/).*
 
 ----
 
@@ -60,7 +62,7 @@ Until this functionality is natively available in Tealium iQ, it can be implemen
 
 # Integrating a New CMP
 
-To add a new integration, you can use the existing integrations and provided examples as a guide - OneTrust is the most complete.
+To add a new integration, you can use the existing integrations and provided [example](https://github.com/jaquith/cmp-integrations/blob/main/extensions/extension-2-cmp-variants/extension-2-example.js) as a guide.
 
 The CMP-specific component of the integration is defined in `extension-2` on the `window.tealiumCmpIntegration` object.
 
