@@ -1720,14 +1720,13 @@ exports.getWindowSpoof = function (rawDecision, useOptInModel) {
         return rawDecision
       },
       getSettings: function () {
-        return (rawDecision && {
-          id: 'test-config'
-        }) || ''
+        return 'DEPRECATED'
       },
       getSettingsCore: function () {
-        return {
+        return (rawDecision && {
+          id: 'test-config',
           acceptAllImplicitlyOutsideEU: !useOptInModel
-        }
+        }) || ''
       }
     }
   }

@@ -15,13 +15,23 @@
   *
   */
 
+/**
+ * CHANGELOG
+ *
+ * 1.0.1
+ *  - Replace UC_UI.getSettings (due for deprecation) with UC_UI.getSettingsCore (a 1:1 replacement for our purposes)
+ *
+ * 1.0.0
+ *  - Initial version, start versioning
+ */
+
 // Usercentrics v2 setup
 ;(function usercentricsBrowserSdkV2 (window) {
   // CMP specific functionality and labels
   window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
 
   window.tealiumCmpIntegration.cmpName = 'Usercentrics Browser SDK'
-  window.tealiumCmpIntegration.cmpIntegrationVersion = 'usercentrics-1.0.0'
+  window.tealiumCmpIntegration.cmpIntegrationVersion = 'usercentrics-1.0.1'
 
   // for the consent information in the b object
   window.tealiumCmpIntegration.nameOfVendorOptInArray = 'usercentrics_services_with_consent'
@@ -34,7 +44,7 @@
   }
 
   function cmpFetchCurrentLookupKey () {
-    return (window.UC_UI && typeof window.UC_UI.getSettings === 'function' && window.UC_UI.getSettings().id) || ''
+    return (window.UC_UI && typeof window.UC_UI.getSettingsCore === 'function' && window.UC_UI.getSettingsCore().id) || ''
   }
 
   // only support opt-In model for Usercentrics for now, can be added if needed
