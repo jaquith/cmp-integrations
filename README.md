@@ -5,11 +5,13 @@ A series of integrations between the Tealium iQ Tag Manager and various Consent 
 
 # See It in Action
 
-Visit the [OneTrust-managed demo site](https://demo9.otprivacy.com/files/EN/TagManagerDemo/OTKicks_Tealium/index.html) and [activate debug mode](https://docs.tealium.com/platforms/javascript/debugging/) by pasting 
+Just visit the [OneTrust-managed demo site](https://demo9.otprivacy.com/files/EN/TagManagerDemo/OTKicks_Tealium/index.html).
+
+If you want detailed logs, [activate debug mode](https://docs.tealium.com/platforms/javascript/debugging/) by pasting 
 
 `document.cookie = "utagdb=true"`
 
-in the developer tools console for detailed logging.
+in the developer tools console.
 
 ----
 
