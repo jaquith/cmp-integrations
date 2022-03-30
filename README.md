@@ -2,13 +2,22 @@
 
 A series of integrations between the Tealium iQ Tag Manager and various Consent Management Platforms (CMPs).
 
+
+# See It in Action
+
+Visit the [OneTrust-managed demo site](https://demo9.otprivacy.com/files/EN/TagManagerDemo/OTKicks_Tealium/index.html) and [activate debug mode](https://docs.tealium.com/platforms/javascript/debugging/) by pasting 
+
+`document.cookie = "utagdb=true"`
+
+in the developer tools console for detailed logging.
+
 ----
 
 # Approach
 
 The purpose of these integrations is to allow Tealium iQ customers to control **individual tags** based on a user's interactions with the CMP of their choice.
 
-### Opt-In Model
+### Opt-in Model
 
  - Tealium iQ will not fire any tags, or set any cookies, until a consent decision is available from the CMP. If the expected CMP is not active on the page, no tags will be allowed to fire at all.
 
@@ -26,7 +35,7 @@ The purpose of these integrations is to allow Tealium iQ customers to control **
  
  - For new events processed after initial Tealium iQ load, the fresh consent decision is retrieved from the CMP as each event is processed by Tealium iQ, to ensure the CMP is treated as the universal source of truth.
 
- *The opt-out model is very similar but simpler, more detail [here](https://jaquith.github.io/cmp-integrations/).*
+ *The opt-out model is very similar but simpler, (much) more detail [here](https://jaquith.github.io/cmp-integrations/).*
 
 ----
 
