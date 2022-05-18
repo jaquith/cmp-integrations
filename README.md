@@ -21,17 +21,19 @@ The purpose of these integrations is to allow Tealium iQ customers to control **
 
 ### Opt-in Model
 
- - Tealium iQ will not fire any tags, or set any cookies, until a consent decision is available from the CMP. If the expected CMP is not active on the page, no tags will be allowed to fire at all.
+ - Tealium iQ will not fire any tags, or set any cookies, until a consent decision (that includes permission to run Teaelium iQ) is available from the CMP. If the expected CMP is not active on the page, or Tealium iQ is not consented to, Tealium iQ will not run, and no tags will be allowed to fire at all.
 
  - If a consent decision isn't found when Tealium iQ loads, this solution will continually poll until one is found.
 
  - Until a consent decision is found, all events are queued, so they can be processed when a decision is found.
 
- - When a consent decision (either implicit or explicit) is available from the CMP, tags will be fired in accordance with that consent for all events that have been queued.
+ - When a consent decision (either implicit or explicit) is available from the CMP, the first check is whether Tealium iQ is allowed to run (since it sets cookies). 
+ 
+  - If Tealium iQ is allowed to run, tags will be fired in accordance with that consent for all events that have been queued.
 
  - If the found consent decision is implicit, those events go into another queue after implicitly consented tags have been fired, so they can be re-processed for newly consented tags if the user makes an explicit decision. The solution will poll for an explicit decision until one is found.
  
- - If the found consent decision is explicit, all queues are emptied and polling stops. Tags that have already been fired on implicit consent are not re-fired when the explicit consent decision is processed.
+ - If the found consent decision is explicit, all queues are emptied and polling stops. Tags that have already been fired on implicit consent are not re-fired when the explicit consent decision is processed unless included in the `refiringAllowed` array in the map and there are newly-consented purposes to process.
 
  - If a user reopens the CMP's interactive layer and makes a new explicit consent decision, past events are NOT reprocessed with the new consent decision.
  
@@ -114,6 +116,23 @@ This framework is allowed to make it easy to support new CMPs, so please reach o
 ### OneTrust
  - Supports both opt-in and opt-out modes
  - [OneTrust-managed Demo](https://demo9.otprivacy.com/files/EN/TagManagerDemo/OTKicks_Tealium/index.html)
+
+----
+
+# Server-side Enforcement
+
+Tealium Collect must be mapped to a consented purpose, like all other tags. 
+
+But the `refiringAllowed` option allows tags to be refired on new decisions, so one could clearly explain that the tag is used for a variety of server-side purposes and use the available server-side filters and logic to ensure the signal is only processed as appropriate, while allowing it to refire. 
+
+Collect will fire with the following event-level attributes on each event:
+
+ - `consent_type` - the ConsentDecision's 'type' attribute ('implicit' or 'explicit') when adding it to Tealium's b object on each event
+ - `groups_with_consent_all` - the full ConsentDecision array when adding it to Tealium's b object on each event
+ - `groups_with_consent_processed` - the array of already-processed consented groups
+ - `groups_with_consent_unprocessed` - the array of not-yet-processed-but-consented groups 
+
+Depending on whether you're refiring Collect (and what server-side tools you're using), you should use either `groups_with_consent_unprocessed` (with refiring) or `groups_with_consent_all` (without refiring) as your primarly event-level consent attribute.
 
 ----
 

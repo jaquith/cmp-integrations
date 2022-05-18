@@ -23,7 +23,7 @@
 ;(function avoidGlobalScopeUnlessExplicit (window) {
   // set names for key objects and variables to make them easy to change if needed
 
-  var version = 'v1.0.0-alpha-3'
+  var version = 'v1.0.0-alpha-6'
 
   /**
  * A window-scoped (global) object used to expose or define selected functionality.
@@ -47,11 +47,23 @@ window.tealiumCmpIntegration.cmpName = 'Usercentrics'
   window.tealiumCmpIntegration.cmpName = window.tealiumCmpIntegration.cmpName || 'Unnamed CMP'
 
   // for the consent information in the b object
-  var nameOfVendorOptInArray = window.tealiumCmpIntegration.nameOfVendorOptInArray || 'groups_with_consent'
+  var nameOfFullGroupArray = window.tealiumCmpIntegration.nameOfFullGroupArray || 'groups_with_consent_all'
+  var nameOfUnprocessedGroupArray = window.tealiumCmpIntegration.nameOfUnprocessedGroupArray || 'groups_with_consent_unprocessed'
+  var nameOfProcessedGroupArray = window.tealiumCmpIntegration.nameOfProcessedGroupArray || 'groups_with_consent_processed'
   var nameOfConsentTypeString = window.tealiumCmpIntegration.nameOfConsentTypeString || 'consent_type'
 
-  // for the name in the queue
-  var nameOfImplicitConsentArray = window.tealiumCmpIntegration.nameOfImplicitConsentArray || '_groups_already_processed'
+  /**
+   * A list of tags that should refire when the user makes an initial, non opt-out explicit decision on first landing. This example will cause tag 7 to fire any intial events twice, allowing server-side activations to be triggered as early as possible.
+   * @name refiringAllowed
+   * @type {array}
+   * @memberof! tealiumCmpIntegration
+   *
+   * @example
+window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
+// the numbers in the array are tag UIDs from the TiQ user interface, this
+window.tealiumCmpIntegration.refiringAllowed = [7]
+   */
+  var refiringAllowed = window.tealiumCmpIntegration.refiringAllowed || []
 
   // name to use when calling utag.handler.trigger to indicate a consent polling call
   var nameOfConsentPollingEvent = window.tealiumCmpIntegration.nameOfConsentPollingEvent || 'tiq_cmp_consent_polling'
@@ -259,31 +271,40 @@ window.tealiumCmpIntegration.cmpConvertResponseToGroupList = cmpConvertResponseT
   window.tealiumCmpIntegration.isNoviewSet = window.utag_cfg_ovrd && window.utag_cfg_ovrd.noview === true
 
   /**
-   * The name to use for the [ConsentDecision]{@link ConsentDecision} array when adding it to Tealium's b object on each event.
-   * @name nameOfVendorOptInArray
+   * The name to use for the full [ConsentDecision]{@link ConsentDecision} array when adding it to Tealium's b object on each event.
+   * @name nameOfFullGroupArray
    * @type {string}
-   * @private
+   * @default groups_with_consent_all
    * @memberof! tealiumCmpIntegration
    */
-  window.tealiumCmpIntegration.nameOfVendorOptInArray = nameOfVendorOptInArray
+  window.tealiumCmpIntegration.nameOfFullGroupArray = nameOfFullGroupArray
 
   /**
-   * The name to use for the current [ConsentDecision]{@link ConsentDecision}'s 'type' attribute when adding it to Tealium's b object on each event.
+   * The name to use for the [ConsentDecision]{@link ConsentDecision}'s 'type' attribute ('implicit' or 'explicit') when adding it to Tealium's b object on each event.
    * @name nameOfConsentTypeString
    * @type {string}
-   * @private
+   * @default consent_type
    * @memberof! tealiumCmpIntegration
    */
   window.tealiumCmpIntegration.nameOfConsentTypeString = nameOfConsentTypeString
 
   /**
-   * The name to use for the array of implicit tags (which have already been fired) in the 'data' property of {@link QueuedEvent QueuedEvent} objects.
-   * @name nameOfImplicitConsentArray
+   * The name to use for the array of not-yet-processed-but-consented groups when adding it to Tealium's b object on each event and in the 'data' property of {@link QueuedEvent QueuedEvent} objects.
+   * @name nameOfUnprocessedGroupArray
    * @type {string}
-   * @private
+   * @default groups_with_consent_unprocessed
    * @memberof! tealiumCmpIntegration
    */
-  window.tealiumCmpIntegration.nameOfImplicitConsentArray = nameOfImplicitConsentArray
+  window.tealiumCmpIntegration.nameOfUnprocessedGroupArray = nameOfUnprocessedGroupArray
+
+  /**
+   * The name to use for the array of already-processed consented groups when adding it to Tealium's b object on each event and in the 'data' property of {@link QueuedEvent QueuedEvent} objects.
+   * @name nameOfProcessedGroupArray
+   * @type {string}
+   * @default groups_with_consent_processed
+   * @memberof! tealiumCmpIntegration
+   */
+  window.tealiumCmpIntegration.nameOfProcessedGroupArray = nameOfProcessedGroupArray
 
   /**
    * A [helper function]{@link module:extension-3~overrideUtagFunctions} that overrides certain utag functions to allow tags to be blocked based on CMP response.
@@ -291,7 +312,6 @@ window.tealiumCmpIntegration.cmpConvertResponseToGroupList = cmpConvertResponseT
    * Must be called directly after the '##UTGEN##' reference by [editing]{@link https://community.tealiumiq.com/t5/iQ-Tag-Management/Managing-Tag-Templates/ta-p/21713} the 'utag loader' template, as shown in the example.
    * @name overrideUtagFunctions
    * @type {function}
-   * @private
    * @memberof! tealiumCmpIntegration
    * @example
 // ... utag loader template ...
@@ -647,18 +667,20 @@ window.tealiumCmpIntegration.map = {
 
     // if an array of tagUids is passed, that forces them to fire regardless of load rules
     // or consent, so we need to filter that array before allowing it to be processed
-    var hasTagUidArray = c && typeof c === 'object' && c.uids && c.uids && window.utag.ut.typeOf(c.uids) === 'array'
+    var hasTagUidArray = c && typeof c === 'object' && c.uids && window.utag.ut.typeOf(c.uids) === 'array'
     var uidMap = generateTagBasedMap()
     var allowedTagUids = []
     var blockedTagUids = []
     var serviceName
     var tagUid
+    var hasConsent
     if (hasTagUidArray) {
       for (var i = 0; i < c.uids.length; i++) {
         tagUid = c.uids[i]
         serviceName = uidMap[tagUid] || '(missing)'
+        hasConsent = consentedServices.indexOf(serviceName) !== -1
         // only push consented services into the new array
-        if (consentedServices.indexOf(serviceName) !== -1) {
+        if (hasConsent) {
           allowedTagUids.push(tagUid)
         } else {
           blockedTagUids.push(tagUid)
@@ -794,13 +816,8 @@ window.tealiumCmpIntegration.map = {
       a = { event: a, data: b || {}, cfg: c }
     }
 
-    // if there's a tagUid array, don't queue the already-fired tags - instead, swap that with any blocked tags
-    if (a && a.cfg && window.utag.ut.typeOf(a.cfg.uids) === 'array') {
-      a.cfg.uids = a.cfg.blockedTagUids.slice()
-    }
-
     // nothing will be allowed to fire
-    a.data[nameOfImplicitConsentArray] = []
+    a.data[nameOfProcessedGroupArray] = []
 
     window.tealiumCmpIntegration.earlyEventQueue = window.tealiumCmpIntegration.earlyEventQueue || []
     window.tealiumCmpIntegration.earlyEventQueue.push(a)
@@ -831,12 +848,25 @@ window.tealiumCmpIntegration.map = {
       a = { event: a, data: b || {}, cfg: c }
     }
 
-    // if there's a tagUid array, don't queue the already-fired tags - instead, swap that with any blocked tags
+    // if there's a tagUid array, don't queue the already-fired tags unless they're allowed to refire - instead, swap that with any blocked tags
+    var newUids
     if (a && a.cfg && window.utag.ut.typeOf(a.cfg.uids) === 'array') {
-      a.cfg.uids = a.cfg.blockedTagUids.slice()
+      // anything blocked previously (to give it another chance with new consent)
+      newUids = a.cfg.blockedTagUids.slice()
+      // add any tags that were originally in the uid array AND have been marked to refire on both IMPLICIT and EXPLICIT consent decisions (like Tealium Collect)
+      // as long as there are newly consented groups and it's not already in the array
+      for (var i = 0; i < refiringAllowed.length; i++) {
+        if (a.cfg.originalUids && a.cfg.originalUids.indexOf(refiringAllowed[i]) !== -1 && newUids.indexOf(refiringAllowed[i]) === -1 && b[nameOfUnprocessedGroupArray].length > 0) {
+          newUids.push(refiringAllowed[i])
+        }
+      }
+
+      a.cfg.uids = newUids
     }
 
-    a.data[nameOfImplicitConsentArray] = window.tealiumCmpIntegration.implicitServices || []
+    a.data[nameOfProcessedGroupArray] = window.tealiumCmpIntegration.implicitServices || []
+    delete a.data[nameOfFullGroupArray]
+    delete a.data[nameOfUnprocessedGroupArray]
 
     window.tealiumCmpIntegration.implicitEventQueue = window.tealiumCmpIntegration.implicitEventQueue || []
     window.tealiumCmpIntegration.implicitEventQueue.push(a)
@@ -965,7 +995,10 @@ window.tealiumCmpIntegration.map = {
     if (!window.utag.handler || !window.utag.handler.iflag) {
       // we don't need to reload actually, just allow it to finish loading
       window.utag.cfg.noload = false // safe because this code only runs if it was set to false originally
-      window.utag.loader.PINIT()
+      if (!window.utag.PINITCalled) { // calling PINIT more than once causes issues in some edge cases
+        window.utag.loader.PINIT()
+        window.utag.PINITCalled = true
+      }
       return true
     }
     // already loaded
@@ -1097,73 +1130,74 @@ window.tealiumCmpIntegration.map = {
  * @property {object} cfg an optional configuration object that can have a 'cb' property (for a callback function) and a 'uids' array, which is a list of tag UIDs that should be triggered by the event, regardless of whether load rules are met.
  * @example
 {
-  "event": "view",
-  "data": {
-    "page_type": "test_virtual_view",
-    "cp.utag_main_v_id": "0174492849d50013581219634d6103079004907101274",
-    "cp.utag_main__sn": "4",
-    "cp.utag_main__se": "4",
-    "cp.utag_main__ss": "0",
-    "cp.utag_main__st": "1598990152209",
-    "cp.utag_main_ses_id": "1598988112353",
-    "cp.utag_main__pn": "3",
-    "cp.utagdb": "true",
-    "dom.referrer": "",
-    "dom.title": "Usercentrics Test",
-    "dom.domain": "solutions.tealium.net",
-    "dom.query_string": "",
-    "dom.hash": "",
-    "dom.url": "https://solutions.tealium.net/hosted/usercentrics/test-page-standard.html",
-    "dom.pathname": "/hosted/usercentrics/test-page-standard.html",
-    "dom.viewport_height": 456,
-    "dom.viewport_width": 1825,
-    "ut.domain": "tealium.net",
-    "ut.version": "ut4.46.202009011921",
-    "ut.event": "view",
-    "ut.visitor_id": "0174492849d50013581219634d6103079004907101274",
-    "ut.session_id": "1598988112353",
-    "ut.account": "services-caleb",
-    "ut.profile": "usercentrics-by-tag",
-    "ut.env": "prod",
-    "tealium_event": "view",
-    "tealium_visitor_id": "0174492849d50013581219634d6103079004907101274",
-    "tealium_session_id": "1598988112353",
-    "tealium_session_number": "4",
-    "tealium_session_event_number": "4",
-    "tealium_datasource": "",
-    "tealium_account": "services-caleb",
-    "tealium_profile": "usercentrics-by-tag",
-    "tealium_environment": "prod",
-    "tealium_random": "2085060854215077",
-    "tealium_library_name": "utag.js",
-    "tealium_library_version": "4.46.0",
-    "tealium_timestamp_epoch": 1598988352,
-    "tealium_timestamp_utc": "2020-09-01T19:25:52.211Z",
-    "tealium_timestamp_local": "2020-09-01T21:25:52.211",
-    "usercentrics_services_with_consent": [
-      "Mouseflow",
-      "Tealium iQ Tag Management",
-      "Usercentrics Consent Management Platform"
-    ],
-    "usercentrics_consent_type": "implicit",
-    "_usercentrics_services_already_processed": [
-      "Mouseflow",
-      "Tealium iQ Tag Management",
-      "Usercentrics Consent Management Platform"
-    ]
-  },
-  "cfg": {
-    "cb": function myCallback () {console.log("Callback fired!")},
-    "uids": [
-      11
-    ],
-    "originalUids": [
-      7,
-      11
-    ],
-    "blockedTagUids": [
-      11
-    ]
-  }
+    "event": "view",
+    "data": {
+        "cp.utag_main_v_id": "0180d6afbfe5001fb3c58332996b05079004c07100fb8",
+        "cp.utag_main__sn": "1",
+        "cp.utag_main__se": "5",
+        "cp.utag_main__ss": "0",
+        "cp.utag_main__st": "1652872155220",
+        "cp.utag_main_ses_id": "1652869283813",
+        "cp.utag_main__pn": "3",
+        "cp.utagdb": "true",
+        "dom.referrer": "",
+        "dom.title": "Usercentrics v2 Test",
+        "dom.domain": "solutions.tealium.net",
+        "dom.query_string": "",
+        "dom.hash": "",
+        "dom.url": "https://solutions.tealium.net/hosted/usercentrics-v2/test-page-standard.html",
+        "dom.pathname": "/hosted/usercentrics-v2/test-page-standard.html",
+        "dom.viewport_height": 1336,
+        "dom.viewport_width": 976,
+        "ut.domain": "tealium.net",
+        "ut.version": "ut4.46.202205181037",
+        "ut.event": "view",
+        "ut.visitor_id": "0180d6afbfe5001fb3c58332996b05079004c07100fb8",
+        "ut.session_id": "1652869283813",
+        "ut.account": "services-caleb",
+        "ut.profile": "usercentrics-v2-by-tag",
+        "ut.env": "qa",
+        "tealium_event": "view",
+        "tealium_visitor_id": "0180d6afbfe5001fb3c58332996b05079004c07100fb8",
+        "tealium_session_id": "1652869283813",
+        "tealium_session_number": "1",
+        "tealium_session_event_number": "5",
+        "tealium_datasource": "",
+        "tealium_account": "services-caleb",
+        "tealium_profile": "usercentrics-v2-by-tag",
+        "tealium_environment": "qa",
+        "tealium_random": "8882989585076650",
+        "tealium_library_name": "utag.js",
+        "tealium_library_version": "4.46.0",
+        "tealium_timestamp_epoch": 1652870355,
+        "tealium_timestamp_utc": "2022-05-18T10:39:15.221Z",
+        "tealium_timestamp_local": "2022-05-18T12:39:15.221",
+        "groups_with_consent_all": [
+            "Tealium iQ Tag Management",
+            "Mouseflow",
+            "Usercentrics Consent Management Platform"
+        ],
+        "consent_type": "implicit",
+        "groups_with_consent_unprocessed": [],
+        "groups_with_consent_processed": [
+            "Tealium iQ Tag Management",
+            "Mouseflow",
+            "Usercentrics Consent Management Platform"
+        ]
+    },
+    "cfg": {
+        "cb": null,
+        "uids": [
+            10,
+            7
+        ],
+        "originalUids": [
+            7,
+            10
+        ],
+        "blockedTagUids": [
+            10
+        ]
+    }
 }
 */
