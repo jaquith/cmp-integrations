@@ -37,5 +37,11 @@ window.tealiumCmpIntegration.map = {
   }
 }
 
+// refire if an event is processed twice (once implicitly consent, once explicitly)
+window.tealiumCmpIntegration.refiringAllowed = [11]
+
+// tags like Tealium Collect, where it should be refired for the same event (on implicit AND explicit consent)
+window.tealiumCmpIntegration.refiringAllowed = []
+
 // if TiQ isn't allowed to fire, no tags will be fired at all, and no cookies will be set
 window.tealiumCmpIntegration.tiqGroupName = 'Tealium iQ'
