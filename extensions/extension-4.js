@@ -43,6 +43,7 @@ var notProcessed = getNewConsents(alreadyProcessed, currentlyAllowedVendors)
 b[nameOfFullGroupArray] = currentlyAllowedVendors
 b[nameOfConsentTypeString] = currentlyAllowedVendors && currentlyAllowedVendors.type
 b[nameOfUnprocessedGroupArray] = notProcessed
+b[nameOfProcessedGroupArray] = alreadyProcessed
 
 function getNewConsents (implicit, explicit) {
   implicit = implicit || []
