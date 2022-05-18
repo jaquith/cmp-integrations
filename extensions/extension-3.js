@@ -23,7 +23,7 @@
 ;(function avoidGlobalScopeUnlessExplicit (window) {
   // set names for key objects and variables to make them easy to change if needed
 
-  var version = 'v1.0.0-alpha-5'
+  var version = 'v1.0.0-alpha-6'
 
   /**
  * A window-scoped (global) object used to expose or define selected functionality.
