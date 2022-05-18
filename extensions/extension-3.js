@@ -844,8 +844,9 @@ window.tealiumCmpIntegration.map = {
       // anything blocked previously (to give it another chance with new consent)
       newUids = a.cfg.blockedTagUids.slice()
       // add any tags that were originally in the uid array AND have been marked to refire on both IMPLICIT and EXPLICIT consent decisions (like Tealium Collect)
+      // as long as there are newly consented groups and it's not already in the array
       for (var i = 0; i < refiringAllowed.length; i++) {
-        if (a.cfg.originalUids && a.cfg.originalUids.indexOf(refiringAllowed[i]) !== -1 && newUids.indexOf(refiringAllowed[i]) === -1) {
+        if (a.cfg.originalUids && a.cfg.originalUids.indexOf(refiringAllowed[i]) !== -1 && newUids.indexOf(refiringAllowed[i]) === -1 && b[nameOfUnprocessedGroupArray].length > 0) {
           newUids.push(refiringAllowed[i])
         }
       }
