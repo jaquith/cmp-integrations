@@ -18,6 +18,9 @@
 /**
  * CHANGELOG
  *
+ * 1.0.2
+ *  - Stop renaming the b properties (use the standards instead of matching legacy extension naming)
+ *
  * 1.0.1
  *  - Replace UC_UI.getSettings (due for deprecation) with UC_UI.getSettingsCore (a 1:1 replacement for our purposes)
  *
@@ -31,11 +34,7 @@
   window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
 
   window.tealiumCmpIntegration.cmpName = 'Usercentrics Browser SDK'
-  window.tealiumCmpIntegration.cmpIntegrationVersion = 'usercentrics-1.0.1'
-
-  // for the consent information in the b object
-  window.tealiumCmpIntegration.nameOfVendorOptInArray = 'usercentrics_services_with_consent'
-  window.tealiumCmpIntegration.nameOfConsentTypeString = 'usercentrics_consent_type'
+  window.tealiumCmpIntegration.cmpIntegrationVersion = 'usercentrics-1.0.2'
 
   function cmpFetchCurrentConsentDecision () {
     if (!window.UC_UI || typeof window.UC_UI.getServicesBaseInfo !== 'function') return false

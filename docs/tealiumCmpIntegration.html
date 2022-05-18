@@ -216,7 +216,7 @@ window.tealiumCmpIntegration.cmpName = 'Usercentrics'</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line347">line 347</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line357">line 357</a>
     </li></ul></dd>
     
 
@@ -290,6 +290,403 @@ window.tealiumCmpIntegration.map = {
 
         
             
+<h4 class="name" id="..nameOfConsentTypeString"><span class="type-signature">(static) </span>.nameOfConsentTypeString<span class="type-signature"> :string</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line272">line 272</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>consent_type</li>
+        </ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>The name to use for the <a href="global.html#ConsentDecision"><code>ConsentDecision</code></a>'s 'type' attribute ('implicit' or 'explicit') when adding it to Tealium's b object on each event.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">string</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="..nameOfFullGroupArray"><span class="type-signature">(static) </span>.nameOfFullGroupArray<span class="type-signature"> :string</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line263">line 263</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>groups_with_consent_all</li>
+        </ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>The name to use for the full <a href="global.html#ConsentDecision"><code>ConsentDecision</code></a> array when adding it to Tealium's b object on each event.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">string</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="..nameOfProcessedGroupArray"><span class="type-signature">(static) </span>.nameOfProcessedGroupArray<span class="type-signature"> :string</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line290">line 290</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>groups_with_consent_processed</li>
+        </ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>The name to use for the array of already-processed consented groups when adding it to Tealium's b object on each event and in the 'data' property of <a href="global.html#QueuedEvent"><code>QueuedEvent</code></a> objects.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">string</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="..nameOfUnprocessedGroupArray"><span class="type-signature">(static) </span>.nameOfUnprocessedGroupArray<span class="type-signature"> :string</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line281">line 281</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>groups_with_consent_unprocessed</li>
+        </ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>The name to use for the array of not-yet-processed-but-consented groups when adding it to Tealium's b object on each event and in the 'data' property of <a href="global.html#QueuedEvent"><code>QueuedEvent</code></a> objects.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">string</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="..overrideUtagFunctions"><span class="type-signature">(static) </span>.overrideUtagFunctions<span class="type-signature"> :function</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line299">line 299</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>A <code>helper function</code> that overrides certain utag functions to allow tags to be blocked based on CMP response.</p>
+<p>Must be called directly after the '##UTGEN##' reference by <a href="https://community.tealiumiq.com/t5/iQ-Tag-Management/Managing-Tag-Templates/ta-p/21713">editing</a> the 'utag loader' template, as shown in the example.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">function</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// ... utag loader template ...
+
+##UTGEN##
+// override two utag functions for the CMP Integration, to allow tags to be blocked as needed
+window.tealiumCmpIntegration &amp;&amp; window.tealiumCmpIntegration.overrideUtagFunctions &amp;&amp; window.tealiumCmpIntegration.overrideUtagFunctions()
+
+// ... utag loader template continues...</code></pre>
+
+
+
+        
+            
 <h4 class="name" id="..tiqGroupName"><span class="type-signature">(static) </span>.tiqGroupName<span class="type-signature"> :object</span></h4>
 
 
@@ -301,7 +698,7 @@ window.tealiumCmpIntegration.map = {
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line65">line 65</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line67">line 67</a>
     </li></ul></dd>
     
 
@@ -395,7 +792,7 @@ window.tealiumCmpIntegration.tiqGroupName = "TiQ"</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line129">line 129</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line131">line 131</a>
     </li></ul></dd>
     
 
@@ -564,7 +961,7 @@ window.tealiumCmpIntegration.cmpCheckForExplicitConsentDecision = cmpCheckForExp
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line152">line 152</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line154">line 154</a>
     </li></ul></dd>
     
 
@@ -752,7 +1149,7 @@ window.tealiumCmpIntegration.cmpCheckForTiqConsent = cmpCheckForTiqConsent</code
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line93">line 93</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line95">line 95</a>
     </li></ul></dd>
     
 
@@ -919,7 +1316,7 @@ window.tealiumCmpIntegration.cmpCheckForWellFormedDecision = cmpCheckForWellForm
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line198">line 198</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line200">line 200</a>
     </li></ul></dd>
     
 
@@ -1039,7 +1436,7 @@ window.tealiumCmpIntegration.cmpCheckForWellFormedDecision = cmpCheckForWellForm
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line177">line 177</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line179">line 179</a>
     </li></ul></dd>
     
 
@@ -1206,7 +1603,7 @@ window.tealiumCmpIntegration.cmpConvertResponseToGroupList = cmpConvertResponseT
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line77">line 77</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line79">line 79</a>
     </li></ul></dd>
     
 
@@ -1328,7 +1725,7 @@ window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision = cmpFetchCurrentCon
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Wed Apr 20 2022 10:28:54 GMT+0200 (Central European Summer Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Wed May 18 2022 10:03:39 GMT+0200 (Central European Summer Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
