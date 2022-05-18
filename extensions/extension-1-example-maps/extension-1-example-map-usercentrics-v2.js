@@ -37,7 +37,6 @@ window.tealiumCmpIntegration.map = {
   }
 }
 
-
 // tags like Tealium Collect, where it should be refired for the same event (on implicit AND explicit consent)
 window.tealiumCmpIntegration.refiringAllowed = [11]
 
