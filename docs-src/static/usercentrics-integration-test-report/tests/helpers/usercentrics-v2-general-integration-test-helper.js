@@ -1,32 +1,32 @@
 
-'use strict'
+'use strict';
 
 // const environmentQueryParam = 'tealium_environment=qa'
 
-const environmentQueryParam = ''
+const environmentQueryParam = '';
 
-module.exports.currentVersion = 'v1.0.0-alpha-3'
+module.exports.currentVersion = 'v1.0.0-alpha-6';
 
 // const environmentQueryParam = 'tealium_environment=qa'
 
-module.exports.standardTestPage = addEnvironmentSwitch('https://solutions.tealium.net/hosted/usercentrics-v2/test-page-standard.html', environmentQueryParam)
-module.exports.noviewTestPage = addEnvironmentSwitch('https://solutions.tealium.net/hosted/usercentrics-v2/test-page-noview.html', environmentQueryParam)
-module.exports.nocookieTestPage = addEnvironmentSwitch('https://solutions.tealium.net/hosted/usercentrics-v2/test-page-nocookie.html', environmentQueryParam)
-module.exports.standardNoMapTestPage = addEnvironmentSwitch('https://solutions.tealium.net/hosted/usercentrics-v2/test-page-standard-no-map.html', environmentQueryParam)
-module.exports.standardNoUtagEditTestPage = addEnvironmentSwitch('https://solutions.tealium.net/hosted/usercentrics-v2/test-page-standard-no-utag-edit.html', environmentQueryParam)
-module.exports.standardNoUsercentricsTestPage = addEnvironmentSwitch('https://solutions.tealium.net/hosted/usercentrics-v2/test-page-standard-no-usercentrics.html', environmentQueryParam)
-module.exports.noviewNoUtagEditTestPage = addEnvironmentSwitch('https://solutions.tealium.net/hosted/usercentrics-v2/test-page-noview-no-utag-edit.html', environmentQueryParam)
-module.exports.datalayerListenerTestPage = addEnvironmentSwitch('https://solutions.tealium.net/hosted/usercentrics-v2/test-page-datalayer-listener.html', environmentQueryParam)
+module.exports.standardTestPage = addEnvironmentSwitch('https://solutions.tealium.net/hosted/usercentrics-v2/test-page-standard.html', environmentQueryParam);
+module.exports.noviewTestPage = addEnvironmentSwitch('https://solutions.tealium.net/hosted/usercentrics-v2/test-page-noview.html', environmentQueryParam);
+module.exports.nocookieTestPage = addEnvironmentSwitch('https://solutions.tealium.net/hosted/usercentrics-v2/test-page-nocookie.html', environmentQueryParam);
+module.exports.standardNoMapTestPage = addEnvironmentSwitch('https://solutions.tealium.net/hosted/usercentrics-v2/test-page-standard-no-map.html', environmentQueryParam);
+module.exports.standardNoUtagEditTestPage = addEnvironmentSwitch('https://solutions.tealium.net/hosted/usercentrics-v2/test-page-standard-no-utag-edit.html', environmentQueryParam);
+module.exports.standardNoUsercentricsTestPage = addEnvironmentSwitch('https://solutions.tealium.net/hosted/usercentrics-v2/test-page-standard-no-usercentrics.html', environmentQueryParam);
+module.exports.noviewNoUtagEditTestPage = addEnvironmentSwitch('https://solutions.tealium.net/hosted/usercentrics-v2/test-page-noview-no-utag-edit.html', environmentQueryParam);
+module.exports.datalayerListenerTestPage = addEnvironmentSwitch('https://solutions.tealium.net/hosted/usercentrics-v2/test-page-datalayer-listener.html', environmentQueryParam);
 
 function addEnvironmentSwitch (url, environmentString) {
   if (typeof url !== 'string' || url === '') {
-    return url
+    return url;
   }
   if (typeof environmentString === 'string' && environmentString !== '') {
-    if (url.indexOf('?') === -1) url = url + '?'
-    return url + environmentString
+    if (url.indexOf('?') === -1) url = url + '?';
+    return url + environmentString;
   }
-  return url
+  return url;
 }
 
 module.exports.tagValidationObjects = {
@@ -53,9 +53,9 @@ module.exports.tagValidationObjects = {
     ut_event: 'view',
     page_type: 'test_virtual_view'
   }
-}
+};
 
-module.exports.testTagUrl = 'https://solutions.tealium.net/hosted/i.gif'
+module.exports.testTagUrl = 'https://solutions.tealium.net/hosted/i.gif';
 
 module.exports.selectors = {
   ucShadow: '#usercentrics-root',
@@ -67,22 +67,22 @@ module.exports.selectors = {
   specificViewButton11: '#specific-virtual-view-11',
   specificViewButton7and11: '#specific-virtual-view-7-and-11',
   specificViewButton6and7: '#specific-virtual-view-6-and-7'
-}
+};
 
 module.exports.getTestTagObject = (tagUid, extraQueryParams) => {
-  if (typeof tagUid === 'number') tagUid = tagUid.toString()
+  if (typeof tagUid === 'number') tagUid = tagUid.toString();
   const qps = {
     taguid: tagUid
-  }
+  };
   if (typeof extraQueryParams === 'object') {
-    const lowercased = {}
+    const lowercased = {};
     // lowercase the qp keys (but not the values), since mitmproxy records them lowercased
-    const keys = Object.keys(extraQueryParams)
-    const values = Object.values(extraQueryParams)
+    const keys = Object.keys(extraQueryParams);
+    const values = Object.values(extraQueryParams);
     keys.forEach((key, i) => {
-      lowercased[key.toLowerCase()] = values[i]
-    })
-    Object.assign(qps, lowercased)
+      lowercased[key.toLowerCase()] = values[i];
+    });
+    Object.assign(qps, lowercased);
   }
   return {
     request: {
@@ -92,5 +92,5 @@ module.exports.getTestTagObject = (tagUid, extraQueryParams) => {
     response: {
       status: 200
     }
-  }
-}
+  };
+};
