@@ -52,7 +52,17 @@ window.tealiumCmpIntegration.cmpName = 'Usercentrics'
   var nameOfProcessedGroupArray = window.tealiumCmpIntegration.nameOfProcessedGroupArray || 'groups_with_consent_processed'
   var nameOfConsentTypeString = window.tealiumCmpIntegration.nameOfConsentTypeString || 'consent_type'
 
-  // this is an optional setting meant for the Tealium Collect tag, default to no refirings at all
+  /**
+   * A list of tags that should refire when the user makes an initial, non opt-out explicit decision on first landing. This example will cause tag 7 to fire any intial events twice, allowing server-side activations to be triggered as early as possible.
+   * @name refiringAllowed
+   * @type {array}
+   * @memberof! tealiumCmpIntegration
+   *
+   * @example
+window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
+// the numbers in the array are tag UIDs from the TiQ user interface, this
+window.tealiumCmpIntegration.refiringAllowed = [7]
+   */
   var refiringAllowed = window.tealiumCmpIntegration.refiringAllowed || []
 
   // name to use when calling utag.handler.trigger to indicate a consent polling call

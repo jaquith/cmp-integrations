@@ -216,7 +216,7 @@ window.tealiumCmpIntegration.cmpName = 'Usercentrics'</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line357">line 357</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line367">line 367</a>
     </li></ul></dd>
     
 
@@ -301,7 +301,7 @@ window.tealiumCmpIntegration.map = {
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line272">line 272</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line282">line 282</a>
     </li></ul></dd>
     
 
@@ -379,7 +379,7 @@ window.tealiumCmpIntegration.map = {
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line263">line 263</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line273">line 273</a>
     </li></ul></dd>
     
 
@@ -457,7 +457,7 @@ window.tealiumCmpIntegration.map = {
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line290">line 290</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line300">line 300</a>
     </li></ul></dd>
     
 
@@ -535,7 +535,7 @@ window.tealiumCmpIntegration.map = {
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line281">line 281</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line291">line 291</a>
     </li></ul></dd>
     
 
@@ -613,7 +613,7 @@ window.tealiumCmpIntegration.map = {
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line299">line 299</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line309">line 309</a>
     </li></ul></dd>
     
 
@@ -687,6 +687,86 @@ window.tealiumCmpIntegration &amp;&amp; window.tealiumCmpIntegration.overrideUta
 
         
             
+<h4 class="name" id="..refiringAllowed"><span class="type-signature">(static) </span>.refiringAllowed<span class="type-signature"> :array</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line55">line 55</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>A list of tags that should refire when the user makes an initial, non opt-out explicit decision on first landing. This example will cause tag 7 to fire any intial events twice, allowing server-side activations to be triggered as early as possible.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">array</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
+// the numbers in the array are tag UIDs from the TiQ user interface, this
+window.tealiumCmpIntegration.refiringAllowed = [7]</code></pre>
+
+
+
+        
+            
 <h4 class="name" id="..tiqGroupName"><span class="type-signature">(static) </span>.tiqGroupName<span class="type-signature"> :object</span></h4>
 
 
@@ -698,7 +778,7 @@ window.tealiumCmpIntegration &amp;&amp; window.tealiumCmpIntegration.overrideUta
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line67">line 67</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line77">line 77</a>
     </li></ul></dd>
     
 
@@ -792,7 +872,7 @@ window.tealiumCmpIntegration.tiqGroupName = "TiQ"</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line131">line 131</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line141">line 141</a>
     </li></ul></dd>
     
 
@@ -961,7 +1041,7 @@ window.tealiumCmpIntegration.cmpCheckForExplicitConsentDecision = cmpCheckForExp
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line154">line 154</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line164">line 164</a>
     </li></ul></dd>
     
 
@@ -1149,7 +1229,7 @@ window.tealiumCmpIntegration.cmpCheckForTiqConsent = cmpCheckForTiqConsent</code
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line95">line 95</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line105">line 105</a>
     </li></ul></dd>
     
 
@@ -1316,7 +1396,7 @@ window.tealiumCmpIntegration.cmpCheckForWellFormedDecision = cmpCheckForWellForm
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line200">line 200</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line210">line 210</a>
     </li></ul></dd>
     
 
@@ -1436,7 +1516,7 @@ window.tealiumCmpIntegration.cmpCheckForWellFormedDecision = cmpCheckForWellForm
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line179">line 179</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line189">line 189</a>
     </li></ul></dd>
     
 
@@ -1603,7 +1683,7 @@ window.tealiumCmpIntegration.cmpConvertResponseToGroupList = cmpConvertResponseT
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line79">line 79</a>
+        <a href="extension-3.js.html">extension-3.js</a>, <a href="extension-3.js.html#line89">line 89</a>
     </li></ul></dd>
     
 
@@ -1725,7 +1805,7 @@ window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision = cmpFetchCurrentCon
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Wed May 18 2022 10:03:39 GMT+0200 (Central European Summer Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Wed May 18 2022 12:14:22 GMT+0200 (Central European Summer Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
