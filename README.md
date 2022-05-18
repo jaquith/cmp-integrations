@@ -143,6 +143,10 @@ Depending on whether you're refiring Collect (and what server-side tools you're 
 
 ----
 
+# More Detail
 
+The [developer docs](https://jaquith.github.io/cmp-integrations/) have much more detail.
+
+----
 
 [![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
