@@ -49,9 +49,11 @@ For regulations like CCPA - the opt-in flow also works, but this simplified flow
  - Allows individual Tealium iQ tags to be associated with a CMP group name (like "Google Analytics" or "Tealium iQ Tag Management" or "Analytics").
  - Blocks any tags without consent from firing. The blocking logic works even for tags that are explicitly called using the `uids` array (which circumvents load rules).
  - Allows any implicitly allowed tags to fire immediately (before user decision), then reprocesses the same event(s) for new tags only if the user makes an explicit choice.
- - Makes the consent information available in each tracking event (in the `b` object), as 
-   - `b.groups_with_consent` - array of allowed groups, name can be overridden by specific CMPs
-   - `b.consent_type` - 'explicit' or 'implicit' ((name can be overridden by specific CMPs
+ - Makes the consent information available in each tracking event (in the `b` object), as: 
+   - `b.groups_with_consent` - array of all allowed groups, name can be overridden
+   - `b.groups_with_consent_processed` - array of allowed groups, name can be overridden
+   - `b.groups_with_consent_unprocessed` - array of all allowed but not yet processed groups, name can be overridden
+   - `b.consent_type` - 'explicit' or 'implicit', name can be overridden
  - Allows more than one tag to be mapped to a given service name.
 
 # What does it NOT do?
@@ -62,6 +64,23 @@ For regulations like CCPA - the opt-in flow also works, but this simplified flow
 
 
 The only **per-profile** configuration required is a map of service names to tag UIDs for each relevant CMP setting ID, see [GroupToTagMap](https://jaquith.github.io/cmp-integrations/global.html#GroupToTagMap) for more detailed information.
+
+----
+
+# Server-side Enforcement
+
+Tealium Collect must be mapped to a consented purpose, like all other tags. 
+
+But the `refiringAllowed` option allows tags to be refired on new decisions, so one could clearly explain that the tag is used for a variety of server-side purposes and use the available server-side filters and logic to ensure the signal is only processed as appropriate, while allowing it to refire. 
+
+Collect will include the event-level attributes on each event:
+
+ - `consent_type` - the ConsentDecision's 'type' attribute ('implicit' or 'explicit') when adding it to Tealium's b object on each event
+ - `groups_with_consent_all` - the full ConsentDecision array when adding it to Tealium's b object on each event
+ - `groups_with_consent_processed` - the array of already-processed consented groups
+ - `groups_with_consent_unprocessed` - the array of not-yet-processed-but-consented groups 
+
+Depending on whether you're refiring Collect (and what server-side tools you're using), you should use either `groups_with_consent_unprocessed` (with refiring) or `groups_with_consent_all` (without refiring) as your primarly event-level consent attribute.
 
 ----
 
