@@ -36,17 +36,13 @@ var logger = globals.logger || (window.utag && window.utag.DB) || function (mess
 
 // recheck
 var currentlyAllowedVendors = getCurrentConsentDecision()
+var alreadyProcessed = b[nameOfProcessedGroupArray] || [] // use the previously stored array, from the queued event
+var notProcessed = getNewConsents(alreadyProcessed, currentlyAllowedVendors)
 
 // Add the current ConsentDecision information (allowed Services and consent type) to the UDO for possible use in extensions
 b[nameOfFullGroupArray] = currentlyAllowedVendors
 b[nameOfConsentTypeString] = currentlyAllowedVendors && currentlyAllowedVendors.type
-
-var implicitServices
-
-// only block previous implicit services from reloading if the current consent is explicit
-if (currentlyAllowedVendors.type === 'explicit') {
-  implicitServices = b[nameOfProcessedGroupArray] // use the previously stored array, from the queued event
-}
+b[nameOfUnprocessedGroupArray] = notProcessed
 
 function getNewConsents (implicit, explicit) {
   implicit = implicit || []
@@ -59,8 +55,6 @@ function getNewConsents (implicit, explicit) {
   }
   return changes
 }
-
-b[nameOfUnprocessedGroupArray] = getNewConsents(implicitServices, currentlyAllowedVendors)
 
 /**
  * Allows us to make sure we don't log certain messages more than once, especially useful while polling to avoid overwhelming the user.
@@ -79,12 +73,12 @@ function messageNotLoggedYet (messageId) {
   return output
 }
 
-logger('Called block logic:\n\nAllowed: ' + JSON.stringify(currentlyAllowedVendors, null, 2) + '\n\nAlready processed: ' + (implicitServices ? JSON.stringify(implicitServices, null, 2) : '(none)'))
+logger('Called block logic:\n\nAllowed: ' + JSON.stringify(currentlyAllowedVendors, null, 2) + '\n\nAlready processed: ' + (alreadyProcessed ? JSON.stringify(alreadyProcessed, null, 2) : '(none)'))
 
 logger('Map:\n\n' + JSON.stringify(map, null, 2) + '\n\nActive CMP Lookup Key: ' + cmpFetchCurrentLookupKey() + '\n\nMap has entry for current settingsId: ' + (typeof map[cmpFetchCurrentLookupKey()] === 'object' ? 'true' : 'false') + '\n\nTag-based map for the active key: ' + JSON.stringify(tagBasedMap, null, 2))
 logger('Consent confirmed: ' + currentlyAllowedVendors.type + ' : ' + JSON.stringify(currentlyAllowedVendors, null, 2))
 
-var newCfg = blockTagsBasedOnConsent(tagBasedMap, window.utag.loader.cfg, currentlyAllowedVendors, implicitServices, refiringAllowed)
+var newCfg = blockTagsBasedOnConsent(tagBasedMap, window.utag.loader.cfg, currentlyAllowedVendors, alreadyProcessed, notProcessed, refiringAllowed)
 
 // logger('Tag block debug:' + JSON.stringify(newCfg, null, 2))
 
@@ -97,10 +91,10 @@ window.utag.loader.cfg = newCfg
  * @param {object} tagBasedMap a {@link TagToGroupMap TagToGroupMap}
  * @param {object} configObject the current window.utag.loader.cfg object (which is used to control which tags should load/fire)
  * @param {array} consentedServices a {@link ConsentDecision ConsentDecision}
- * @param {array} alreadyProcessedImplicitServices an array of Service Names that have already been processed, to avoid double-firing those tags.
+ * @param {array} alreadyProcessedGroups an array of Service Names that have already been processed, to avoid double-firing those tags.
  * @private
  */
-function blockTagsBasedOnConsent (tagBasedMap, configObject, consentedServices, alreadyProcessedImplicitServices, refiringAllowed) {
+function blockTagsBasedOnConsent (tagBasedMap, configObject, consentedServices, alreadyProcessedGroups, notProcessedGroups, refiringAllowed) {
   // block all tags if the consented services array is missing
   if (Array.isArray(consentedServices) !== true) {
     consentedServices = []
@@ -123,7 +117,7 @@ function blockTagsBasedOnConsent (tagBasedMap, configObject, consentedServices, 
   var deactivatedTags = []
   // turn the map into an easier-to-query object
 
-  alreadyProcessedImplicitServices = alreadyProcessedImplicitServices || []
+  alreadyProcessedGroups = alreadyProcessedGroups || []
 
   var tiqIsAllowed = tiqGroupName && consentedServices.indexOf(tiqGroupName) !== -1
 
@@ -140,7 +134,7 @@ function blockTagsBasedOnConsent (tagBasedMap, configObject, consentedServices, 
 
     if (assignedServiceName) {
       // only fire if TiQ and the tag is allowed AND (it hasn't already fired OR it's supposed to fire when decisions change)
-      shouldFire = tiqIsAllowed && consentedServices.indexOf(assignedServiceName) !== -1 && (alreadyProcessedImplicitServices.indexOf(assignedServiceName) === -1 || refiringAllowed.indexOf(Number(allTagUids[i])) !== -1)
+      shouldFire = tiqIsAllowed && consentedServices.indexOf(assignedServiceName) !== -1 && (alreadyProcessedGroups.indexOf(assignedServiceName) === -1 || (notProcessedGroups.length > 0 && refiringAllowed.indexOf(Number(allTagUids[i])) !== -1))
     }
 
     if (shouldFire !== true) {
