@@ -50,10 +50,10 @@ For regulations like CCPA - the opt-in flow also works, but this simplified flow
  - Blocks any tags without consent from firing. The blocking logic works even for tags that are explicitly called using the `uids` array (which circumvents load rules).
  - Allows any implicitly allowed tags to fire immediately (before user decision), then reprocesses the same event(s) for new tags only if the user makes an explicit choice.
  - Makes the consent information available in each tracking event (in the `b` object), as: 
-   - `b.groups_with_consent` - array of all allowed groups, name can be overridden
+   - `b.consent_type` - 'explicit' or 'implicit', name can be overridden
+   - `b.groups_with_consent_all` - array of all allowed groups, name can be overridden
    - `b.groups_with_consent_processed` - array of allowed groups, name can be overridden
    - `b.groups_with_consent_unprocessed` - array of all allowed but not yet processed groups, name can be overridden
-   - `b.consent_type` - 'explicit' or 'implicit', name can be overridden
  - Allows more than one tag to be mapped to a given service name.
 
 # What does it NOT do?
