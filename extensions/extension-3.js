@@ -23,7 +23,7 @@
 ;(function avoidGlobalScopeUnlessExplicit (window) {
   // set names for key objects and variables to make them easy to change if needed
 
-  var version = 'v1.0.0-alpha-6'
+  var version = 'v1.0.0-alpha-7'
 
   /**
  * A window-scoped (global) object used to expose or define selected functionality.
@@ -997,6 +997,15 @@ window.tealiumCmpIntegration.map = {
       window.utag.cfg.noload = false // safe because this code only runs if it was set to false originally
       if (!window.utag.PINITCalled) { // calling PINIT more than once causes issues in some edge cases
         window.utag.loader.PINIT()
+
+        // ensure bundled tags that are both prioritized and implicitly consented fire correctly
+        for (var i in utag.loader.GV(utag.loader.cfg)) {
+          var tag = utag.loader.cfg[i];
+          if (tag.load === 4 && tag.send === 1 && tag.wait === 0) {
+              utag.loader.LOAD(i);
+          }
+        }
+
         window.utag.PINITCalled = true
       }
       return true
