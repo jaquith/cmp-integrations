@@ -21,7 +21,7 @@ The purpose of these integrations is to allow Tealium iQ customers to control **
 
 ### Opt-in Model
 
- - Tealium iQ will not fire any tags, or set any cookies, until a consent decision (that includes permission to run Tealium iQ) is available from the CMP. If the expected CMP is not active on the page, or Tealium iQ is not consented to, Tealium iQ will not run, and no tags will be allowed to fire at all.
+ - Tealium iQ will not fire any tags, or set any cookies, until a consent decision is available from the CMP. If the expected CMP is not active on the page, or Tealium iQ is not consented to, Tealium iQ will not run, and no tags will be allowed to fire at all.
 
  - If a consent decision isn't found when Tealium iQ loads, this solution will continually poll until one is found.
 
