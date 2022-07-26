@@ -127,12 +127,6 @@ describe('VERIFY - check the network logs to make sure the correct tags fired fo
     chai.expect(firedTagLogs.step1).to.not.include.something.like(helper.getTestTagObject(10));
   });
 
-  it('Step 2 should have refired tag 7 but not tag 9 based on EXPLICIT consent (tag 7 is set to refire)', async function () {
-    reporterHelper.logMessage('Those tags are categorized as \'Mouseflow\', which is set up to fire by default (with implicit consent).');
-    chai.expect(firedTagLogs.step2).to.include.something.like(helper.getTestTagObject(7));
-    chai.expect(firedTagLogs.step2).to.not.include.something.like(helper.getTestTagObject(9));
-  });
-
   it('Step 2 should have fired tags 6, 8, and 10 based on EXPLICIT consent', async function () {
     reporterHelper.logMessage('Those tags are categorized as \'Mouseflow\', which is set up to fire by default (with implicit consent).');
     chai.expect(firedTagLogs.step2).to.include.something.like(helper.getTestTagObject(6));

@@ -132,20 +132,12 @@ describe('VERIFY - check the network logs to make sure the correct tags fired fo
     chai.expect(firedTagLogs.step1).to.not.include.something.like(helper.getTestTagObject(10));
   });
 
-  it('Step 2 should NOT have refired tag 7 based on EXPLICIT consent', async function () {
-    reporterHelper.logMessage('A full opt-out will not retrigger any tags (because there are no newly-consented purposes), though it appears in the `allowRefiring` array in the map', true);
-    chai.expect(firedTagLogs.step2).to.not.include.something.like(helper.getTestTagObject(7));
-  });
-
-  it('Step 2 should not have refired tag 9 based on EXPLICIT consent', async function () {
-    reporterHelper.logMessage('Though this tag is consented (even on opt-out), it isn\'t marked for refiring.');
-    chai.expect(firedTagLogs.step2).to.not.include.something.like(helper.getTestTagObject(9));
-  });
-
-  it('Step 2 should not have fired any other tags)', async function () {
-    reporterHelper.logMessage('Since it was an opt-out decision, no additional tags should fire on decision');
+  it('Step 2 should not have refired tags 7 and 9 based on EXPLICIT consent (or fired any other tags)', async function () {
+    reporterHelper.logMessage('Since it was an opt-out decision, no tags should fire on decision');
     chai.expect(firedTagLogs.step2).to.not.include.something.like(helper.getTestTagObject(6));
+    chai.expect(firedTagLogs.step2).to.not.include.something.like(helper.getTestTagObject(7));
     chai.expect(firedTagLogs.step2).to.not.include.something.like(helper.getTestTagObject(8));
+    chai.expect(firedTagLogs.step2).to.not.include.something.like(helper.getTestTagObject(9));
     chai.expect(firedTagLogs.step2).to.not.include.something.like(helper.getTestTagObject(10));
   });
 

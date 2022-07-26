@@ -118,7 +118,7 @@ describe('VERIFY - check the network logs to make sure the correct tags fired fo
   });
 
   it('Step 3 should ONLY have fired tags 6 and 7 based on EXPLICIT consent', async function () {
-    reporterHelper.logMessage('The virtual view is scoped to tags 6 and 7.');
+    reporterHelper.logMessage('The virtual view is scoped to tags 6 and 7, but only 7 has implicit consent.');
     chai.expect(firedTagLogs.step3).to.include.something.like(helper.getTestTagObject(6));
     chai.expect(firedTagLogs.step3).to.include.something.like(helper.getTestTagObject(7));
     chai.expect(firedTagLogs.step3).to.not.include.something.like(helper.getTestTagObject(8));

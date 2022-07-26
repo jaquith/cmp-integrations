@@ -5,7 +5,7 @@
 
 const environmentQueryParam = '';
 
-module.exports.currentVersion = 'v1.0.0-alpha-6';
+module.exports.currentVersion = 'v1.0.0-alpha-7';
 
 // const environmentQueryParam = 'tealium_environment=qa'
 

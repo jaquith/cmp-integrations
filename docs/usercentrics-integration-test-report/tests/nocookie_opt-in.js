@@ -132,16 +132,6 @@ describe('VERIFY - check the network logs to make sure the correct tags fired fo
     chai.expect(firedTagLogs.step2).to.include.something.like(helper.getTestTagObject(10));
   });
 
-  it('Step 2 should have refired tag 7 based on EXPLICIT consent', async function () {
-    reporterHelper.logMessage('This tag is set to refire.');
-    chai.expect(firedTagLogs.step1).to.include.something.like(helper.getTestTagObject(7));
-  });
-
-  it('Step 2 should NOT have refired tag 9 based on EXPLICIT consent', async function () {
-    reporterHelper.logMessage('This tag is NOT set to refire.');
-    chai.expect(firedTagLogs.step1).to.include.something.like(helper.getTestTagObject(7));
-  });
-
   it('Step 3 should only fire tag 10', async function () {
     chai.expect(firedTagLogs.step3).to.not.include.something.like(helper.getTestTagObject(6));
     chai.expect(firedTagLogs.step3).to.not.include.something.like(helper.getTestTagObject(7));

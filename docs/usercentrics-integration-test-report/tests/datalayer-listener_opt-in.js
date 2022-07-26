@@ -186,20 +186,6 @@ describe('VERIFY STEP 2 - make sure the correct tags fired', function () {
     chai.expect(filteredTags8).to.be.an('array').with.lengthOf(1);
   });
 
-  it('Step 2 should have refired tag 7 for event1, but not refired tag 9', async function () {
-    reporterHelper.logMessage('The queuing should only have refired 7 but not 9, based on the refiringAllowed configuration.');
-
-    const filteredTags7 = firedTagLogs.step2.filter((entry) => {
-      return entry.request.urlWithoutQueryString === helper.testTagUrl && entry.request.queryString.taguid === '7' && entry.request.queryString.event === 'event1';
-    });
-    chai.expect(filteredTags7).to.be.an('array').with.lengthOf(1);
-
-    const filteredTags9 = firedTagLogs.step2.filter((entry) => {
-      return entry.request.urlWithoutQueryString === helper.testTagUrl && entry.request.queryString.taguid === '9' && entry.request.queryString.event === 'event1';
-    });
-    chai.expect(filteredTags9).to.be.an('array').with.lengthOf(0);
-  });
-
   it('Step 2 should have fired tags 6 and 8 based on EXPLICIT consent for event2, but only once', async function () {
     reporterHelper.logMessage('The queuing shouldn\'t have double-fired either tag.');
 
@@ -212,20 +198,6 @@ describe('VERIFY STEP 2 - make sure the correct tags fired', function () {
       return entry.request.urlWithoutQueryString === helper.testTagUrl && entry.request.queryString.taguid === '8' && entry.request.queryString.event === 'event2';
     });
     chai.expect(filteredTags8).to.be.an('array').with.lengthOf(1);
-  });
-
-  it('Step 2 should have refired tag 7 for event2, but not refired tag 9', async function () {
-    reporterHelper.logMessage('The queuing should only have refired 7 but not 9, based on the refiringAllowed configuration.');
-
-    const filteredTags7 = firedTagLogs.step2.filter((entry) => {
-      return entry.request.urlWithoutQueryString === helper.testTagUrl && entry.request.queryString.taguid === '7' && entry.request.queryString.event === 'event2';
-    });
-    chai.expect(filteredTags7).to.be.an('array').with.lengthOf(1);
-
-    const filteredTags9 = firedTagLogs.step2.filter((entry) => {
-      return entry.request.urlWithoutQueryString === helper.testTagUrl && entry.request.queryString.taguid === '9' && entry.request.queryString.event === 'event2';
-    });
-    chai.expect(filteredTags9).to.be.an('array').with.lengthOf(0);
   });
 
   it('Step 2 should have fired tags 6 and 8 based on EXPLICIT consent for event3, but only once', async function () {
@@ -242,25 +214,20 @@ describe('VERIFY STEP 2 - make sure the correct tags fired', function () {
     chai.expect(filteredTags8).to.be.an('array').with.lengthOf(1);
   });
 
-  it('Step 2 should have refired tag 7 for event3, but not refired tag 9', async function () {
-    reporterHelper.logMessage('The queuing should only have refired 7 but not 9, based on the refiringAllowed configuration.');
-
-    const filteredTags7 = firedTagLogs.step2.filter((entry) => {
-      return entry.request.urlWithoutQueryString === helper.testTagUrl && entry.request.queryString.taguid === '7' && entry.request.queryString.event === 'event3';
-    });
-    chai.expect(filteredTags7).to.be.an('array').with.lengthOf(1);
-
-    const filteredTags9 = firedTagLogs.step2.filter((entry) => {
-      return entry.request.urlWithoutQueryString === helper.testTagUrl && entry.request.queryString.taguid === '9' && entry.request.queryString.event === 'event3';
-    });
-    chai.expect(filteredTags9).to.be.an('array').with.lengthOf(0);
-  });
-
   it('Step 2 should have fired tag 10 based on EXPLICIT consent for the initial pageview', async function () {
     reporterHelper.logMessage('Although consent was granted for \'Google Analytics\', the load rule for tag 10 hasn\'t been met');
     chai.expect(firedTagLogs.step2).to.include.something.like(helper.getTestTagObject(10, initialView));
   });
 
+  it('Step 2 should have fired tags 6 and 8 based on EXPLICIT consent for all 3 events', async function () {
+    reporterHelper.logMessage('Since consent was given for \'Google Analytics\', those tags should have fired after the explicit decision.');
+    chai.expect(firedTagLogs.step2).to.include.something.like(helper.getTestTagObject(6, event1));
+    chai.expect(firedTagLogs.step2).to.include.something.like(helper.getTestTagObject(8, event1));
+    chai.expect(firedTagLogs.step2).to.include.something.like(helper.getTestTagObject(6, event2));
+    chai.expect(firedTagLogs.step2).to.include.something.like(helper.getTestTagObject(8, event2));
+    chai.expect(firedTagLogs.step2).to.include.something.like(helper.getTestTagObject(6, event3));
+    chai.expect(firedTagLogs.step2).to.include.something.like(helper.getTestTagObject(8, event3));
+  });
 
   it('Step 2 should NOT have fired tag 10 for any of the the 3 events', async function () {
     reporterHelper.logMessage('Although consent was granted for \'Google Analytics\', the load rule for tag 10 hasn\'t been met');
