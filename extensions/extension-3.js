@@ -999,10 +999,10 @@ window.tealiumCmpIntegration.map = {
         window.utag.loader.PINIT()
 
         // ensure bundled tags that are both prioritized and implicitly consented fire correctly
-        for (var i in utag.loader.GV(utag.loader.cfg)) {
-          var tag = utag.loader.cfg[i];
+        for (var i in window.utag.loader.GV(window.utag.loader.cfg)) {
+          var tag = window.utag.loader.cfg[i]
           if (tag.load === 4 && tag.send === 1 && tag.wait === 0) {
-              utag.loader.LOAD(i);
+            window.utag.loader.LOAD(i)
           }
         }
 
