@@ -47,9 +47,9 @@ window.tealiumCmpIntegration.cmpName = 'Usercentrics'
   window.tealiumCmpIntegration.cmpName = window.tealiumCmpIntegration.cmpName || 'Unnamed CMP'
 
   // for the consent information in the b object
-  var nameOfFullGroupArray = window.tealiumCmpIntegration.nameOfFullGroupArray || 'groups_with_consent_all'
-  var nameOfUnprocessedGroupArray = window.tealiumCmpIntegration.nameOfUnprocessedGroupArray || 'groups_with_consent_unprocessed'
-  var nameOfProcessedGroupArray = window.tealiumCmpIntegration.nameOfProcessedGroupArray || 'groups_with_consent_processed'
+  var nameOfFullGroupArray = window.tealiumCmpIntegration.nameOfFullGroupArray || 'purposes_with_consent_all'
+  var nameOfUnprocessedGroupArray = window.tealiumCmpIntegration.nameOfUnprocessedGroupArray || 'purposes_with_consent_unprocessed'
+  var nameOfProcessedGroupArray = window.tealiumCmpIntegration.nameOfProcessedGroupArray || 'purposes_with_consent_processed'
   var nameOfConsentTypeString = window.tealiumCmpIntegration.nameOfConsentTypeString || 'consent_type'
 
   /**
@@ -274,7 +274,7 @@ window.tealiumCmpIntegration.cmpConvertResponseToGroupList = cmpConvertResponseT
    * The name to use for the full [ConsentDecision]{@link ConsentDecision} array when adding it to Tealium's b object on each event.
    * @name nameOfFullGroupArray
    * @type {string}
-   * @default groups_with_consent_all
+   * @default purposes_with_consent_all
    * @memberof! tealiumCmpIntegration
    */
   window.tealiumCmpIntegration.nameOfFullGroupArray = nameOfFullGroupArray
@@ -292,7 +292,7 @@ window.tealiumCmpIntegration.cmpConvertResponseToGroupList = cmpConvertResponseT
    * The name to use for the array of not-yet-processed-but-consented groups when adding it to Tealium's b object on each event and in the 'data' property of {@link QueuedEvent QueuedEvent} objects.
    * @name nameOfUnprocessedGroupArray
    * @type {string}
-   * @default groups_with_consent_unprocessed
+   * @default purposes_with_consent_unprocessed
    * @memberof! tealiumCmpIntegration
    */
   window.tealiumCmpIntegration.nameOfUnprocessedGroupArray = nameOfUnprocessedGroupArray
@@ -301,7 +301,7 @@ window.tealiumCmpIntegration.cmpConvertResponseToGroupList = cmpConvertResponseT
    * The name to use for the array of already-processed consented groups when adding it to Tealium's b object on each event and in the 'data' property of {@link QueuedEvent QueuedEvent} objects.
    * @name nameOfProcessedGroupArray
    * @type {string}
-   * @default groups_with_consent_processed
+   * @default purposes_with_consent_processed
    * @memberof! tealiumCmpIntegration
    */
   window.tealiumCmpIntegration.nameOfProcessedGroupArray = nameOfProcessedGroupArray
@@ -1181,14 +1181,14 @@ window.tealiumCmpIntegration.map = {
         "tealium_timestamp_epoch": 1652870355,
         "tealium_timestamp_utc": "2022-05-18T10:39:15.221Z",
         "tealium_timestamp_local": "2022-05-18T12:39:15.221",
-        "groups_with_consent_all": [
+        "purposes_with_consent_all": [
             "Tealium iQ Tag Management",
             "Mouseflow",
             "Usercentrics Consent Management Platform"
         ],
         "consent_type": "implicit",
-        "groups_with_consent_unprocessed": [],
-        "groups_with_consent_processed": [
+        "purposes_with_consent_unprocessed": [],
+        "purposes_with_consent_processed": [
             "Tealium iQ Tag Management",
             "Mouseflow",
             "Usercentrics Consent Management Platform"

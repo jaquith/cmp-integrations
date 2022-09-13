@@ -124,7 +124,7 @@ function basicTests (code, settings) {
       chai.expect(cmpSettings.cmpCheckForTiqConsent(settings.rawDecision, settings.tiqGroupName)).to.equal(settings.hasTiqConsent)
     })
 
-    it(`cmpConvertResponseToGroupList should return the expected consented group list with ${settings.expectedGroups && settings.expectedGroups.length} members`, function () {
+    it(`cmpConvertResponseToGroupList should return the expected consented purpose list with ${settings.expectedGroups && settings.expectedGroups.length} members`, function () {
       chai.expect(settings.expectedGroups.length).to.be.a('number')
       chai.expect(cmpSettings.cmpConvertResponseToGroupList(settings.rawDecision)).to.deep.equalInAnyOrder(settings.expectedGroups)
     })
