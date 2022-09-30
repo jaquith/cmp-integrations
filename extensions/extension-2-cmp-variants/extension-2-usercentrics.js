@@ -17,6 +17,9 @@
 
 /**
  * CHANGELOG
+ * 
+ * 1.0.3
+ *  - Update cmpCheckIfOptInModel to support CCPA without polling
  *
  * 1.0.2
  *  - Stop renaming the b properties (use the standards instead of matching legacy extension naming)
@@ -34,7 +37,7 @@
   window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
 
   window.tealiumCmpIntegration.cmpName = 'Usercentrics Browser SDK'
-  window.tealiumCmpIntegration.cmpIntegrationVersion = 'usercentrics-1.0.2'
+  window.tealiumCmpIntegration.cmpIntegrationVersion = 'usercentrics-1.0.3'
 
   function cmpFetchCurrentConsentDecision () {
     if (!window.UC_UI || typeof window.UC_UI.getServicesBaseInfo !== 'function') return false
@@ -48,7 +51,7 @@
 
   // only support opt-In model for Usercentrics for now, can be added if needed
   function cmpCheckIfOptInModel () {
-    return true
+    return window.UC_UI && typeof window.UC_UI.isConsentRequired === 'function' && window.UC_UI.isConsentRequired() === true
   }
 
   function cmpCheckForWellFormedDecision (cmpRawOutput) {

@@ -16,13 +16,14 @@ exports.getCmpTestSuite = function (code, cmpHelper, expectOptInModel) {
     describe('no CMP / not loaded', basicTests(code, {
       isExplicit: false,
       expectedSettingLookupKey: false,
-      expectOptInModel: true,
+      expectOptInModel: expectOptInModel,
       isWellFormed: false,
       hasTiqConsent: false,
       rawDecision: false,
       expectedGroups: [],
       windowSpoof: {},
-      tiqGroupName: cmpHelper.tiqGroupName
+      tiqGroupName: cmpHelper.tiqGroupName,
+      noCmp: true
     }))
 
     describe('implicit case', basicTests(code, {
@@ -104,9 +105,11 @@ function basicTests (code, settings) {
       chai.expect(cmpSettings.cmpFetchCurrentConsentDecision()).to.deep.equal(settings.rawDecision)
     })
 
-    it(`cmpCheckIfOptInModel should return ${typeof settings.expectOptInModel === 'boolean' ? settings.expectOptInModel : '(missing from CMP test config)'}`, function () {
-      chai.expect(cmpSettings.cmpCheckIfOptInModel()).to.equal(typeof settings.expectOptInModel === 'boolean' ? settings.expectOptInModel : '(missing from CMP test config)')
-    })
+    if (settings.noCmp !== true) {
+      it(`cmpCheckIfOptInModel should return ${typeof settings.expectOptInModel === 'boolean' ? settings.expectOptInModel : '(missing from CMP test config)'}`, function () {
+        chai.expect(cmpSettings.cmpCheckIfOptInModel()).to.equal(typeof settings.expectOptInModel === 'boolean' ? settings.expectOptInModel : '(missing from CMP test config)')
+      })
+    }
 
     it(`cmpFetchCurrentLookupKey should return ${settings.expectedSettingLookupKey ? settings.expectedSettingLookupKey : 'an empty string'}`, function () {
       chai.expect(cmpSettings.cmpFetchCurrentLookupKey()).to.equal(settings.expectedSettingLookupKey ? settings.expectedSettingLookupKey : '')

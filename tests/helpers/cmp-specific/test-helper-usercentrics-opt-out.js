@@ -1716,6 +1716,9 @@ exports.expectedSettingLookupKey = 'test-config'
 exports.getWindowSpoof = function (rawDecision, useOptInModel) {
   return {
     UC_UI: {
+      isConsentRequired: function () {
+        return useOptInModel
+      },
       getServicesBaseInfo: function () {
         return rawDecision
       },

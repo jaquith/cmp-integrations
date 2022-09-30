@@ -1,6 +1,6 @@
 {
   "name": "cmp-integrations",
-  "version": "0.0.1-alpha-1",
+  "version": "0.0.1-alpha-8",
   "description": "An integration framework between Tealium iQ Tag Manager and market-leading Consent Management Platforms",
   "main": "index.js",
   "scripts": {
