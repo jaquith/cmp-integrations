@@ -12,7 +12,11 @@
   * @description The 'Pre Loader' CMP-specific component for OneTrust.
   * @private
   *
+  * 1.0.1
+  *  - Improve cmpCheckForExplicitConsentDecision - use the interaction count instead of last interaction label (more reliable)
   *
+  * 1.0.0
+  *  - Initial version, start versioning
   */
 
 ;(function oneTrust (window) {
@@ -20,7 +24,7 @@
   window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
 
   window.tealiumCmpIntegration.cmpName = 'OneTrust'
-  window.tealiumCmpIntegration.cmpIntegrationVersion = 'onetrust-1.0.0'
+  window.tealiumCmpIntegration.cmpIntegrationVersion = 'onetrust-1.0.1'
 
   function cmpCheckIfOptInModel () {
     var decision = cmpFetchCurrentConsentDecision()
@@ -57,8 +61,8 @@
 
     // check for any logged interaction - OneTrust seems to only log decisions, not other clicks in the UI
     if (cmpRawOutput.ConsentIntegrationData && cmpRawOutput.ConsentIntegrationData.consentPayload &&
-      cmpRawOutput.ConsentIntegrationData.consentPayload.dsDataElements &&
-      cmpRawOutput.ConsentIntegrationData.consentPayload.dsDataElements.InteractionType !== '') {
+      cmpRawOutput.ConsentIntegrationData.consentPayload.customPayload &&
+      cmpRawOutput.ConsentIntegrationData.consentPayload.customPayload.Interaction > 0) {
       return true
     }
     return false
