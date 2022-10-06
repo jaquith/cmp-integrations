@@ -17,7 +17,7 @@
 
 /**
  * CHANGELOG
- * 
+ *
  * 1.0.3
  *  - Update cmpCheckIfOptInModel to support CCPA without polling
  *
