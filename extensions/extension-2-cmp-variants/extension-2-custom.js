@@ -1,5 +1,5 @@
 /**
-  * @module extension-2-example
+  * @module extension-2-custom
   *
   * @description The 'Pre Loader' CMP-specific component, see [tealiumCmpIntegration]{@link namespace:tealiumCmpIntegration} for specifics on inputs, or view the source to see a working example for an example CMP.
   *
@@ -11,39 +11,48 @@
   // CMP specific functionality and labels
   window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
 
-  window.tealiumCmpIntegration.cmpName = 'OneTrust'
-  window.tealiumCmpIntegration.cmpIntegrationVersion = 'onetrust-1.0.0'
+  window.tealiumCmpIntegration.cmpName = 'Custom Integration Example'
+  window.tealiumCmpIntegration.cmpIntegrationVersion = 'custom-example-1.0.0'
 
   function cmpCheckIfOptInModel () {
+    /*
     var decision = cmpFetchCurrentConsentDecision()
     if (decision && decision.ConsentModel && decision.ConsentModel.Name === 'opt-out') {
       return false
     }
     return true
+    */
   }
 
   function cmpFetchCurrentConsentDecision () {
+    /*
     if (!window.OneTrust || typeof window.OneTrust.GetDomainData !== 'function') return false
     var cmpRawOutput = window.OneTrust.GetDomainData()
     return cmpRawOutput
+    */
   }
 
   function cmpFetchCurrentLookupKey () {
+    /*
     if (!window.OneTrust || typeof window.OneTrust.GetDomainData !== 'function') return ''
     var id = window.OneTrust.GetDomainData().cctId
     return id || ''
+    */
   }
 
   function cmpCheckForWellFormedDecision (cmpRawOutput) {
+    /*
     // treat things we don't understand as an opt-out
     if (typeof cmpRawOutput !== 'object') return false
     if (typeof cmpRawOutput.ConsentIntegrationData !== 'object') return false
     if (typeof cmpRawOutput.ConsentIntegrationData.consentPayload !== 'object') return false
     if (toString.call(cmpRawOutput.Groups) !== '[object Array]') return false
     return true
+    */
   }
 
   function cmpCheckForExplicitConsentDecision (cmpRawOutput) {
+    /*
     // treat things we don't understand as an opt-out
     if (cmpCheckForWellFormedDecision(cmpRawOutput) !== true) return false
 
@@ -54,9 +63,11 @@
       return true
     }
     return false
+    */
   }
 
   function cmpConvertResponseToGroupList (cmpRawOutput) {
+    /*
     // convert from array of objects to object for easier lookups
     var decisionByPurpose = {}
     if (cmpRawOutput && cmpRawOutput.ConsentIntegrationData &&
@@ -83,8 +94,10 @@
       }
     })
     return vendorArray
+    */
   }
 
+  // you shouldn't need to change this function
   function cmpCheckForTiqConsent (cmpRawOutput, tiqGroupName) {
     // treat things we don't understand as an opt-out
     if (cmpCheckForWellFormedDecision(cmpRawOutput) !== true) return false
