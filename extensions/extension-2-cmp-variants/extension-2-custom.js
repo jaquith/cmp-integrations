@@ -6,8 +6,7 @@
   *
   */
 
-// Use OneTrust integration as the example
-;(function oneTrust (window) {
+;(function myCustomConsentIntegration (window) {
   // CMP specific functionality and labels
   window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
 
@@ -115,3 +114,17 @@
   window.tealiumCmpIntegration.cmpCheckForTiqConsent = cmpCheckForTiqConsent
   window.tealiumCmpIntegration.cmpConvertResponseToGroupList = cmpConvertResponseToGroupList
 })(window)
+
+/*
+// Debugging / development output - repaste the integration on your test pages each time you make a change to your consent state
+var outputString = `${tealiumCmpIntegration.cmpCheckIfOptInModel() ? 'Opt-in' : 'Opt-out'} Model
+
+Checks:
+  - id:          ${tealiumCmpIntegration.cmpFetchCurrentLookupKey()}
+  - well-formed: ${tealiumCmpIntegration.cmpCheckForWellFormedDecision(tealiumCmpIntegration.cmpFetchCurrentConsentDecision())}
+  - explicit:    ${tealiumCmpIntegration.cmpCheckForExplicitConsentDecision(tealiumCmpIntegration.cmpFetchCurrentConsentDecision())}
+  - group list:  ${JSON.stringify(tealiumCmpIntegration.cmpConvertResponseToGroupList(tealiumCmpIntegration.cmpFetchCurrentConsentDecision()))}
+`
+console.log(outputString)
+
+*/
