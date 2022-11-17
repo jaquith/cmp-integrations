@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>extension-2-cmp-variants/extension-2-example.js - Documentation</title>
+    <title>extension-2-cmp-variants/extension-2-didomi.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -32,7 +32,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">extension-2-cmp-variants/extension-2-example.js</h1>
+    <h1 class="page-title">extension-2-cmp-variants/extension-2-didomi.js</h1>
     
 
     
@@ -43,96 +43,65 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
-  * @module extension-2-example
+  * @module extension-2-didomi
   *
   * @description The 'Pre Loader' CMP-specific component, see [tealiumCmpIntegration]{@link namespace:tealiumCmpIntegration} for specifics on inputs, or view the source to see a working example for an example CMP.
   *
-  *
   */
 
-// Use OneTrust integration as the example
-;(function oneTrust (window) {
+;(function didomiIntegration (window) {
   // CMP specific functionality and labels
   window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
 
-  window.tealiumCmpIntegration.cmpName = 'OneTrust'
-  window.tealiumCmpIntegration.cmpIntegrationVersion = 'onetrust-1.0.0'
+  window.tealiumCmpIntegration.cmpName = 'Didomi'
+  window.tealiumCmpIntegration.cmpIntegrationVersion = 'didomi-1.0.0'
 
   function cmpCheckIfOptInModel () {
-    var decision = cmpFetchCurrentConsentDecision()
-    if (decision &amp;&amp; decision.ConsentModel &amp;&amp; decision.ConsentModel.Name === 'opt-out') {
-      return false
-    }
-    return true
+    if (!window.Didomi || typeof window.Didomi.getConfig !== 'function') return false
+    return window.Didomi.getConfig().notice.type === 'optin'
   }
 
   function cmpFetchCurrentConsentDecision () {
-    if (!window.OneTrust || typeof window.OneTrust.GetDomainData !== 'function') return false
-    var cmpRawOutput = window.OneTrust.GetDomainData()
+    if (!window.Didomi || typeof window.Didomi.getUserConsentStatusForAll !== 'function') return false
+    if (typeof window.Didomi.getConfig !== 'function') return false
+    var cmpRawOutput = {}
+    cmpRawOutput = window.Didomi.getUserConsentStatusForAll()
     return cmpRawOutput
   }
 
   function cmpFetchCurrentLookupKey () {
-    if (!window.OneTrust || typeof window.OneTrust.GetDomainData !== 'function') return ''
-    var id = window.OneTrust.GetDomainData().cctId
+    if (!window.Didomi || typeof window.Didomi.getConfig !== 'function') return ''
+    var id = window.Didomi.getConfig().app.deploymentId
     return id || ''
   }
 
   function cmpCheckForWellFormedDecision (cmpRawOutput) {
     // treat things we don't understand as an opt-out
     if (typeof cmpRawOutput !== 'object') return false
-    if (typeof cmpRawOutput.ConsentIntegrationData !== 'object') return false
-    if (typeof cmpRawOutput.ConsentIntegrationData.consentPayload !== 'object') return false
-    if (toString.call(cmpRawOutput.Groups) !== '[object Array]') return false
+    if (typeof cmpRawOutput.purposes !== 'object') return false
+    if (typeof cmpRawOutput.vendors !== 'object') return false
+    if (toString.call(cmpRawOutput.purposes.enabled) !== '[object Array]') return false
+    if (toString.call(cmpRawOutput.vendors.enabled) !== '[object Array]') return false
     return true
   }
 
   function cmpCheckForExplicitConsentDecision (cmpRawOutput) {
     // treat things we don't understand as an opt-out
     if (cmpCheckForWellFormedDecision(cmpRawOutput) !== true) return false
-
-    // check for any logged interaction - OneTrust seems to only log decisions, not other clicks in the UI
-    if (cmpRawOutput.ConsentIntegrationData &amp;&amp; cmpRawOutput.ConsentIntegrationData.consentPayload &amp;&amp;
-      cmpRawOutput.ConsentIntegrationData.consentPayload.customPayload &amp;&amp;
-      cmpRawOutput.ConsentIntegrationData.consentPayload.customPayload.Interaction > 0) {
-      return true
-    }
-    return false
+    return window.Didomi.shouldConsentBeCollected() === false // false after an explicit decision is made
   }
 
   function cmpConvertResponseToGroupList (cmpRawOutput) {
-    // convert from array of objects to object for easier lookups
-    var decisionByPurpose = {}
-    if (cmpRawOutput &amp;&amp; cmpRawOutput.ConsentIntegrationData &amp;&amp;
-        cmpRawOutput.ConsentIntegrationData.consentPayload &amp;&amp;
-        cmpRawOutput.ConsentIntegrationData.consentPayload.purposes
-    ) {
-      cmpRawOutput.ConsentIntegrationData.consentPayload.purposes.forEach(function (obj) {
-        decisionByPurpose[obj.Id] = obj.TransactionType
-      })
-    } else {
-      return []
-    }
-
-    var decisionByGroupName = {}
-    cmpRawOutput.Groups.forEach(function (groupInfo) {
-      decisionByGroupName[groupInfo.GroupName] = decisionByPurpose[groupInfo.PurposeId] || 'ERROR-MISSING'
+    // this doesn't seem to include vendors allowed by implicit consent so far?
+    const vendorsBeforePurposeCheck = cmpRawOutput.vendors.enabled
+    return vendorsBeforePurposeCheck.filter(function (vendorName) {
+      return window.Didomi.getUserConsentStatusForVendor(vendorName)
     })
-
-    var vendorArray = []
-    var groupNames = Object.keys(decisionByGroupName)
-    groupNames.forEach(function (groupName) {
-      if (decisionByGroupName[groupName] === 'NO_CHOICE' || decisionByGroupName[groupName] === 'CONFIRMED') {
-        vendorArray.push(groupName)
-      }
-    })
-    return vendorArray
   }
 
   function cmpCheckForTiqConsent (cmpRawOutput, tiqGroupName) {
     // treat things we don't understand as an opt-out
     if (cmpCheckForWellFormedDecision(cmpRawOutput) !== true) return false
-
     tiqGroupName = tiqGroupName || 'tiq-group-name-missing'
     var allowedGroups = cmpConvertResponseToGroupList(cmpRawOutput)
     return allowedGroups.indexOf(tiqGroupName) !== -1
@@ -146,6 +115,17 @@
   window.tealiumCmpIntegration.cmpCheckForTiqConsent = cmpCheckForTiqConsent
   window.tealiumCmpIntegration.cmpConvertResponseToGroupList = cmpConvertResponseToGroupList
 })(window)
+
+var outputString = `CMP Found: ${window.tealiumCmpIntegration.cmpName} (${window.tealiumCmpIntegration.cmpCheckIfOptInModel() ? 'Opt-in' : 'Opt-out'} Model)
+
+Checks:
+  - id:          ${window.tealiumCmpIntegration.cmpFetchCurrentLookupKey()}
+  - well-formed: ${window.tealiumCmpIntegration.cmpCheckForWellFormedDecision(window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision())}
+  - explicit:    ${window.tealiumCmpIntegration.cmpCheckForExplicitConsentDecision(window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision())}
+  - group list:  ${JSON.stringify(window.tealiumCmpIntegration.cmpConvertResponseToGroupList(window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision()).sort())}
+  - list length: ${window.tealiumCmpIntegration.cmpConvertResponseToGroupList(window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision()).length}
+`
+console.log(outputString)
 </code></pre>
         </article>
     </section>

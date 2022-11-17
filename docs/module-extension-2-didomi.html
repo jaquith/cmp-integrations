@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>extension-1-example-map - Documentation</title>
+    <title>extension-2-didomi - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -32,7 +32,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">extension-1-example-map</h1>
+    <h1 class="page-title">extension-2-didomi</h1>
     
 
     
@@ -55,8 +55,7 @@
         <div class="container-overview">
         
             
-                <div class="description usertext"><p>An example of an extension to supply the mapping, which should be a <a href="global.html#GroupToTagMap"><code>GroupToTagMap</code></a>.</p>
-<p>Also shows how to declare a non-standard name for the Tealium iQ TMS, which is used to determine if the TMS is allowed to run at all.</p></div>
+                <div class="description usertext"><p>The 'Pre Loader' CMP-specific component, see <code>tealiumCmpIntegration</code> for specifics on inputs, or view the source to see a working example for an example CMP.</p></div>
             
 
             
@@ -70,7 +69,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="extension-1-example-maps_extension-1-example-map-usercentrics-v2.js.html">extension-1-example-maps/extension-1-example-map-usercentrics-v2.js</a>, <a href="extension-1-example-maps_extension-1-example-map-usercentrics-v2.js.html#line10">line 10</a>
+        <a href="extension-2-cmp-variants_extension-2-didomi.js.html">extension-2-cmp-variants/extension-2-didomi.js</a>, <a href="extension-2-cmp-variants_extension-2-didomi.js.html#line1">line 1</a>
     </li></ul></dd>
     
 
@@ -115,20 +114,6 @@
 
 
 
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
-// the numbers are tag UIDs from the TiQ user interface
-window.tealiumCmpIntegration.map = {
-  yPyIAIIxY: {
-    'Google Analytics': [6, 8, 10], // three Google Analytics tags in TiQ
-    'Another Tag': [11]
-  }
-}
-// if TiQ isn't allowed to fire, no tags will be fired at all, and no cookies will be set
-window.tealiumCmpIntegration.tiqGroupName = 'Tealium iQ'</code></pre>
 
 
 

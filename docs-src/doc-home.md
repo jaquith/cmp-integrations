@@ -76,11 +76,11 @@ But the `refiringAllowed` option allows tags to be refired on new decisions, so 
 Collect will include the event-level attributes on each event:
 
  - `consent_type` - the ConsentDecision's 'type' attribute ('implicit' or 'explicit') when adding it to Tealium's b object on each event
- - `groups_with_consent_all` - the full ConsentDecision array when adding it to Tealium's b object on each event
- - `groups_with_consent_processed` - the array of already-processed consented groups
- - `groups_with_consent_unprocessed` - the array of not-yet-processed-but-consented groups 
+ - `purposes_with_consent_all` - the full ConsentDecision array when adding it to Tealium's b object on each event
+ - `purposes_with_consent_processed` - the array of already-processed consented groups
+ - `purposes_with_consent_unprocessed` - the array of not-yet-processed-but-consented groups 
 
-Depending on whether you're refiring Collect (and what server-side tools you're using), you should use either `groups_with_consent_unprocessed` (with refiring) or `groups_with_consent_all` (without refiring) as your primarly event-level consent attribute.
+Depending on whether you're refiring Collect (and what server-side tools you're using), you should use either `purposes_with_consent_unprocessed` (with refiring) or `purposes_with_consent_all` (without refiring) as your primarly event-level consent attribute.
 
 ----
 

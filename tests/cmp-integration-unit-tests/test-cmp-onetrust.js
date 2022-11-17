@@ -9,6 +9,6 @@ const cmpHelperOptOut = require('../helpers/cmp-specific/test-helper-onetrust-op
 const code = stringFunctions.getVanillaJsFile('extensions/extension-2-cmp-variants/extension-2-onetrust.js')
 
 describe('OneTrust Integration', function () {
-  describe('Opt-in Model tests', tests.getCmpTestSuite(code, cmpHelperOptIn, true))
-  describe('Opt-out Model tests', tests.getCmpTestSuite(code, cmpHelperOptOut, false))
+  describe.skip('Opt-in Model tests', tests.getCmpTestSuite(code, cmpHelperOptIn, true))
+  describe.skip('Opt-out Model tests', tests.getCmpTestSuite(code, cmpHelperOptOut, false))
 })

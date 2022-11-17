@@ -12,6 +12,9 @@
   * @description The 'Pre Loader' CMP-specific component for OneTrust.
   * @private
   *
+  * 1.0.2
+  *  - Improve cmpCheckForExplicitConsentDecision again - there are non-decision interactions, so now we check if it's opt-in mode and the box is open
+  *
   * 1.0.1
   *  - Improve cmpCheckForExplicitConsentDecision - use the interaction count instead of last interaction label (more reliable)
   *
@@ -56,14 +59,10 @@
   }
 
   function cmpCheckForExplicitConsentDecision (cmpRawOutput) {
-    // treat things we don't understand as an opt-out
+    // treat things we don't understand as implicit
     if (cmpCheckForWellFormedDecision(cmpRawOutput) !== true) return false
-
-    // check for any logged interaction - OneTrust seems to only log decisions, not other clicks in the UI
-    if (cmpRawOutput.ConsentIntegrationData && cmpRawOutput.ConsentIntegrationData.consentPayload &&
-      cmpRawOutput.ConsentIntegrationData.consentPayload.customPayload &&
-      cmpRawOutput.ConsentIntegrationData.consentPayload.customPayload.Interaction > 0) {
-      return true
+    if (cmpCheckIfOptInModel()) {
+      return window.OneTrust.IsAlertBoxClosed()
     }
     return false
   }
