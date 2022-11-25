@@ -13,6 +13,7 @@
   window.tealiumCmpIntegration.cmpName = 'Custom Integration Example'
   window.tealiumCmpIntegration.cmpIntegrationVersion = 'custom-example-1.0.0'
 
+  // Should return a boolean, true if the CMP is running the 'Opt-in' model (GDPR style)
   function cmpCheckIfOptInModel () {
     /*
     var decision = cmpFetchCurrentConsentDecision()
@@ -23,6 +24,8 @@
     */
   }
 
+  // Should return some CMP-specific raw object that contains the needed information about the decision
+  // This output is used as the cmpRawOutput argument in functions below 
   function cmpFetchCurrentConsentDecision () {
     /*
     if (!window.OneTrust || typeof window.OneTrust.GetDomainData !== 'function') return false
@@ -31,6 +34,7 @@
     */
   }
 
+  // Should return a string that helps Tealium iQ confirm that it's got the right CMP configuration (and not one from some other page / customer of the CMP)
   function cmpFetchCurrentLookupKey () {
     /*
     if (!window.OneTrust || typeof window.OneTrust.GetDomainData !== 'function') return ''
@@ -39,6 +43,7 @@
     */
   }
 
+  // Should return a boolean - true if the raw decision meets our expectations for the CMP
   function cmpCheckForWellFormedDecision (cmpRawOutput) {
     /*
     // treat things we don't understand as an opt-out
@@ -50,6 +55,7 @@
     */
   }
 
+  // Should return a boolean - true if the consent decision was explicitly made by the user
   function cmpCheckForExplicitConsentDecision (cmpRawOutput) {
     /*
     // treat things we don't understand as an opt-out
@@ -65,6 +71,7 @@
     */
   }
 
+  // Should return an array of consented vendors/purposes - these should match the Purposes in Tealium iQ exactly
   function cmpConvertResponseToGroupList (cmpRawOutput) {
     /*
     // convert from array of objects to object for easier lookups
@@ -96,7 +103,7 @@
     */
   }
 
-  // you shouldn't need to change this function
+  // You shouldn't need to change this function, or anything below it
   function cmpCheckForTiqConsent (cmpRawOutput, tiqGroupName) {
     // treat things we don't understand as an opt-out
     if (cmpCheckForWellFormedDecision(cmpRawOutput) !== true) return false
