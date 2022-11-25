@@ -18,10 +18,10 @@
   }
 
   function cmpFetchCurrentConsentDecision () {
-    if (!window.Didomi || typeof window.Didomi.getUserConsentStatusForAll !== 'function') return false
+    if (!window.Didomi || typeof window.Didomi.getUserStatus !== 'function') return false
     if (typeof window.Didomi.getConfig !== 'function') return false
     var cmpRawOutput = {}
-    cmpRawOutput = window.Didomi.getUserConsentStatusForAll()
+    cmpRawOutput = window.Didomi.getUserStatus()
     return cmpRawOutput
   }
 
@@ -34,10 +34,13 @@
   function cmpCheckForWellFormedDecision (cmpRawOutput) {
     // treat things we don't understand as an opt-out
     if (typeof cmpRawOutput !== 'object') return false
+    // do more checks than strictly necessary to confirm expectations
     if (typeof cmpRawOutput.purposes !== 'object') return false
     if (typeof cmpRawOutput.vendors !== 'object') return false
-    if (toString.call(cmpRawOutput.purposes.enabled) !== '[object Array]') return false
-    if (toString.call(cmpRawOutput.vendors.enabled) !== '[object Array]') return false
+    if (typeof cmpRawOutput.purposes.global !== 'object') return false
+    if (typeof cmpRawOutput.vendors.global !== 'object') return false
+    if (toString.call(cmpRawOutput.purposes.global.enabled) !== '[object Array]') return false
+    if (toString.call(cmpRawOutput.vendors.global.enabled) !== '[object Array]') return false
     return true
   }
 
@@ -48,11 +51,9 @@
   }
 
   function cmpConvertResponseToGroupList (cmpRawOutput) {
-    // this doesn't seem to include vendors allowed by implicit consent so far?
-    const vendorsBeforePurposeCheck = cmpRawOutput.vendors.enabled
-    return vendorsBeforePurposeCheck.filter(function (vendorName) {
-      return window.Didomi.getUserConsentStatusForVendor(vendorName)
-    })
+    // Didomi handles checking each vendor's required purposes
+    if (cmpCheckForWellFormedDecision(cmpRawOutput) !== true) return []
+    return cmpRawOutput.vendors.global.enabled
   }
 
   function cmpCheckForTiqConsent (cmpRawOutput, tiqGroupName) {
@@ -72,6 +73,7 @@
   window.tealiumCmpIntegration.cmpConvertResponseToGroupList = cmpConvertResponseToGroupList
 })(window)
 
+/*
 var outputString = `CMP Found: ${window.tealiumCmpIntegration.cmpName} (${window.tealiumCmpIntegration.cmpCheckIfOptInModel() ? 'Opt-in' : 'Opt-out'} Model)
 
 Checks:
@@ -82,3 +84,4 @@ Checks:
   - list length: ${window.tealiumCmpIntegration.cmpConvertResponseToGroupList(window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision()).length}
 `
 console.log(outputString)
+*/
