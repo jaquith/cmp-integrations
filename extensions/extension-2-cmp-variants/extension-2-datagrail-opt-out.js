@@ -7,7 +7,7 @@
     // CMP specific functionality and labels
     window.tealiumCmpIntegration = window.tealiumCmpIntegration || {};
   
-    window.tealiumCmpIntegration.cmpName = 'Data Grail Opt-out Cookie for CCPA/CPRA';
+    window.tealiumCmpIntegration.cmpName = 'DataGrail Opt-out Cookie for CCPA/CPRA';
     window.tealiumCmpIntegration.cmpIntegrationVersion = 'v1.0.0';
     
     var optOutCookieName = 'CCPA_DNSMPI';
