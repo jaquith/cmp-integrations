@@ -10,7 +10,7 @@
     window.tealiumCmpIntegration.cmpName = 'DataGrail Opt-out Cookie for CCPA/CPRA';
     window.tealiumCmpIntegration.cmpIntegrationVersion = 'v1.0.0';
     
-    var optOutCookieName = 'CCPA_DNSMPI';
+    var optOutCookieName = 'ccpa_dnsmpi';
 
     // Should return a boolean, true if the CMP is running the 'Opt-in' model (GDPR style)
     function cmpCheckIfOptInModel () {
