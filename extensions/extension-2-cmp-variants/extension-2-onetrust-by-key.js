@@ -11,7 +11,7 @@
   *
   * @description The 'Pre Loader' CMP-specific component for OneTrust.
   * @private
-  * 
+  *
   * 2.0.0
   *  - Start using keys instead of names for the lookup (breaking change)
   *  - Parse the dataLayer for the decision to avoid relying on ConsentIntegrationData, which isn't always populated for all customers

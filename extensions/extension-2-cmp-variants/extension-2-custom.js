@@ -6,8 +6,8 @@
   *  1.0.1
   *  - Add cmpConvertResponseToLookupObject function, update example logic in other functions
   *  - Move all window-scoped definitions to the top of the main function
-  * 
-  * 1.0.0 
+  *
+  * 1.0.0
   *  - Initial version
   *
   */
@@ -21,14 +21,13 @@
 
   window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision = cmpFetchCurrentConsentDecision
   window.tealiumCmpIntegration.cmpFetchCurrentLookupKey = cmpFetchCurrentLookupKey
-  
+
   window.tealiumCmpIntegration.cmpCheckIfOptInModel = cmpCheckIfOptInModel
   window.tealiumCmpIntegration.cmpCheckForWellFormedDecision = cmpCheckForWellFormedDecision
   window.tealiumCmpIntegration.cmpCheckForExplicitConsentDecision = cmpCheckForExplicitConsentDecision
   window.tealiumCmpIntegration.cmpCheckForTiqConsent = cmpCheckForTiqConsent
   window.tealiumCmpIntegration.cmpConvertResponseToGroupList = cmpConvertResponseToGroupList
   window.tealiumCmpIntegration.cmpConvertResponseToLookupObject = cmpConvertResponseToLookupObject
-
 
   // Should return a boolean, true if the CMP is running the 'Opt-in' model (GDPR style)
   function cmpCheckIfOptInModel () {
@@ -92,7 +91,7 @@
     */
   }
 
-  // Only used in the console-based debugging / config helper snippet below - the 
+  // Only used in the console-based debugging / config helper snippet below - the
   // framework itself only needs the keys, not the pretty names - those are for the user.
   // Should return an object that shows the relationship of IDs to names, for consented vendors
   // or purposes.
@@ -131,8 +130,6 @@
     var allowedGroups = cmpConvertResponseToGroupList(cmpRawOutput)
     return allowedGroups.indexOf(tiqGroupName) !== -1
   }
-
-
 })(window)
 
 /*

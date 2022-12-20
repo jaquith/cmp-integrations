@@ -73,7 +73,6 @@
     var allowedGroups = cmpConvertResponseToGroupList(cmpRawOutput)
     return allowedGroups.indexOf(tiqGroupName) !== -1
   }
-
 })(window)
 
 /*

@@ -76,7 +76,7 @@
   }
 
   function cmpConvertResponseToLookupObject (cmpRawOutput) {
-    var allowedVendors = cmpRawOutput.userStatus.vendors.global.enabled
+    var allowedVendors = cmpConvertResponseToGroupList(cmpRawOutput)
     var allVendors = cmpRawOutput.vendorInfo
     var lookupObject = {}
     allVendors.forEach(function (vendorObject) {
@@ -95,17 +95,17 @@
   }
 })(window)
 
-
+/*
   // Debugging / development output - repaste the integration on your test pages each time you make a change to your consent state
   var outputString = `CMP Found: ${window.tealiumCmpIntegration.cmpName} (${window.tealiumCmpIntegration.cmpCheckIfOptInModel() ? 'Opt-in' : 'Opt-out'} Model)
 
   Checks:
-    - id:          ${tealiumCmpIntegration.cmpFetchCurrentLookupKey()}
-    - well-formed: ${tealiumCmpIntegration.cmpCheckForWellFormedDecision(tealiumCmpIntegration.cmpFetchCurrentConsentDecision())}
-    - explicit:    ${tealiumCmpIntegration.cmpCheckForExplicitConsentDecision(tealiumCmpIntegration.cmpFetchCurrentConsentDecision())}
-    - group list:  ${JSON.stringify(tealiumCmpIntegration.cmpConvertResponseToGroupList(tealiumCmpIntegration.cmpFetchCurrentConsentDecision()))}
+    - id:          ${window.tealiumCmpIntegration.cmpFetchCurrentLookupKey()}
+    - well-formed: ${window.tealiumCmpIntegration.cmpCheckForWellFormedDecision(window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision())}
+    - explicit:    ${window.tealiumCmpIntegration.cmpCheckForExplicitConsentDecision(window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision())}
+    - group list:  ${JSON.stringify(window.tealiumCmpIntegration.cmpConvertResponseToGroupList(window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision()))}
 
     - name lookup: ${JSON.stringify(tealiumCmpIntegration.cmpConvertResponseToLookupObject(tealiumCmpIntegration.cmpFetchCurrentConsentDecision()), null, 6)}
   `
   console.log(outputString)
-
+*/
