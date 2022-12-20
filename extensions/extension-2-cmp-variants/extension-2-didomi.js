@@ -12,6 +12,15 @@
   window.tealiumCmpIntegration.cmpName = 'Didomi'
   window.tealiumCmpIntegration.cmpIntegrationVersion = 'didomi-1.0.0'
 
+  window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision = cmpFetchCurrentConsentDecision
+  window.tealiumCmpIntegration.cmpFetchCurrentLookupKey = cmpFetchCurrentLookupKey
+  window.tealiumCmpIntegration.cmpCheckIfOptInModel = cmpCheckIfOptInModel
+  window.tealiumCmpIntegration.cmpCheckForWellFormedDecision = cmpCheckForWellFormedDecision
+  window.tealiumCmpIntegration.cmpCheckForExplicitConsentDecision = cmpCheckForExplicitConsentDecision
+  window.tealiumCmpIntegration.cmpCheckForTiqConsent = cmpCheckForTiqConsent
+  window.tealiumCmpIntegration.cmpConvertResponseToGroupList = cmpConvertResponseToGroupList
+  window.tealiumCmpIntegration.cmpConvertResponseToLookupObject = cmpConvertResponseToLookupObject
+
   function cmpCheckIfOptInModel () {
     if (!window.Didomi || typeof window.Didomi.getConfig !== 'function') return false
     return window.Didomi.getConfig().notice.type === 'optin'
@@ -21,7 +30,9 @@
     if (!window.Didomi || typeof window.Didomi.getUserStatus !== 'function') return false
     if (typeof window.Didomi.getConfig !== 'function') return false
     var cmpRawOutput = {}
-    cmpRawOutput = window.Didomi.getUserStatus()
+    cmpRawOutput.userStatus = window.Didomi.getUserStatus()
+    cmpRawOutput.vendorInfo = window.Didomi.getVendors()
+    cmpRawOutput.shouldConsentBeCollected = window.Didomi.shouldConsentBeCollected()
     return cmpRawOutput
   }
 
@@ -34,26 +45,45 @@
   function cmpCheckForWellFormedDecision (cmpRawOutput) {
     // treat things we don't understand as an opt-out
     if (typeof cmpRawOutput !== 'object') return false
+    if (typeof cmpRawOutput.userStatus !== 'object') return false
     // do more checks than strictly necessary to confirm expectations
-    if (typeof cmpRawOutput.purposes !== 'object') return false
-    if (typeof cmpRawOutput.vendors !== 'object') return false
-    if (typeof cmpRawOutput.purposes.global !== 'object') return false
-    if (typeof cmpRawOutput.vendors.global !== 'object') return false
-    if (toString.call(cmpRawOutput.purposes.global.enabled) !== '[object Array]') return false
-    if (toString.call(cmpRawOutput.vendors.global.enabled) !== '[object Array]') return false
+    if (typeof cmpRawOutput.userStatus.purposes !== 'object') return false
+    if (typeof cmpRawOutput.userStatus.vendors !== 'object') return false
+    if (typeof cmpRawOutput.userStatus.purposes.global !== 'object') return false
+    if (typeof cmpRawOutput.userStatus.vendors.global !== 'object') return false
+    if (toString.call(cmpRawOutput.userStatus.purposes.global.enabled) !== '[object Array]') return false
+    if (toString.call(cmpRawOutput.userStatus.vendors.global.enabled) !== '[object Array]') return false
+
+    if (typeof cmpRawOutput.vendorInfo !== 'object') return false
+
+    if (typeof cmpRawOutput.shouldConsentBeCollected !== 'boolean') return false
     return true
   }
 
   function cmpCheckForExplicitConsentDecision (cmpRawOutput) {
     // treat things we don't understand as an opt-out
     if (cmpCheckForWellFormedDecision(cmpRawOutput) !== true) return false
-    return window.Didomi.shouldConsentBeCollected() === false // false after an explicit decision is made
+    return cmpRawOutput.shouldConsentBeCollected === false // false after an explicit decision is made
   }
 
   function cmpConvertResponseToGroupList (cmpRawOutput) {
     // Didomi handles checking each vendor's required purposes
     if (cmpCheckForWellFormedDecision(cmpRawOutput) !== true) return []
-    return cmpRawOutput.vendors.global.enabled
+    // enforce strings, even for IAB vendor ids
+    return cmpRawOutput.userStatus.vendors.global.enabled.map(function (vendorId) {
+      return String(vendorId)
+    })
+  }
+
+  function cmpConvertResponseToLookupObject (cmpRawOutput) {
+    var allowedVendors = cmpRawOutput.userStatus.vendors.global.enabled
+    var allVendors = cmpRawOutput.vendorInfo
+    var lookupObject = {}
+    allVendors.forEach(function (vendorObject) {
+      if (allowedVendors.indexOf(String(vendorObject.id)) === -1) return
+      lookupObject[vendorObject.id] = vendorObject.name || 'iab-vendor-' + vendorObject.id
+    })
+    return lookupObject
   }
 
   function cmpCheckForTiqConsent (cmpRawOutput, tiqGroupName) {
@@ -63,25 +93,19 @@
     var allowedGroups = cmpConvertResponseToGroupList(cmpRawOutput)
     return allowedGroups.indexOf(tiqGroupName) !== -1
   }
-
-  window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision = cmpFetchCurrentConsentDecision
-  window.tealiumCmpIntegration.cmpFetchCurrentLookupKey = cmpFetchCurrentLookupKey
-  window.tealiumCmpIntegration.cmpCheckIfOptInModel = cmpCheckIfOptInModel
-  window.tealiumCmpIntegration.cmpCheckForWellFormedDecision = cmpCheckForWellFormedDecision
-  window.tealiumCmpIntegration.cmpCheckForExplicitConsentDecision = cmpCheckForExplicitConsentDecision
-  window.tealiumCmpIntegration.cmpCheckForTiqConsent = cmpCheckForTiqConsent
-  window.tealiumCmpIntegration.cmpConvertResponseToGroupList = cmpConvertResponseToGroupList
 })(window)
 
-/*
-var outputString = `CMP Found: ${window.tealiumCmpIntegration.cmpName} (${window.tealiumCmpIntegration.cmpCheckIfOptInModel() ? 'Opt-in' : 'Opt-out'} Model)
 
-Checks:
-  - id:          ${window.tealiumCmpIntegration.cmpFetchCurrentLookupKey()}
-  - well-formed: ${window.tealiumCmpIntegration.cmpCheckForWellFormedDecision(window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision())}
-  - explicit:    ${window.tealiumCmpIntegration.cmpCheckForExplicitConsentDecision(window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision())}
-  - key list:    ${JSON.stringify(window.tealiumCmpIntegration.cmpConvertResponseToGroupList(window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision()).sort())}
-  - list length: ${window.tealiumCmpIntegration.cmpConvertResponseToGroupList(window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision()).length}
-`
-console.log(outputString)
-*/
+  // Debugging / development output - repaste the integration on your test pages each time you make a change to your consent state
+  var outputString = `CMP Found: ${window.tealiumCmpIntegration.cmpName} (${window.tealiumCmpIntegration.cmpCheckIfOptInModel() ? 'Opt-in' : 'Opt-out'} Model)
+
+  Checks:
+    - id:          ${tealiumCmpIntegration.cmpFetchCurrentLookupKey()}
+    - well-formed: ${tealiumCmpIntegration.cmpCheckForWellFormedDecision(tealiumCmpIntegration.cmpFetchCurrentConsentDecision())}
+    - explicit:    ${tealiumCmpIntegration.cmpCheckForExplicitConsentDecision(tealiumCmpIntegration.cmpFetchCurrentConsentDecision())}
+    - group list:  ${JSON.stringify(tealiumCmpIntegration.cmpConvertResponseToGroupList(tealiumCmpIntegration.cmpFetchCurrentConsentDecision()))}
+
+    - name lookup: ${JSON.stringify(tealiumCmpIntegration.cmpConvertResponseToLookupObject(tealiumCmpIntegration.cmpFetchCurrentConsentDecision()), null, 6)}
+  `
+  console.log(outputString)
+
