@@ -13,10 +13,10 @@
   * @private
   *
   * 2.0.0
-  *  - Start using keys instead of names for the lookup (breaking change)
-  *  - Parse the dataLayer for the decision to avoid relying on ConsentIntegrationData, which isn't always populated for all customers
+  *  - Start using keys instead of names for the lookup (breaking change, but with deactivation switch)
+  *  - Update the way the Vendor ID is pulled from the page to stop using the legacy cctId property
+  *  - Parse window.dataLayer for the decision to avoid relying on ConsentIntegrationData, which isn't always populated for all customers
   *  - Introduce a new function to help with setup (cmpConvertResponseToLookupObject) that produces a key-to-name lookup object
-  *  - Update debugging comment at bottom to include new function
   *
   * 1.0.2
   *  - Improve cmpCheckForExplicitConsentDecision again - there are non-decision interactions, so now we check if it's opt-in mode and the box is open
@@ -29,10 +29,15 @@
   */
 
 ;(function oneTrust (window) {
+  // allows simple adjustment of the name/id behavior
+  var useNamesInsteadOfKeys = false
+  // allow the safety check of the expected Vendor ID to be circumvented to simplify setup at the cost of increased risk
+  var disableVendorIdValidation = false
+
   // CMP specific functionality and labels
   window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
 
-  window.tealiumCmpIntegration.cmpName = 'OneTrust by Key'
+  window.tealiumCmpIntegration.cmpName = 'OneTrust'
   window.tealiumCmpIntegration.cmpIntegrationVersion = 'onetrust-2.0.0'
 
   window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision = cmpFetchCurrentConsentDecision
@@ -59,22 +64,26 @@
     return cmpRawOutput
   }
 
-  function scrapeOneTrustVendorId () {
-    var allScripts = document.getElementsByTagName('script')
-    var re = /\/otSDKStub\.js(\?.*)*$/
-    for (var i = 0; i < allScripts.length; i++) {
-      var isOneTrustScript = re.test(allScripts[i].src) // can be null
-      if (isOneTrustScript) { // [1] is the result of the match
-        return allScripts[i].dataset && allScripts[i].dataset.domainScript
-      }
-    }
-    return 'error-not-found' // default to guessing we're in prod, just in case we're actually in prod (to avoid logging in Prod)
-  }
-
   function cmpFetchCurrentLookupKey () {
-    if (!window.OneTrust || typeof window.OneTrust.GetDomainData !== 'function') return ''
-    var id = window.OneTrust.GetDomainData().cctId || scrapeOneTrustVendorId()
-    return id || ''
+    // newer versions of OneTrust, starting at the end of 2022 no longer have cctId defined
+    // but this HTML attribute is the way OneTrust can tell
+    var scrapeOneTrustVendorId = function () {
+      var allScripts = document.getElementsByTagName('script')
+      var re = /\/otSDKStub\.js(\?.*)*$/
+      for (var i = 0; i < allScripts.length; i++) {
+        var isOneTrustScript = re.test(allScripts[i].src) // can be null
+        if (isOneTrustScript) {
+          var fullVendorId = allScripts[i].getAttribute('data-domain-script') // parse it from the script
+          return fullVendorId.split('-test')[0]
+        }
+      }
+      return 'error-not-found'
+    }
+    if (disableVendorIdValidation) {
+      // just return whatever Vendor ID is expected be active
+      return (window.tealiumCmpIntegration && window.tealiumCmpIntegration.map && Object.keys(window.tealiumCmpIntegration.map)[0]) || '(Vendor ID check disabled)' // just return whatever's mapped to short-circuit the check as a test
+    }
+    return scrapeOneTrustVendorId()
   }
 
   function cmpCheckForWellFormedDecision (cmpRawOutput) {
@@ -120,7 +129,8 @@
 
   function cmpConvertResponseToGroupList (cmpRawOutput) {
     var permittedPurposesWithNames = cmpConvertResponseToLookupObject(cmpRawOutput)
-    return Object.keys(permittedPurposesWithNames) // keys are IDs, values are names
+    var keysOrValues = useNamesInsteadOfKeys ? 'values' : 'keys'
+    return Object[keysOrValues](permittedPurposesWithNames) // keys are IDs, values are names
   }
 
   function cmpCheckForTiqConsent (cmpRawOutput, tiqGroupName) {

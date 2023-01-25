@@ -1,13 +1,18 @@
 /**
   * @module utcm/integration
-  * @description The 'Pre Loader' CMP-specific component, see [tealiumCmpIntegration]{@link namespace:tealiumCmpIntegration} for specifics on inputs, or view the source to see a working example for an example CMP.
+  * @description An integration that checks for an opt-out cookie and returns either
+  *  - ['no-selling'] (opt-out cookie with any value found)
+  * OR
+  *  - ['no-selling', 'yes-selling'] (no opt-out cookie found)
+  *
+  * The (case-sensitive) name of the cookie is taken from the 'Vendor ID' field in the UI.
   */
 
 (function myCustomConsentIntegration (window) {
   // CMP specific functionality and labels
   window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
 
-  window.tealiumCmpIntegration.cmpName = 'Opt-out Cookie (cookie name in Vendor ID)'
+  window.tealiumCmpIntegration.cmpName = 'Opt-out Cookie (cookie name from Vendor ID field)'
   window.tealiumCmpIntegration.cmpIntegrationVersion = 'v1.0.0'
 
   window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision = cmpFetchCurrentConsentDecision
