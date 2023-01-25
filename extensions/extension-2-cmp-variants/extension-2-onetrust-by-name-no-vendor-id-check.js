@@ -12,8 +12,8 @@
   * @description The 'Pre Loader' CMP-specific component for OneTrust.
   * @private
   *
-  * 2.0.0
-  *  - Start using keys instead of names for the lookup (breaking change)
+  * 1.1.0
+  *  - Circumvent the cctId check because of a OneTrust bug in a couple recent versions where that's unavailable
   *  - Parse the dataLayer for the decision to avoid relying on ConsentIntegrationData, which isn't always populated for all customers
   *  - Introduce a new function to help with setup (cmpConvertResponseToLookupObject) that produces a key-to-name lookup object
   *  - Update debugging comment at bottom to include new function
@@ -32,8 +32,8 @@
   // CMP specific functionality and labels
   window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
 
-  window.tealiumCmpIntegration.cmpName = 'OneTrust by Key'
-  window.tealiumCmpIntegration.cmpIntegrationVersion = 'onetrust-2.0.0'
+  window.tealiumCmpIntegration.cmpName = 'OneTrust by Name'
+  window.tealiumCmpIntegration.cmpIntegrationVersion = 'onetrust-1.1.0'
 
   window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision = cmpFetchCurrentConsentDecision
   window.tealiumCmpIntegration.cmpFetchCurrentLookupKey = cmpFetchCurrentLookupKey
@@ -59,22 +59,8 @@
     return cmpRawOutput
   }
 
-  function scrapeOneTrustVendorId () {
-    var allScripts = document.getElementsByTagName('script')
-    var re = /\/otSDKStub\.js(\?.*)*$/
-    for (var i = 0; i < allScripts.length; i++) {
-      var isOneTrustScript = re.test(allScripts[i].src) // can be null
-      if (isOneTrustScript) { // [1] is the result of the match
-        return allScripts[i].dataset && allScripts[i].dataset.domainScript
-      }
-    }
-    return 'error-not-found' // default to guessing we're in prod, just in case we're actually in prod (to avoid logging in Prod)
-  }
-
   function cmpFetchCurrentLookupKey () {
-    if (!window.OneTrust || typeof window.OneTrust.GetDomainData !== 'function') return ''
-    var id = window.OneTrust.GetDomainData().cctId || scrapeOneTrustVendorId()
-    return id || ''
+    return (window.tealiumCmpIntegration && window.tealiumCmpIntegration.map && Object.keys(tealiumCmpIntegration.map)[0]) || '(Vendor ID check disabled)' // just return whatever's mapped to short-circuit the check as a test
   }
 
   function cmpCheckForWellFormedDecision (cmpRawOutput) {
@@ -120,7 +106,7 @@
 
   function cmpConvertResponseToGroupList (cmpRawOutput) {
     var permittedPurposesWithNames = cmpConvertResponseToLookupObject(cmpRawOutput)
-    return Object.keys(permittedPurposesWithNames) // keys are IDs, values are names
+    return Object.values(permittedPurposesWithNames) // keys are IDs, values are names
   }
 
   function cmpCheckForTiqConsent (cmpRawOutput, tiqGroupName) {
