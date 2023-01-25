@@ -115,7 +115,7 @@ This framework is allowed to make it easy to support new CMPs, so please reach o
 
 ### OneTrust
  - Supports both opt-in and opt-out modes
- - [OneTrust-managed Demo](https://demo9.otprivacy.com/files/EN/TagManagerDemo/OTKicks_Tealium/index.html)
+ - [OneTrust-managed Demo](https://www.otprivacy.com/user/jmyles/TagManagerDemo/OTKicks_Tealium/index.html)
 
 ----
 
