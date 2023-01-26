@@ -1,14 +1,20 @@
 /**
   * @module utcm/integration
-  * @description An integration that checks for an opt-out cookie and returns either
+  * @description
+  *
+  * An integration that checks for an opt-out cookie and returns either
   *  - ['no-selling'] (opt-out cookie with any value found)
   * OR
   *  - ['no-selling', 'yes-selling'] (no opt-out cookie found)
   *
   * The (case-sensitive) name of the cookie is taken from the 'Vendor ID' field in the UI.
+  *
+  * Also respects the Global Privacy Control as an opt-out
   */
 
 (function myCustomConsentIntegration (window) {
+  // allow this to be deactivated in case someone wants to for some reason
+  var respectGlobalPrivacyControlSignal = true
   // CMP specific functionality and labels
   window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
 
@@ -41,7 +47,8 @@
       return cookieValue
     }
     var cookie = readCookie(optOutCookieName) || 'opt-out-cookie-not-found'
-    return { cookieState: cookie }
+    var gpc = navigator.globalPrivacyControl
+    return { cookieState: cookie, gpcState: gpc }
   }
 
   // Should return a string that helps Tealium iQ confirm that it's got the right CMP configuration (and not one from some other page / customer of the CMP)
@@ -63,7 +70,8 @@
   // Should return an array of consented vendors/purposes - these should match the Purposes in Tealium iQ exactly
   function cmpConvertResponseToGroupList (cmpRawOutput) {
     var consentDecision = ['no-selling'] // always allowed
-    if (cmpRawOutput.cookieState === 'opt-out-cookie-not-found') { // cookie will be undefined if the user hasn't interacted, not super privacy-by-design but no better option
+    // very simple check for a non-empty opt-out cookie OR GPC opt-out signal (if active)
+    if (cmpRawOutput.cookieState === 'opt-out-cookie-not-found' && (!respectGlobalPrivacyControlSignal || cmpRawOutput.gpcState !== true)) {
       consentDecision.push('yes-selling') // we don't see a cookie, so we have to assume selling/sharing data is fine
     }
     return consentDecision
