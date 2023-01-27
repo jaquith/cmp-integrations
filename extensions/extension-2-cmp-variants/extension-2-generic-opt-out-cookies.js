@@ -63,7 +63,7 @@
 
   // Should return a boolean - true if the consent decision was explicitly made by the user
   function cmpCheckForExplicitConsentDecision (cmpRawOutput) {
-    if (typeof cmpRawOutput === 'object' && typeof cmpRawOutput.cookieState === 'string' && cmpRawOutput.cookieState !== 'opt-out-cookie-not-found') return true
+    if ((typeof cmpRawOutput === 'object' && typeof cmpRawOutput.cookieState === 'string' && cmpRawOutput.cookieState !== 'opt-out-cookie-not-found') || (typeof cmpRawOutput === 'object' && cmpRawOutput.gpcState === true)) return true
     return false
   }
 
