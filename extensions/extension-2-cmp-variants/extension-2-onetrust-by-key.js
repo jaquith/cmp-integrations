@@ -12,6 +12,10 @@
   * @description The 'Pre Loader' CMP-specific component for OneTrust.
   * @private
   *
+  * 2.0.1
+  *  - Add safeguarding conditional to cmpConvertResponseToLookupObject
+  *  - Fix bug in cmpCheckForExplicitConsentDecision where an explicit opt-in was incorrectly output as an 'implicit' decision
+  *  One
   * 2.0.0
   *  - Start using keys instead of names for the lookup (breaking change, but with deactivation switch)
   *  - Update the way the Vendor ID is pulled from the page to stop using the legacy cctId property
@@ -38,7 +42,7 @@
   window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
 
   window.tealiumCmpIntegration.cmpName = 'OneTrust'
-  window.tealiumCmpIntegration.cmpIntegrationVersion = 'onetrust-2.0.0'
+  window.tealiumCmpIntegration.cmpIntegrationVersion = 'onetrust-2.0.1'
 
   window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision = cmpFetchCurrentConsentDecision
   window.tealiumCmpIntegration.cmpFetchCurrentLookupKey = cmpFetchCurrentLookupKey
@@ -97,15 +101,13 @@
   function cmpCheckForExplicitConsentDecision (cmpRawOutput) {
     // treat things we don't understand as implicit
     if (cmpCheckForWellFormedDecision(cmpRawOutput) !== true) return false
-    if (cmpCheckIfOptInModel()) {
-      return window.OneTrust.IsAlertBoxClosed()
-    }
-    return false
+    return window.OneTrust && typeof window.OneTrust.IsAlertBoxClosed === 'function' && window.OneTrust.IsAlertBoxClosed()
   }
 
   function cmpConvertResponseToLookupObject (cmpRawOutput) {
     // convert from array of objects to object for easier lookups
     var decisionString = ''
+    if (cmpCheckForWellFormedDecision(cmpRawOutput) !== true) return {}
     for (var i = cmpRawOutput.dataLayer.length - 1; i >= 0; i--) {
       if (['OneTrustGroupsUpdated', 'OneTrustLoaded'].indexOf(cmpRawOutput.dataLayer[i].event) !== -1) {
         decisionString = cmpRawOutput.dataLayer[i].OnetrustActiveGroups
@@ -144,16 +146,16 @@
 })(window)
 
 /*
-  // Debugging / development output - repaste the integration on your test pages each time you make a change to your consent state
-  var outputString = `CMP Found: ${window.tealiumCmpIntegration.cmpName} (${window.tealiumCmpIntegration.cmpCheckIfOptInModel() ? 'Opt-in' : 'Opt-out'} Model)
+// Debugging / development output - repaste the integration on your test pages each time you make a change to your consent state
+var outputString = `CMP Found: ${window.tealiumCmpIntegration.cmpName} (${window.tealiumCmpIntegration.cmpCheckIfOptInModel() ? 'Opt-in' : 'Opt-out'} Model)
 
   Checks:
-    - id:          ${tealiumCmpIntegration.cmpFetchCurrentLookupKey()}
-    - well-formed: ${tealiumCmpIntegration.cmpCheckForWellFormedDecision(tealiumCmpIntegration.cmpFetchCurrentConsentDecision())}
-    - explicit:    ${tealiumCmpIntegration.cmpCheckForExplicitConsentDecision(tealiumCmpIntegration.cmpFetchCurrentConsentDecision())}
-    - group list:  ${JSON.stringify(tealiumCmpIntegration.cmpConvertResponseToGroupList(tealiumCmpIntegration.cmpFetchCurrentConsentDecision()))}
+    - id:          ${window.tealiumCmpIntegration.cmpFetchCurrentLookupKey()}
+    - well-formed: ${window.tealiumCmpIntegration.cmpCheckForWellFormedDecision(window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision())}
+    - explicit:    ${window.tealiumCmpIntegration.cmpCheckForExplicitConsentDecision(window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision())}
+    - group list:  ${JSON.stringify(window.tealiumCmpIntegration.cmpConvertResponseToGroupList(window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision()))}
 
-    - name lookup: ${JSON.stringify(tealiumCmpIntegration.cmpConvertResponseToLookupObject(tealiumCmpIntegration.cmpFetchCurrentConsentDecision()), null, 6)}
+    - name lookup: ${JSON.stringify(window.tealiumCmpIntegration.cmpConvertResponseToLookupObject(window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision()), null, 6)}
   `
-  console.log(outputString)
+console.log(outputString)
 */
