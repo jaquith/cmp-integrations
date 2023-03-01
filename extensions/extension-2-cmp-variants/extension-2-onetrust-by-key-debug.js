@@ -15,7 +15,7 @@
   * 2.0.1 
   *  - Add safeguarding conditional to cmpConvertResponseToLookupObject
   *  - Fix bug in cmpCheckForExplicitConsentDecision where an explicit opt-in was incorrectly output as an 'implicit' decision
-  * 
+  *  One
   * 2.0.0
   *  - Start using keys instead of names for the lookup (breaking change, but with deactivation switch)
   *  - Update the way the Vendor ID is pulled from the page to stop using the legacy cctId property
@@ -42,7 +42,7 @@
   window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
 
   window.tealiumCmpIntegration.cmpName = 'OneTrust'
-  window.tealiumCmpIntegration.cmpIntegrationVersion = 'onetrust-2.0.0'
+  window.tealiumCmpIntegration.cmpIntegrationVersion = 'onetrust-2.0.1'
 
   window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision = cmpFetchCurrentConsentDecision
   window.tealiumCmpIntegration.cmpFetchCurrentLookupKey = cmpFetchCurrentLookupKey
