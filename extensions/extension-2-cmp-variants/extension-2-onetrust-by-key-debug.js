@@ -12,6 +12,10 @@
   * @description The 'Pre Loader' CMP-specific component for OneTrust.
   * @private
   *
+  * 2.0.1 
+  *  - Add safeguarding conditional to cmpConvertResponseToLookupObject
+  *  - Fix bug in cmpCheckForExplicitConsentDecision where an explicit opt-in was incorrectly output as an 'implicit' decision
+  * 
   * 2.0.0
   *  - Start using keys instead of names for the lookup (breaking change, but with deactivation switch)
   *  - Update the way the Vendor ID is pulled from the page to stop using the legacy cctId property
@@ -97,15 +101,13 @@
   function cmpCheckForExplicitConsentDecision (cmpRawOutput) {
     // treat things we don't understand as implicit
     if (cmpCheckForWellFormedDecision(cmpRawOutput) !== true) return false
-    if (cmpCheckIfOptInModel()) {
-      return window.OneTrust.IsAlertBoxClosed()
-    }
-    return false
+    return window.OneTrust && typeof window.OneTrust.IsAlertBoxClosed === 'function' && window.OneTrust.IsAlertBoxClosed()
   }
 
   function cmpConvertResponseToLookupObject (cmpRawOutput) {
     // convert from array of objects to object for easier lookups
     var decisionString = ''
+    if (cmpCheckForWellFormedDecision(cmpRawOutput) !== true) return {}
     for (var i = cmpRawOutput.dataLayer.length - 1; i >= 0; i--) {
       if (['OneTrustGroupsUpdated', 'OneTrustLoaded'].indexOf(cmpRawOutput.dataLayer[i].event) !== -1) {
         decisionString = cmpRawOutput.dataLayer[i].OnetrustActiveGroups
