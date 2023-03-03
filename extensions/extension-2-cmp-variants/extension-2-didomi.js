@@ -3,6 +3,12 @@
   *
   * @description The 'Pre Loader' CMP-specific component, see [tealiumCmpIntegration]{@link namespace:tealiumCmpIntegration} for specifics on inputs, or view the source to see a working example for an example CMP.
   *
+  * 1.0.1
+  *  - Add workaround for known Didomi bug where implicit consent is always empty regardless of configuration
+  *
+  * 1.0.0
+  *  - Initial version, start versioning
+  *
   */
 
 ;(function didomiIntegration (window) {
@@ -10,7 +16,7 @@
   window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
 
   window.tealiumCmpIntegration.cmpName = 'Didomi'
-  window.tealiumCmpIntegration.cmpIntegrationVersion = 'didomi-1.0.0'
+  window.tealiumCmpIntegration.cmpIntegrationVersion = 'didomi-1.0.1'
 
   window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision = cmpFetchCurrentConsentDecision
   window.tealiumCmpIntegration.cmpFetchCurrentLookupKey = cmpFetchCurrentLookupKey
@@ -70,15 +76,21 @@
     // Didomi handles checking each vendor's required purposes
     if (cmpCheckForWellFormedDecision(cmpRawOutput) !== true) return []
     // enforce strings, even for IAB vendor ids
-    return cmpRawOutput.userStatus.vendors.global.enabled.map(function (vendorId) {
+
+    const decision = cmpRawOutput.userStatus.vendors.global.enabled.map(function (vendorId) {
       return String(vendorId)
     })
+
+    decision.push('always_consented')
+    return decision
   }
 
   function cmpConvertResponseToLookupObject (cmpRawOutput) {
     var allowedVendors = cmpConvertResponseToGroupList(cmpRawOutput)
     var allVendors = cmpRawOutput.vendorInfo
     var lookupObject = {}
+    // WORKAROUND to allow implicit triggering until the Didomi bug is fixed
+    lookupObject.always_consented = 'Always consented (to allow strictly needed triggering)'
     allVendors.forEach(function (vendorObject) {
       if (allowedVendors.indexOf(String(vendorObject.id)) === -1) return
       lookupObject[vendorObject.id] = vendorObject.name || 'iab-vendor-' + vendorObject.id
