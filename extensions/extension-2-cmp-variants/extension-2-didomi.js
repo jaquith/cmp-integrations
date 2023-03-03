@@ -4,7 +4,7 @@
   * @description The 'Pre Loader' CMP-specific component, see [tealiumCmpIntegration]{@link namespace:tealiumCmpIntegration} for specifics on inputs, or view the source to see a working example for an example CMP.
   *
   * 1.0.1
-  *  - Add workaround for known Didomi bug where implicit consent is always empty regardless of configuration
+  *  - Add workaround for known Didomi bug where implicit consent is always empty by unconditionally adding an ‘always_consented’ purpose key to the outbound consent decision to allow implicit triggering
   *
   * 1.0.0
   *  - Initial version, start versioning
