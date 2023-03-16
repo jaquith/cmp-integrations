@@ -47,8 +47,8 @@
   }
 
   function cmpFetchCurrentLookupKey () {
-    // just return whatever Vendor ID is expected be active
-    return (window.tealiumCmpIntegration && window.tealiumCmpIntegration.map && Object.keys(window.tealiumCmpIntegration.map)[0]) || '(Vendor ID check disabled)' // just return whatever's mapped to short-circuit the check as a test
+    // just return whatever Vendor ID is expected be active to short-circuit the ID-based double check for now
+    return (window.tealiumCmpIntegration && window.tealiumCmpIntegration.map && Object.keys(window.tealiumCmpIntegration.map)[0]) || '(Vendor ID check disabled)'
   }
 
   function cmpCheckForWellFormedDecision (cmpRawOutput) {
@@ -64,7 +64,6 @@
   }
 
   function cmpConvertResponseToLookupObject (cmpRawOutput) {
-    // convert from array of objects to object for easier lookups
     if (!cmpCheckForWellFormedDecision(cmpRawOutput)) return []
     const cookieConsentValues = cmpRawOutput.cookie.split(':')[0].split(',')
     const extraSplit = []
@@ -105,7 +104,9 @@
   }
 })(window)
 
-// Debugging / development output - repaste the integration on your test pages each time you make a change to your consent state
+/*
+
+// Debugging / development output - uncomment this code and paste the integration into the console on your test pages each time you make a change to your consent state to test without publishing
 var outputString = `CMP Found: ${window.tealiumCmpIntegration.cmpName} (${window.tealiumCmpIntegration.cmpCheckIfOptInModel() ? 'Opt-in' : 'Opt-out'} Model)
   
     Checks:
@@ -117,3 +118,5 @@ var outputString = `CMP Found: ${window.tealiumCmpIntegration.cmpName} (${window
       - name lookup: ${JSON.stringify(tealiumCmpIntegration.cmpConvertResponseToLookupObject(tealiumCmpIntegration.cmpFetchCurrentConsentDecision()), null, 6)}
     `
 console.log(outputString)
+
+*/
