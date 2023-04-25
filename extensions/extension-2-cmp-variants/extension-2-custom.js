@@ -21,7 +21,7 @@
  *            - Paste the debugging comment at the bottom by itself to output just your decision and related output
  *            - You can also call those functions individually as needed, or access the other useful properties of that object, more in the docs below
  * 
- * More detail in the related docs
+ * More detail in the related docs:
  *  - https://docs.tealium.com/iq-tag-management/consent-integrations/custom-cmp/
  *  - https://docs.tealium.com/iq-tag-management/consent-integrations/validate-and-debug/
  */
@@ -58,9 +58,13 @@
   window.tealiumCmpIntegration.cmpCheckForTiqConsent = cmpCheckForTiqConsent
   window.tealiumCmpIntegration.cmpConvertResponseToGroupList = cmpConvertResponseToGroupList
 
-  // allow this to be deactivated in case someone wants to for some reason
+
   /*
+  // allow this to be deactivated in case someone wants to for some reason
   var respectGlobalPrivacyControlSignal = true
+
+  // pull whatever's been entered as the Vendor ID in the UI for the single relevant integration
+  var optOutCookieName = (window.tealiumCmpIntegration && window.tealiumCmpIntegration.map && Object.keys(window.tealiumCmpIntegration.map)[0]) || 'error-no-map-found-so-no-cookie-name-available'
   */
 
   // Should return a boolean, true if the CMP is running the 'Opt-in' model (GDPR style) - this opt-out cookie example only supports 
