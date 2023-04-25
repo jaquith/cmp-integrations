@@ -95,7 +95,7 @@
   // Should return a string that helps Tealium iQ confirm that it's got the right CMP configuration (and not one from some other page / customer of the CMP)
   function cmpFetchCurrentLookupKey () {
     /*
-      return optOutCookieName
+    return optOutCookieName
     */
   }
 
