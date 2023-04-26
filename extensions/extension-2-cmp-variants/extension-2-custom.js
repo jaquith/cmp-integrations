@@ -2,7 +2,6 @@
 //base:custom
 
 /**
- * 
  * GETTING STARTED WITH YOUR CUSTOM CONSENT INTEGRATION
  * 
  *   - You will need to edit this template. 
