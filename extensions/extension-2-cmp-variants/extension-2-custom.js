@@ -141,5 +141,4 @@
     - group list:  ${JSON.stringify(tealiumCmpIntegration.cmpConvertResponseToGroupList(tealiumCmpIntegration.cmpFetchCurrentConsentDecision()))}
   `
   console.log(outputString);
-
-  */
+*/
