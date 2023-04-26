@@ -2,7 +2,9 @@
 //base:custom
 
 /**
+ * 
  * GETTING STARTED WITH YOUR CUSTOM CONSENT INTEGRATION
+ * 
  *   - You will need to edit this template. 
  *   - There is a working example provided in the comments and described below.
  *   - Make sure to take advantage of the built-in debugging features:
