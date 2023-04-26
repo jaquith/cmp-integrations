@@ -32,7 +32,6 @@
 /**
   * @module utcm/integration
   * @description
-  * 
   * This template is meant to be edited, for you to build your own support for a custom or unsupport CMP / capture tool.
   * 
   * The example code (commented out) is taken from an integration that checks for an opt-out cookie and returns either
@@ -45,7 +44,6 @@
   * For more, see https://docs.tealium.com/iq-tag-management/consent-integrations/supported-vendors/#opt-out-cookie--gpc (that integration is the provided example, with the GPC logic removed for simplicity)
   */
 
-(function myCustomConsentIntegration (window) {
   // CMP specific functionality and labels
   window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
 
