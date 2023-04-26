@@ -1,27 +1,27 @@
-//1.0.0
-//base:custom
+// 1.0.0
+// base:custom
 
 /**
  * GETTING STARTED WITH YOUR CUSTOM CONSENT INTEGRATION
- * 
- *   - You will need to edit this template. 
+ *
+ *   - You will need to edit this template.
  *   - There is a working example provided in the comments and described below.
  *   - Make sure to take advantage of the built-in debugging features:
  *      - Developing without publishing
  *          1. Uncomment the block at the bottom of this template
  *          2. Paste this entire file into the console of a website running the CMP you are working to support
- *          3. The newly uncommented trailing code block will output the consent decision. 
+ *          3. The newly uncommented trailing code block will output the consent decision.
  *          4. Adjust your decision and repaste the template contents to see the re-interpreted decision
  *          5. When you're happy with it, make sure to re-comment the debugging block before adding it to Tealium iQ and publishing
  *      - Debugging and validating after publishing:
  *          - Using debug mode
  *            - Set the 'utagdb' cookie to 'true' with 'document.cookie = "utagdb=true"' in the console
  *            - Set your console filter to see only the relevant (suggested filter is in the debug output)
- *            - Test different decisions to ensure things are working as expected. 
+ *            - Test different decisions to ensure things are working as expected.
  *          - Using the window.tealiumCmpOutput object
  *            - Paste the debugging comment at the bottom by itself to output just your decision and related output
  *            - You can also call those functions individually as needed, or access the other useful properties of that object, more in the docs below
- * 
+ *
  * More detail in the related docs:
  *  - https://docs.tealium.com/iq-tag-management/consent-integrations/custom-cmp/
  *  - https://docs.tealium.com/iq-tag-management/consent-integrations/validate-and-debug/
@@ -30,15 +30,14 @@
 ;(function myCustomConsentIntegration (window) {
   /**
     * This template is meant to be edited, for you to build your own support for a custom or unsupport CMP / capture tool.
-    * 
-    * The example code (commented out) is taken from an integration that checks for an opt-out cookie and returns either
-    * 
-    *  - ['no-selling'] (opt-out cookie with any value found)
-    *  - ['no-selling', 'yes-selling'] (no opt-out cookie found)
     *
-    * The (case-sensitive) name of the cookie is taken from the 'Vendor ID' field in the UI. 
-    * 
-    * For more, see https://docs.tealium.com/iq-tag-management/consent-integrations/supported-vendors/#opt-out-cookie--gpc (that integration is the provided example, with the GPC logic removed for simplicity)
+    * The example code (commented out) is taken from an integration that checks for an opt-out cookie and returns one of two decisions:
+    *  - ['no-selling'] (opt-out cookie with any value found) - always an explicit decision (an opt-out cookie has been set)
+    *  - ['no-selling', 'yes-selling'] (no opt-out cookie found) - always an implicit decision (no cookie is set)
+    *
+    * The (case-sensitive) name of the opt-out cookie is taken from the 'Vendor ID' field in the UI.
+    *
+    * For more, see https://docs.tealium.com/iq-tag-management/consent-integrations/supported-vendors/#opt-out-cookie--gpc (that integration was simplified for this example - the GPC logic was removed)
     */
 
   // CMP specific functionality and labels
@@ -54,7 +53,6 @@
   window.tealiumCmpIntegration.cmpCheckForExplicitConsentDecision = cmpCheckForExplicitConsentDecision
   window.tealiumCmpIntegration.cmpCheckForTiqConsent = cmpCheckForTiqConsent
   window.tealiumCmpIntegration.cmpConvertResponseToGroupList = cmpConvertResponseToGroupList
-
 
   /*
   // pull whatever's been entered as the Vendor ID in the UI for the single relevant integration
@@ -103,7 +101,8 @@
   // Should return a boolean - true if the consent decision was explicitly made by the user
   function cmpCheckForExplicitConsentDecision (cmpRawOutput) {
     /*
-    if ((typeof cmpRawOutput === 'object' && typeof cmpRawOutput.cookieState === 'string' && cmpRawOutput.cookieState !== 'opt-out-cookie-not-found') || (typeof cmpRawOutput === 'object' && cmpRawOutput.gpcState === true)) return true
+    // The only way we can tell if the decision is explicit in this example is to check if an opt-out cookie is set
+    if ((typeof cmpRawOutput === 'object' && typeof cmpRawOutput.cookieState === 'string' && cmpRawOutput.cookieState !== 'opt-out-cookie-not-found')) return true
     return false
     */
   }
@@ -129,7 +128,6 @@
     var allowedGroups = cmpConvertResponseToGroupList(cmpRawOutput)
     return allowedGroups.indexOf(tiqGroupName) !== -1
   }
-
 })(window)
 
 /*
@@ -145,5 +143,3 @@
   console.log(outputString);
 
   */
-
-
