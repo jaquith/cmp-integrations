@@ -29,20 +29,18 @@
  */
 
 ;(function myCustomConsentIntegration (window) {
-/**
-  * @module utcm/integration
-  * @description
-  * This template is meant to be edited, for you to build your own support for a custom or unsupport CMP / capture tool.
-  * 
-  * The example code (commented out) is taken from an integration that checks for an opt-out cookie and returns either
-  * 
-  *  - ['no-selling'] (opt-out cookie with any value found)
-  *  - ['no-selling', 'yes-selling'] (no opt-out cookie found)
-  *
-  * The (case-sensitive) name of the cookie is taken from the 'Vendor ID' field in the UI. 
-  * 
-  * For more, see https://docs.tealium.com/iq-tag-management/consent-integrations/supported-vendors/#opt-out-cookie--gpc (that integration is the provided example, with the GPC logic removed for simplicity)
-  */
+  /**
+    * This template is meant to be edited, for you to build your own support for a custom or unsupport CMP / capture tool.
+    * 
+    * The example code (commented out) is taken from an integration that checks for an opt-out cookie and returns either
+    * 
+    *  - ['no-selling'] (opt-out cookie with any value found)
+    *  - ['no-selling', 'yes-selling'] (no opt-out cookie found)
+    *
+    * The (case-sensitive) name of the cookie is taken from the 'Vendor ID' field in the UI. 
+    * 
+    * For more, see https://docs.tealium.com/iq-tag-management/consent-integrations/supported-vendors/#opt-out-cookie--gpc (that integration is the provided example, with the GPC logic removed for simplicity)
+    */
 
   // CMP specific functionality and labels
   window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
@@ -76,6 +74,7 @@
   // This output is used as the cmpRawOutput argument in functions below.
   function cmpFetchCurrentConsentDecision () {
     /*
+    // we can't use any tag manager functionality here because it hasn't been allowed to load yet
     var readCookie = function (name) {
       var reString = '(?:(?:^|.*;\\s*)' + name + '\\s*\\=\\s*([^;]*).*$)|^.*$'
       var re = new RegExp(reString)
