@@ -35,12 +35,12 @@
   * 
   * The example code (commented out) is taken from an integration that checks for an opt-out cookie and returns either
   * 
-  *  - ['no-selling'] (opt-out cookie with any value found, or GPC opt-out signal)
+  *  - ['no-selling'] (opt-out cookie with any value found)
   *  - ['no-selling', 'yes-selling'] (no opt-out cookie found)
   *
-  * The (case-sensitive) name of the cookie is taken from the 'Vendor ID' field in the UI. This example also respects the Global Privacy Control as an opt-out.
+  * The (case-sensitive) name of the cookie is taken from the 'Vendor ID' field in the UI. 
   * 
-  * For more, see https://docs.tealium.com/iq-tag-management/consent-integrations/supported-vendors/#opt-out-cookie--gpc (that integration is the provided example)
+  * For more, see https://docs.tealium.com/iq-tag-management/consent-integrations/supported-vendors/#opt-out-cookie--gpc (that integration is the provided example, with the GPC logic removed for simplicity)
   */
 
 (function myCustomConsentIntegration (window) {
@@ -60,15 +60,13 @@
 
 
   /*
-  // allow this to be deactivated in case someone wants to for some reason
-  var respectGlobalPrivacyControlSignal = true
 
   // pull whatever's been entered as the Vendor ID in the UI for the single relevant integration
   var optOutCookieName = (window.tealiumCmpIntegration && window.tealiumCmpIntegration.map && Object.keys(window.tealiumCmpIntegration.map)[0]) || 'error-no-map-found-so-no-cookie-name-available'
   */
 
-  // Should return a boolean, true if the CMP is running the 'Opt-in' model (GDPR style) - this opt-out cookie example only supports 
-  // the Opt-out model (CCPA/CPRA style), so this is hardcoded to return false.
+  // Should return a boolean, true if the CMP is running the 'Opt-in' model (GDPR style)
+  // This opt-out cookie example only supports the Opt-out model (CCPA/CPRA style), so this is hardcoded to return false.
   function cmpCheckIfOptInModel () {
     /*
     return false
@@ -87,8 +85,7 @@
       return cookieValue
     }
     var cookie = readCookie(optOutCookieName) || 'opt-out-cookie-not-found'
-    var gpc = navigator.globalPrivacyControl
-    return { cookieState: cookie, gpcState: gpc }
+    return { cookieState: cookie } // we have to return an object for the integration to work - this lets us add in other properties (like Global Privacy Control) later
     */
   }
 
@@ -117,9 +114,9 @@
   // Should return an array of consented vendors/purposes - these should match the Purposes in Tealium iQ exactly
   function cmpConvertResponseToGroupList (cmpRawOutput) {
     /*
-    var consentDecision = ['no-selling'] // always allowed
-    // very simple check for a non-empty opt-out cookie OR GPC opt-out signal (if active)
-    if (cmpRawOutput.cookieState === 'opt-out-cookie-not-found' && (!respectGlobalPrivacyControlSignal || cmpRawOutput.gpcState !== true)) {
+    var consentDecision = ['no-selling'] // tags that don't sell/share data are always allowed
+    // very simple check for a non-empty opt-out cookie to determine if tags that sell data are allowed
+    if (cmpRawOutput.cookieState === 'opt-out-cookie-not-found') {
       consentDecision.push('yes-selling') // we don't see a cookie, so we have to assume selling/sharing data is fine
     }
     return consentDecision
@@ -128,14 +125,12 @@
 
   // You shouldn't need to change this function, or anything below it
   function cmpCheckForTiqConsent (cmpRawOutput, tiqGroupName) {
-    /*
     // treat things we don't understand as an opt-out
     if (cmpCheckForWellFormedDecision(cmpRawOutput) !== true) return false
 
     tiqGroupName = tiqGroupName || 'tiq-group-name-missing'
     var allowedGroups = cmpConvertResponseToGroupList(cmpRawOutput)
     return allowedGroups.indexOf(tiqGroupName) !== -1
-    */
   }
 
 })(window)
