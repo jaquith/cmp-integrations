@@ -12,7 +12,7 @@
  *          2. Paste this entire file into the console of a website running the CMP you are working to support
  *          3. The newly uncommented trailing code block will output the consent decision.
  *          4. Adjust your decision and repaste the template contents to see the re-interpreted decision
- *          5. When you're happy with it, make sure to re-comment the debugging block before adding it to Tealium iQ and publishing
+ *          5. When you're happy with your template, make sure to re-comment the debugging block before pasting into Tealium iQ and publishing
  *      - Debugging and validating after publishing:
  *          - Using debug mode
  *            - Set the 'utagdb' cookie to 'true' with 'document.cookie = "utagdb=true"' in the console
