@@ -43,7 +43,7 @@
   // CMP specific functionality and labels
   window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
 
-  window.tealiumCmpIntegration.cmpName = 'Custom Example - no Vendor ID check'
+  window.tealiumCmpIntegration.cmpName = 'Custom Example'
   window.tealiumCmpIntegration.cmpIntegrationVersion = 'v1.0.0'
 
   window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision = cmpFetchCurrentConsentDecision
