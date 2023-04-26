@@ -60,7 +60,6 @@
 
 
   /*
-
   // pull whatever's been entered as the Vendor ID in the UI for the single relevant integration
   var optOutCookieName = (window.tealiumCmpIntegration && window.tealiumCmpIntegration.map && Object.keys(window.tealiumCmpIntegration.map)[0]) || 'error-no-map-found-so-no-cookie-name-available'
   */
