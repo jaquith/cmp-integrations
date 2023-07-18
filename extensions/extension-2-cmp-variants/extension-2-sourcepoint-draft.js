@@ -116,6 +116,7 @@
         }
   
         data.vendorsActuallyWithConsent = {}
+        data.vendorsActuallyWithConsent['implicit'] = 'Implicitly consented vendors'
   
         var nameLookup = {}
         data.consentedVendors.forEach(function (vendor) {
@@ -141,7 +142,7 @@
 
 })(window)
 
-
+/*
 // Debugging / development output - uncomment this block, then paste/repaste this entire template on your test pages
 window.logString = function () {
   // Debugging / development output - uncomment this block, then paste/repaste this entire template on your test pages
@@ -160,4 +161,4 @@ window.logString = function () {
 }
 tealiumCmpIntegration.cmpFetchCurrentConsentDecision()
 setTimeout(logString, 1000)
-
+*/
