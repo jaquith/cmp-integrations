@@ -116,7 +116,7 @@
         }
   
         data.vendorsActuallyWithConsent = {}
-        data.vendorsActuallyWithConsent['implicit'] = 'Implicitly consented vendors'
+        data.vendorsActuallyWithConsent['always_consented'] = 'For tags that do not require consent to fire, as a workaround'
   
         var nameLookup = {}
         data.consentedVendors.forEach(function (vendor) {
