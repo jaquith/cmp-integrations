@@ -1,20 +1,5 @@
-/**
- *  Scope       : Pre Loader
- *  Condition   : n/a
- *  Description : CMP Integration Element 2/4 - CMP Specific Preloader component
- *
- *                DRAFT of CMP-specific  Logic for TrustArc - not production-ready, but probably a decent starting point
- */
-
-/**
-  * @module integration-trustarc
-  *
-  * @description The 'Pre Loader' CMP-specific component for OneTrust.
-  * @private
-  *
-  * 1.0.0
-  *  - Initial version, start versioning
-  */
+// 1.0.0
+// base:trustarc
 
 ;(function trustarc (window) {
   // allows simple adjustment of the name/id behavior
