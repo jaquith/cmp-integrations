@@ -1,5 +1,14 @@
-// 1.0.0
+// 1.0.1
 // base:trustarc
+
+/**
+  * CHANGELOG
+  * 
+  * 1.0.1
+  *  - Fix implicit consent in opt-out model to return all mapped categories instead of just Required tags
+  *  - Add temporary workaround to replace 0 with 'zero' until a UI bug that removes falsey values can be fixed
+  *
+  **/
 
 ;(function trustarc (window) {
   // allows simple adjustment of the name/id behavior
@@ -9,7 +18,7 @@
   window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
 
   window.tealiumCmpIntegration.cmpName = 'TrustArc'
-  window.tealiumCmpIntegration.cmpIntegrationVersion = 'trustarc-1.0.0'
+  window.tealiumCmpIntegration.cmpIntegrationVersion = 'trustarc-1.0.1'
 
   window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision = cmpFetchCurrentConsentDecision
   window.tealiumCmpIntegration.cmpFetchCurrentLookupKey = cmpFetchCurrentLookupKey
@@ -26,8 +35,17 @@
 
   function cmpFetchCurrentConsentDecision () {
     if (!window.truste || !window.truste.util || typeof window.truste.util.readCookie !== 'function') return false
+
+    var cookieValue =  window.truste.util.readCookie(truste.eu.COOKIE_GDPR_PREF_NAME) || '0,'
+
+    // if we're in the opt-out model and it's an implicit decision, we should allow all tags to fire
+    var map = (window.tealiumCmpIntegration && window.tealiumCmpIntegration.map && Object.keys(window.tealiumCmpIntegration.map)[0] && window.tealiumCmpIntegration.map[Object.keys(window.tealiumCmpIntegration.map)[0]]) || {}
+    if (cmpCheckIfOptInModel() === false && cmpCheckForExplicitConsentDecision() === false) {
+      cookieValue = Object.keys(map).join(',') // all purpose keys that have been added in the UI are returned as consented
+    } 
+
     return {
-      cookie: window.truste.util.readCookie(truste.eu.COOKIE_GDPR_PREF_NAME) || '0,'
+      cookie: cookieValue
     }
   }
 
@@ -58,6 +76,7 @@
     })
 
     const trustArcMap = {
+      'Required': 'Required', // temporary workaround for bug in UI that rejects falsey entries
       0: 'Required',
       1: 'Functional',
       2: 'Personalization/Advertising'
@@ -70,6 +89,14 @@
         output[key] = trustArcMap[key] || 'Category name unknown'
       }
     })
+
+    // temporary workaround for bug in UI that rejects falsey entries
+    if (output[0]) {
+        output['Required'] = output[0]
+        delete output[0]
+    } 
+    // end workaround
+
     return output
   }
 
@@ -101,6 +128,8 @@ var outputString = `CMP Found: ${window.tealiumCmpIntegration.cmpName} (${window
       - group list:  ${JSON.stringify(tealiumCmpIntegration.cmpConvertResponseToGroupList(tealiumCmpIntegration.cmpFetchCurrentConsentDecision()))}
 
       - name lookup: ${JSON.stringify(tealiumCmpIntegration.cmpConvertResponseToLookupObject(tealiumCmpIntegration.cmpFetchCurrentConsentDecision()), null, 6)}
+
+${tealiumCmpIntegration.cmpCheckIfOptInModel() === false && tealiumCmpIntegration.cmpCheckForExplicitConsentDecision() === false ? '(All purposes are consented in opt-out mode with an implicit decision, but the full purpose list can\'t be shown in this debug output for technical reasons.)' : ''}
     `
 console.log(outputString)
 
