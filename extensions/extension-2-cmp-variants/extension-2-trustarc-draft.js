@@ -6,13 +6,12 @@
   * 
   * 1.0.1
   *  - Fix implicit consent in opt-out model to return all mapped categories instead of just Required tags
-  *  - Add temporary workaround to replace 0 with 'zero' until a UI bug that removes falsey values can be fixed
+  *  - Remove unneeded key/value switch
+  *  - Add temporary workaround to replace the Purpose Key '0' with 'Required' until a UI bug that removes falsey values can be fixed
   *
   **/
 
 ;(function trustarc (window) {
-  // allows simple adjustment of the name/id behavior
-  var useNamesInsteadOfKeys = false
 
   // CMP specific functionality and labels
   window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
@@ -102,7 +101,7 @@
 
   function cmpConvertResponseToGroupList (cmpRawOutput) {
     var permittedPurposesWithNames = cmpConvertResponseToLookupObject(cmpRawOutput)
-    var keysOrValues = useNamesInsteadOfKeys ? 'values' : 'keys'
+    var keysOrValues = 'keys'
     return Object[keysOrValues](permittedPurposesWithNames) // keys are IDs, values are names
   }
 
