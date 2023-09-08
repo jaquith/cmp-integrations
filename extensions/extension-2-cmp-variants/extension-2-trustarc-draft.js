@@ -1,8 +1,11 @@
-// 1.0.1
+// 1.0.2
 // base:trustarc
 
 /**
   * CHANGELOG
+  * 
+  * 1.0.2
+  *  - Fix cmpCheckIfOptInModel to correctly detect the two modes in all cases
   * 
   * 1.0.1
   *  - Fix implicit consent in opt-out model to return all mapped categories instead of just Required tags
@@ -17,7 +20,7 @@
   window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
 
   window.tealiumCmpIntegration.cmpName = 'TrustArc'
-  window.tealiumCmpIntegration.cmpIntegrationVersion = 'trustarc-1.0.1'
+  window.tealiumCmpIntegration.cmpIntegrationVersion = 'trustarc-1.0.2'
 
   window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision = cmpFetchCurrentConsentDecision
   window.tealiumCmpIntegration.cmpFetchCurrentLookupKey = cmpFetchCurrentLookupKey
@@ -29,7 +32,8 @@
   window.tealiumCmpIntegration.cmpConvertResponseToLookupObject = cmpConvertResponseToLookupObject
 
   function cmpCheckIfOptInModel () {
-    return !(truste && truste.util && typeof truste.util.readCookie === 'function' && truste.util.readCookie('notice_behavior'))
+    var modeCookieValue = (truste && truste.util && typeof truste.util.readCookie === 'function' && truste.util.readCookie('notice_behavior')) || 'expressed|eu' // default to strict EU rules if no cookie
+    return modeCookieValue.split('|')[0] === 'expressed'
   }
 
   function cmpFetchCurrentConsentDecision () {
