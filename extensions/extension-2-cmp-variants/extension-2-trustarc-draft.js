@@ -4,6 +4,10 @@
 /**
   * CHANGELOG
   * 
+  * 1.0.3
+  *  - Remove temporary workaround since the relevant bugfix is live, restore '0' as a purpose key
+  *  - Improve the behavior of cmpCheckIfOptInModel to support more versions of TrustArc
+  * 
   * 1.0.2
   *  - Fix cmpCheckIfOptInModel to correctly detect the two modes in all cases
   * 
@@ -20,7 +24,7 @@
   window.tealiumCmpIntegration = window.tealiumCmpIntegration || {}
 
   window.tealiumCmpIntegration.cmpName = 'TrustArc'
-  window.tealiumCmpIntegration.cmpIntegrationVersion = 'trustarc-1.0.2'
+  window.tealiumCmpIntegration.cmpIntegrationVersion = 'trustarc-1.0.3'
 
   window.tealiumCmpIntegration.cmpFetchCurrentConsentDecision = cmpFetchCurrentConsentDecision
   window.tealiumCmpIntegration.cmpFetchCurrentLookupKey = cmpFetchCurrentLookupKey
@@ -33,7 +37,7 @@
 
   function cmpCheckIfOptInModel () {
     var modeCookieValue = (truste && truste.util && typeof truste.util.readCookie === 'function' && truste.util.readCookie('notice_behavior')) || 'expressed|eu' // default to strict EU rules if no cookie
-    return modeCookieValue.split('|')[0] === 'expressed'
+    return modeCookieValue.indexOf('expressed') === 0
   }
 
   function cmpFetchCurrentConsentDecision () {
@@ -79,7 +83,6 @@
     })
 
     const trustArcMap = {
-      'Required': 'Required', // temporary workaround for bug in UI that rejects falsey entries
       0: 'Required',
       1: 'Functional',
       2: 'Personalization/Advertising'
@@ -92,13 +95,6 @@
         output[key] = trustArcMap[key] || 'Category name unknown'
       }
     })
-
-    // temporary workaround for bug in UI that rejects falsey entries
-    if (output[0]) {
-        output['Required'] = output[0]
-        delete output[0]
-    } 
-    // end workaround
 
     return output
   }
