@@ -37,8 +37,8 @@
     *
     * The (case-sensitive) name of the opt-out cookie is taken from the 'Vendor ID' field in the UI.
     *
-    * For more, see https://docs.tealium.com/iq-tag-management/consent-integrations/supported-vendors/#opt-out-cookie--gpc 
-    * 
+    * For more, see https://docs.tealium.com/iq-tag-management/consent-integrations/supported-vendors/#opt-out-cookie--gpc
+    *
     * (The above integration was simplified for this example - the GPC logic was removed)
     */
 
