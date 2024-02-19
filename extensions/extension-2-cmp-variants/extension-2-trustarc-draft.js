@@ -42,7 +42,7 @@
 
   function cmpFetchCurrentConsentDecision () {
     if (!window.truste || !window.truste.util || typeof window.truste.util.readCookie !== 'function') return false
-""
+
     var cookieValue =  window.truste.util.readCookie(truste.eu.COOKIE_GDPR_PREF_NAME) || '0,'
 
     // if we're in the opt-out model and it's an implicit decision, we should allow all tags to fire
